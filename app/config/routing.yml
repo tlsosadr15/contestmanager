@@ -1,3 +1,24 @@
-app:
-    resource: "@AppBundle/Controller/"
+core:
+    resource: "@CoreBundle/Controller/"
     type:     annotation
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+match:
+    resource: "@MatchBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+team:
+    resource: "@TeamBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+school:
+    resource: "@SchoolBundle/Controller/"
+    type:     annotation
+    prefix:   /

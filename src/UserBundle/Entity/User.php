@@ -24,14 +24,14 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
     private $lastName;
 
@@ -42,6 +42,15 @@ class User
      */
     private $type;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="user", cascade={"persist", "remove"})
+    */
+    private $team;
+
+    /**
+     * @ORM\OneToOne(targetEntity="TeamBundle\Entity\Team", cascade={"persist", "remove"})
+    */
+    private $school;
 
     /**
      * Get id
@@ -124,5 +133,52 @@ class User
     {
         return $this->type;
     }
-}
 
+    /**
+     * Set team
+     *
+     * @param \TeamBundle\Entity\Team $team
+     *
+     * @return User
+     */
+    public function setTeam(\TeamBundle\Entity\Team $team = null)
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * Get team
+     *
+     * @return \TeamBundle\Entity\Team
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * Set school
+     *
+     * @param \TeamBundle\Entity\Team $school
+     *
+     * @return User
+     */
+    public function setSchool(\TeamBundle\Entity\Team $school = null)
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    /**
+     * Get school
+     *
+     * @return \TeamBundle\Entity\Team
+     */
+    public function getSchool()
+    {
+        return $this->school;
+    }
+}

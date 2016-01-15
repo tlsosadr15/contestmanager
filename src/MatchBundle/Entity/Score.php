@@ -29,12 +29,12 @@ class Score
     private $score;
     
     /**
-     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Score", inversedBy="score", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="score", cascade={"persist", "remove"})
     */
     private $team;
     
     /**
-     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Score", inversedBy="score", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Versus", cascade={"persist", "remove"})
     */
     private $versus;
 
@@ -75,11 +75,11 @@ class Score
     /**
      * Set team
      *
-     * @param \MatchBundle\Entity\Score $team
+     * @param \TeamBundle\Entity\Team $team
      *
      * @return Score
      */
-    public function setTeam(\MatchBundle\Entity\Score $team = null)
+    public function setTeam(\TeamBundle\Entity\Team $team = null)
     {
         $this->team = $team;
 
@@ -89,7 +89,7 @@ class Score
     /**
      * Get team
      *
-     * @return \MatchBundle\Entity\Score
+     * @return \TeamBundle\Entity\Team
      */
     public function getTeam()
     {
@@ -99,11 +99,11 @@ class Score
     /**
      * Set versus
      *
-     * @param \MatchBundle\Entity\Score $versus
+     * @param \MatchBundle\Entity\Versus $versus
      *
      * @return Score
      */
-    public function setVersus(\MatchBundle\Entity\Score $versus = null)
+    public function setVersus(\MatchBundle\Entity\Versus $versus = null)
     {
         $this->versus = $versus;
 
@@ -113,7 +113,7 @@ class Score
     /**
      * Get versus
      *
-     * @return \MatchBundle\Entity\Score
+     * @return \MatchBundle\Entity\Versus
      */
     public function getVersus()
     {

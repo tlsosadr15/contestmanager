@@ -1,0 +1,47 @@
+easy_admin:
+    site_name: 'Contest Manager'
+    entities:
+        User:
+            label: 'Utilisateurs'
+            class: UserBundle\Entity\User
+            list:
+                title: "Liste des utilisateurs"
+                fields: ['id', 'username', 'email', 'enabled', 'roles', 'lastLogin']
+            form:
+                title:  "Ajout d'un utilisateur"
+                fields: ['first_name', 'last_name', 'email', 'roles', 'school']
+            edit:
+                title:  "Edition de l'utilisateur"
+                fields: ['first_name', 'last_name', 'email', 'roles', 'school']
+            show:
+                title:  "Détail d'un utilisateur"
+                fields: ['id','username', 'roles', 'email','first_name','last_name','password', 'enabled', 'locked', 'createdAt','updatedAt']
+
+        school:
+            label: 'Ecoles'
+            class: SchoolBundle\Entity\School
+            list:
+                title: "Liste des écoles"
+                fields: ['id', 'name']
+                actions: ['-show']
+            form:
+                title:  "Ajout d'une école"
+                fields: ['name']
+            edit:
+                title:  "Edition d'une école"
+                fields: ['name']
+
+        match:
+            label: 'Matchs'
+            class: MatchBundle\Entity\Versus
+            list:
+                title: "Liste des Matchs"
+                fields: ['id', 'date_match', 'nb_table', 'team1', 'team2']
+            form:
+                title:  "Ajout d'une école"
+                fields: ['date_match', 'nb_table', 'team1', 'team2']
+            edit:
+                title:  "Edition d'une école"
+                fields: ['date_match', 'nb_table', 'team1', 'team2']
+
+

@@ -24,6 +24,8 @@
 
 # Assets and user uploads
 /web/
+/nbproject/
+/app/check.php
 
 # PHPUnit
 /app/phpunit.xml

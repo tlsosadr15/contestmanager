@@ -45,7 +45,8 @@ class User extends BaseUser
     private $team;
 
     /**
-     * @ORM\OneToOne(targetEntity="TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="user", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="school_id", referencedColumnName="id")
     */
     private $school;
 
@@ -154,11 +155,11 @@ class User extends BaseUser
     /**
      * Set school
      *
-     * @param \TeamBundle\Entity\Team $school
+     * @param \SchoolBundle\Entity\School $school
      *
      * @return User
      */
-    public function setSchool(\TeamBundle\Entity\Team $school = null)
+    public function setSchool(\SchoolBundle\Entity\School $school = null)
     {
         $this->school = $school;
 
@@ -168,7 +169,7 @@ class User extends BaseUser
     /**
      * Get school
      *
-     * @return \TeamBundle\Entity\Team
+     * @return \SchoolBundle\Entity\School
      */
     public function getSchool()
     {

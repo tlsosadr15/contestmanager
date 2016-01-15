@@ -27,7 +27,16 @@ class School
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-
+    
+    /**
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="school", cascade={"persist", "remove"})
+    */
+    private $user;
+    
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * Get id
@@ -62,5 +71,45 @@ class School
     {
         return $this->name;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return School
+     */
+    public function addUser(\UserBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \UserBundle\Entity\User $user
+     */
+    public function removeUser(\UserBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+}

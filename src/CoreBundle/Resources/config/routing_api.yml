@@ -1,0 +1,19 @@
+api_user: 
+  type: rest
+  resource:     "UserBundle:Rest"
+  name_prefix:  api_
+  
+api_school: 
+  type: rest
+  resource:     "SchoolBundle:Rest"
+  name_prefix:  api_
+  
+api_match: 
+  type: rest
+  resource:     "MatchBundle:Rest"
+  name_prefix:  api_
+
+api_team: 
+  type: rest
+  resource:     "TeamBundle:Rest"
+  name_prefix:  api_

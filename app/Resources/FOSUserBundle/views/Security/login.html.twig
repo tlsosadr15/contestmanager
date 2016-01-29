@@ -1,0 +1,34 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}Login{% endblock %}
+{% block fos_user_content %}
+{% if error %}
+    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+{% endif %}
+{% block head_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/easyadmin/stylesheet/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ path('_easyadmin_render_css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/core/stylesheet/login.css') }}">
+{% endblock head_stylesheets %}
+<div class="container col-md-4 col-md-offset-4">
+    <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="Username" required autofocus />
+
+        <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+        <input type="password" id="password" name="_password" class="form-control" placeholder="Password" required />
+
+        {#<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>#}
+        <div class="checkbox">
+            <label for="remember_me">
+                <input type="checkbox" id="remember_me" value="_remember_me" value="on"> Remember me
+            </label>
+        </div>
+
+        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+{#        <button class="btn btn-lg btn-primary btn-block" id="_submit" name="_submit" type="submit">Sign in</button>#}
+    </form>
+</div>
+{% endblock fos_user_content %}

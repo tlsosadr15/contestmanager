@@ -31,11 +31,24 @@ easy_admin:
                 title:  "Edition d'une école"
                 fields: ['name']
 
+        team:
+            label: 'Equipes'
+            class: TeamBundle\Entity\Team
+            list:
+                title: "Liste des équipes"
+                fields: ['id', 'name']
+            form:
+                title:  "Ajout d'une équipe"
+                fields: ['name', 'arbiter']
+            edit:
+                title:  "Edition d'une équipe"
+                fields: ['name', 'arbiter']
+
         match:
             label: 'Matchs'
             class: MatchBundle\Entity\Versus
             list:
-                title: "Liste des Matchs"
+                title: "Liste des matchs"
                 fields: ['id', 'date_match', 'nb_table', 'team1', 'team2']
             form:
                 title:  "Ajout d'une école"
@@ -44,4 +57,13 @@ easy_admin:
                 title:  "Edition d'une école"
                 fields: ['date_match', 'nb_table', 'team1', 'team2']
 
-
+        score:
+            label: 'Scores'
+            class: MatchBundle\Entity\Score
+            list:
+                title: "Liste des scores"
+                fields: ['id', 'score', 'team', 'versus']
+                actions: ['-form']
+            edit:
+                title:  "Edition d'un score"
+                fields: ['score', 'team', 'versus']

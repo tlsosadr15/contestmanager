@@ -44,6 +44,13 @@ class Versus
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", cascade={"persist", "remove"})
     */
     private $team2;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="finished", type="boolean")
+     */
+    private $finished;
 
 
     /**
@@ -150,5 +157,29 @@ class Versus
     public function getTeam2()
     {
         return $this->team2;
+    }
+
+    /**
+     * Set finished
+     *
+     * @param boolean $finished
+     *
+     * @return Versus
+     */
+    public function setFinished($finished)
+    {
+        $this->finished = $finished;
+
+        return $this;
+    }
+
+    /**
+     * Get finished
+     *
+     * @return boolean
+     */
+    public function getFinished()
+    {
+        return $this->finished;
     }
 }

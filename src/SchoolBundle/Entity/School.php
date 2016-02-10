@@ -36,7 +36,7 @@ class School
     private $name;
     
     /**
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="school", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="school")
     */
     private $user;
     

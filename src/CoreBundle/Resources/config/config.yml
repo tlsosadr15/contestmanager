@@ -1,5 +1,10 @@
 easy_admin:
     site_name: 'Contest Manager'
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+        
     entities:
         User:
             label: 'Utilisateurs'
@@ -9,13 +14,13 @@ easy_admin:
                 fields: ['id', 'username', 'email', 'enabled', 'roles', 'lastLogin']
             form:
                 title:  "Ajout d'un utilisateur"
-                fields: ['first_name', 'last_name', 'email', 'roles', 'school']
+                fields: ['first_name', 'last_name', 'email', 'team', 'password', 'roles', 'school']
             edit:
                 title:  "Edition de l'utilisateur"
-                fields: ['first_name', 'last_name', 'email', 'roles', 'school']
+                fields: ['first_name', 'last_name', 'email', 'team', 'password', 'roles', 'school']
             show:
                 title:  "Détail d'un utilisateur"
-                fields: ['id','username', 'roles', 'email','first_name','last_name','password', 'enabled', 'locked', 'createdAt','updatedAt']
+                fields: ['id','username', 'roles','email','first_name','last_name','enabled','locked','createdAt','updatedAt']
 
         school:
             label: 'Ecoles'
@@ -36,7 +41,7 @@ easy_admin:
             class: TeamBundle\Entity\Team
             list:
                 title: "Liste des équipes"
-                fields: ['id', 'name']
+                fields: ['id', 'name', 'arbiter']
             form:
                 title:  "Ajout d'une équipe"
                 fields: ['name', 'arbiter']
@@ -49,7 +54,7 @@ easy_admin:
             class: MatchBundle\Entity\Versus
             list:
                 title: "Liste des matchs"
-                fields: ['id', 'date_match', 'nb_table', 'team1', 'team2']
+                fields: ['id', 'date_match', 'nb_table', 'team1', 'team2', 'finished']
             form:
                 title:  "Ajout d'une école"
                 fields: ['date_match', 'nb_table', 'team1', 'team2']

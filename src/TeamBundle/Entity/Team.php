@@ -34,13 +34,13 @@ class Team
     private $score;
 
     /**
-     * @ORM\OneToOne(targetEntity="UserBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
     */
     private $arbiter;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="team", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="team")
     */
     private $users;
     
@@ -57,6 +57,11 @@ class Team
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**

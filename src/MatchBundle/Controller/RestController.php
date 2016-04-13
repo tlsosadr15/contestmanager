@@ -9,11 +9,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializationContext;
 use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Routing\ClassResourceInterface;
+use FOS\RestBundle\Util\Codes;
 
 class RestController extends Controller
 {
     
-    public function getMatchsAction()
+    public function matchsAction()  
     {
         $em = $this->getDoctrine()->getManager();
 

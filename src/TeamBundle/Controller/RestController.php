@@ -31,3 +31,4 @@ class RestController extends Controller
         return $team;
     }
 
+}

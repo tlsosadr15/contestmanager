@@ -21,5 +21,13 @@ class RestController extends Controller
         
         return $teams;
     }
-}
+    
+    public function getTeamAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $team = $em->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id));
+        
+        return $team;
+    }
 

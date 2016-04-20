@@ -23,6 +23,10 @@ easy_admin_bundle:
     prefix:   /
 
 rest : 
-  type : rest 
-  resource : "@CoreBundle/Resources/config/routing_api.yml"
-  prefix : /api
+    type : rest 
+    resource : "@CoreBundle/Resources/config/routing_api.yml"
+    prefix : /api
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

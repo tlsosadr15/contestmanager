@@ -14,10 +14,10 @@ easy_admin:
                 fields: ['id', 'username', 'email', 'enabled', 'roles', 'lastLogin']
             form:
                 title:  "Ajout d'un utilisateur"
-                fields: ['first_name', 'last_name', 'email', 'team', 'password', 'roles', 'school']
+                fields: ['first_name', 'last_name', 'email', 'team', 'roles', 'school']
             edit:
                 title:  "Edition de l'utilisateur"
-                fields: ['first_name', 'last_name', 'email', 'team', 'password', 'roles', 'school']
+                fields: ['first_name', 'last_name', 'email', 'team', 'roles', 'school']
             show:
                 title:  "Détail d'un utilisateur"
                 fields: ['id','username', 'roles','email','first_name','last_name','enabled','locked','createdAt','updatedAt']

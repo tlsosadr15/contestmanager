@@ -11,13 +11,14 @@ use JMS\Serializer\SerializationContext;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RestController extends Controller
 {
     /**
      * @ApiDoc(
      * resource=true,
-     * resourceDescription="Operations on users",
+     * section="Users",
      * description= "Get all users",
      * output= "UserBundle\Entity\User"
      * )
@@ -35,29 +36,29 @@ class RestController extends Controller
      * @Rest\Post("/user/login", name="_login")
      * @ApiDoc(
      * resource=true,
-     * resourceDescription="Operations on users",
+     * section="Users",
      * description= "User login",
      * parameters={
      *      {"name"="username", "dataType"="string", "required"=true, },
      *      {"name"="password", "dataType"="string", "required"=true, }
-     *  }
+     * },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when the user is not found"
+     * }
      * )
     */
     public function loginAction(Request $request){
         $username = $request->get('username');
         $password = $request->get('password');
-        exit($password);
-        return false;
         
-        $user = $this->get('fos_user.user_manager')->findUserBy(array('username' => $email));
-        $logger = $this->get('logger');
+        $user = $this->get('fos_user.user_manager')->findUserBy(array('username' => $username));
         if( empty($user) ){
-            return false;
+            return new JsonResponse('user not found', 400);
         }
-        $logger->info('user found for '.$email);
         $encoder = $this->get('security.encoder_factory')->getEncoder($user);
         if (!$encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
-            return false;
+            return new JsonResponse('Invalid username/password', 400);
         }
         
         return $user;
@@ -66,7 +67,7 @@ class RestController extends Controller
     /**
      * @ApiDoc(
      * resource=true,
-     * section="Operations on users",
+     * section="Users",
      * description= "Get user by id",
      * output="UserBundle\Entity\User",
      * requirements={
@@ -91,7 +92,7 @@ class RestController extends Controller
     /**
      * @ApiDoc(
      * resource=true,
-     * resourceDescription="Operations on users",
+     * section="Users",
      * description= "Edit user by id",
      * requirements={
      *      {

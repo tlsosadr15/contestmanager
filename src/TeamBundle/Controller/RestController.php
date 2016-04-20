@@ -17,7 +17,7 @@ class RestController extends Controller
     /**
      * @ApiDoc(
      * resource=true,
-     * resourceDescription="Operations on teams",
+     * section="Teams",
      * description= "Get all teams",
      * output= "UserBundle\Entity\User"
      * )
@@ -34,7 +34,7 @@ class RestController extends Controller
     /**
      * @ApiDoc(
      * resource=true,
-     * resourceDescription="Operations on teams",
+     * section="Teams",
      * description= "Get team by id",
      * output="TeamBundle\Entity\Team",
      * requirements={

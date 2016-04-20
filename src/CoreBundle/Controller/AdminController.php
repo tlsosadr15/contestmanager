@@ -14,10 +14,11 @@ class AdminController extends BaseAdminController
     public function prePersistEntity($entity) {
         
         if ("UserBundle\Entity\User" == $this->entity['class']) {
-            $firstName = $entity->getFirstName();
-            $lastName = $entity->getLastName();
-            $username = $firstName."_".$lastName;
-            $entity->setUsername($username);
+            $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
+            $team = $entity->getTeam()->getName();
+            
+            $entity->setUsername($team);
+            $entity->setPassword($encoder->encodePassword($team, $entity->getSalt()));
         }
         
         if ("MatchBundle\Entity\Versus" == $this->entity['class']) {
@@ -33,9 +34,9 @@ class AdminController extends BaseAdminController
 
         $newForm->remove('roles');
         $newForm->add('roles', 'choice', array(
-                'choices' => array('ROLE_USER' => 'ROLE_USER', 'ROLE_ADMIN' => 'ROLE_ADMIN', 'AUCUN'=>'AUCUN'),
-                'multiple'=>true,
-                'empty_data'=>array('AUCUN')));
+            'choices' => array('ROLE_USER' => 'ROLE_USER', 'ROLE_ADMIN' => 'ROLE_ADMIN', 'AUCUN'=>'AUCUN'),
+            'multiple'=>true,
+            'empty_data'=>array('AUCUN')));
         }
         
         if ("MatchBundle\Entity\Versus" == $this->entity['class']) {

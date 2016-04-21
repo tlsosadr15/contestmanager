@@ -10,7 +10,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializationContext;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use MatchBundle\Entity\Score;
 
 class RestController extends Controller
 {
@@ -25,7 +24,6 @@ class RestController extends Controller
     public function getTeamsAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $teams = $em->getRepository('TeamBundle:Team')->findAll();
         
         return $teams;
@@ -48,7 +46,10 @@ class RestController extends Controller
     */
     public function getTeamAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $team = $em->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id));
         
+        return $team;
     }
 
 }

@@ -3,9 +3,7 @@
 namespace MatchBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -14,6 +12,7 @@ use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use MatchBundle\Entity\Score;
 
 class RestController extends Controller
 {
@@ -35,7 +34,7 @@ class RestController extends Controller
     }
     
     /**
-     * @Rest\Get("/matchs/team/{id}", name="")
+     * @Rest\Get("/matchs/team/{id}", requirements={"id" = "\d+"})
      * @ApiDoc(
      * section="Matchs",
      * description= "Get matchs of a team",
@@ -60,11 +59,12 @@ class RestController extends Controller
         if( empty($matchs) ){
             return new JsonResponse('matchs not found', 404);
         }
+        
         return $matchs;
     }
     
     /**
-     * @Rest\Post("/matchs/team/score", name="")
+     * @Rest\Post("/matchs/team/score")
      * @ApiDoc(
      * section="Matchs",
      * description= "Post the score of a team in a match",
@@ -75,15 +75,35 @@ class RestController extends Controller
      * },
      * statusCodes={
      *      200="Returned when successful",
-     *      404="Returned when match not found"
+     *      400="Returned when bad request",
+     *      404="Returned when match/team not found"
      * }
      * )
     */
-    public function scoreTeamMatchAction()
+    public function scoreTeamMatchAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $matchs = $em->getRepository('MatchBundle:Versus')->findAll();
+        $id_team = $request->get('id_team');
+        $id_match = $request->get('id_match');
+        $scoreV = $request->get('score');
         
-        return $matchs;
+        if(!$id_team || !$id_match || !$scoreV){
+            return new JsonResponse('Missing parameter(s)', 400);
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $team = $em->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id_team));
+        $match = $em->getRepository('MatchBundle:Match')->findOneBy(array('id' => $id_match));
+        
+        if(!$match || !$team){
+            return new JsonResponse('Ressource(s) not found', 404);
+        }
+        
+        $score = new Score();
+        $score->setTeam($team);
+        $score->setMatch($match);
+        $score->setScore($scoreV);
+        
+        $em->persist($score);
+        $em->flush();
     }
 }

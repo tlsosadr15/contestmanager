@@ -119,5 +119,5 @@ jms_serializer:
     metadata:
         directories:
             FOSUB:
-                namespace_prefix: "FOS/UserBundle"
-                path: "%kernel.root_dir%/serializer/FOSUB"
+                namespace_prefix: "FOS\\UserBundle"
+                path: "@UserBundle/Resources/serializer/fos"

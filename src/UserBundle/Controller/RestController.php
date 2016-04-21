@@ -17,16 +17,16 @@ class RestController extends Controller
 {
     /**
      * @ApiDoc(
-     * resource=true,
      * section="Users",
      * description= "Get all users",
-     * output= "UserBundle\Entity\User"
+     * statusCodes={
+     *      200="Returned when successful",
+     * }
      * )
     */
     public function getUsersAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $users = $em->getRepository('UserBundle:User')->findAll();
         
         return $users;
@@ -35,7 +35,6 @@ class RestController extends Controller
     /**
      * @Rest\Post("/user/login", name="_login")
      * @ApiDoc(
-     * resource=true,
      * section="Users",
      * description= "User login",
      * parameters={
@@ -44,7 +43,7 @@ class RestController extends Controller
      * },
      * statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the user is not found"
+     *      401="Returned when invalid username/password"
      * }
      * )
     */
@@ -53,12 +52,9 @@ class RestController extends Controller
         $password = $request->get('password');
         
         $user = $this->get('fos_user.user_manager')->findUserBy(array('username' => $username));
-        if( empty($user) ){
-            return new JsonResponse('user not found', 400);
-        }
         $encoder = $this->get('security.encoder_factory')->getEncoder($user);
-        if (!$encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
-            return new JsonResponse('Invalid username/password', 400);
+        if (!$user || !$encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
+            return new JsonResponse('Invalid username/password', 401);
         }
         
         return $user;
@@ -66,32 +62,34 @@ class RestController extends Controller
     
     /**
      * @ApiDoc(
-     * resource=true,
      * section="Users",
      * description= "Get user by id",
-     * output="UserBundle\Entity\User",
      * requirements={
      *      {
      *          "name"="id",
      *          "dataType"="integer",
      *          "requirement"="\d+",
-     *          "description"="Id of the user"
+     *          "description"="Id user"
      *      }
-     *  }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when the user is not found"
+     * }
      * )
     */
     public function getUserAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $user = $em->getRepository('UserBundle:User')->findOneBy(array('id' => $id));
-        
+        if( empty($user) ){
+            return new JsonResponse('user not found', 404);
+        }
         return $user;
     }
     
     /**
      * @ApiDoc(
-     * resource=true,
      * section="Users",
      * description= "Edit user by id",
      * requirements={
@@ -101,11 +99,14 @@ class RestController extends Controller
      *          "requirement"="\d+",
      *          "description"="Id of the user"
      *      }
-     *  }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      400="An error occured"
+     * }
      * )
     */
     public function putUserAction($id)
     {
-        exit('edit');
     }
 }

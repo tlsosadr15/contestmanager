@@ -4,10 +4,14 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @ExclusionPolicy("all")
  */
 class User extends BaseUser
 {
@@ -15,6 +19,7 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     protected $id;
     
@@ -22,6 +27,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
+     * @Expose
      */
     private $firstName;
 
@@ -29,6 +35,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
+     * @Expose
      */
     private $lastName;
 
@@ -36,17 +43,22 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     * @Expose
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="user", cascade={"persist", "remove"})
+     * @Expose
+     * @MaxDepth(1)
     */
     private $team;
 
     /**
      * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="user", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="school_id", referencedColumnName="id")
+     * @Expose
+     * @MaxDepth(1)
     */
     private $school;
 

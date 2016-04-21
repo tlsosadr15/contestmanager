@@ -3,12 +3,16 @@
 namespace MatchBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Score
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="MatchBundle\Entity\ScoreRepository")
+ * @ExclusionPolicy("all")
  */
 class Score
 {
@@ -25,16 +29,20 @@ class Score
      * @var integer
      *
      * @ORM\Column(name="score", type="integer")
+     * @Expose
      */
     private $score;
     
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="score", cascade={"persist", "remove"})
+     * @MaxDepth(1)
     */
     private $team;
     
     /**
      * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Versus", cascade={"persist", "remove"})
+     * @MaxDepth(1)
+     * @Expose
     */
     private $versus;
 

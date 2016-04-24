@@ -91,7 +91,7 @@ class RestController extends Controller
     /**
      * @ApiDoc(
      * section="Users",
-     * description= "Edit user by id",
+     * description= "TODO - Edit user by id",
      * requirements={
      *      {
      *          "name"="id",
@@ -108,5 +108,6 @@ class RestController extends Controller
     */
     public function putUserAction($id)
     {
+        //TODO
     }
 }

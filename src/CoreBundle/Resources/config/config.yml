@@ -67,8 +67,8 @@ easy_admin:
             class: MatchBundle\Entity\Score
             list:
                 title: "Liste des scores"
-                fields: ['id', 'score', 'team', 'versus']
-                actions: ['-form']
+                fields: ['id', 'score', 'team']
+                actions: ['-form', '-edit']
             edit:
                 title:  "Edition d'un score"
-                fields: ['score', 'team', 'versus']
+                fields: ['score', 'team']

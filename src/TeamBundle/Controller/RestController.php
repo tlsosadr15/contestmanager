@@ -18,7 +18,6 @@ class RestController extends Controller
      * @ApiDoc(
      * section="Teams",
      * description= "Get all teams",
-     * output= "UserBundle\Entity\User"
      * )
     */
     public function getTeamsAction()
@@ -33,7 +32,6 @@ class RestController extends Controller
      * @ApiDoc(
      * section="Teams",
      * description= "Get team by id",
-     * output="TeamBundle\Entity\Team",
      * requirements={
      *      {
      *          "name"="id",
@@ -50,6 +48,46 @@ class RestController extends Controller
         $team = $em->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id));
         
         return $team;
+    }
+
+    /**
+     * @Rest\Get("/teams/school/{id}", requirements={"id" = "\d+"})
+     * @ApiDoc(
+     * section="Teams",
+     * description= "TODO - Get teams of the same school",
+     * requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Id Team"
+     *      }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when teams not found"
+     * }
+     * )
+    */
+    public function schoolTeamsAction($id)
+    {
+        //TODO
+    }
+
+    /**
+     * @Rest\Get("/teams/rank")
+     * @ApiDoc(
+     * section="Teams",
+     * description= "TODO - Get rank of teams",
+     * statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when teams not found"
+     * }
+     * )
+    */
+    public function rankTeamsAction($id)
+    {
+        //TODO
     }
 
 }

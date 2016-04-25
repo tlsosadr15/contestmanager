@@ -17,7 +17,9 @@ class AdminController extends BaseAdminController
             $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
             $team = $entity->getTeam()->getName();
             
-            $entity->setUsername($team);
+            $username = $entity->getFirstname().'_'.$entity->getLastname();
+
+            $entity->setUsername($username);
             $entity->setPassword($encoder->encodePassword($team, $entity->getSalt()));
         }
         

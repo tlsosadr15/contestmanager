@@ -15,12 +15,12 @@ class AdminController extends BaseAdminController
         
         if ("UserBundle\Entity\User" == $this->entity['class']) {
             $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
-            $team = $entity->getTeam()->getName();
+            $password = $entity->getFirstname();
             
             $username = $entity->getFirstname().'_'.$entity->getLastname();
 
             $entity->setUsername($username);
-            $entity->setPassword($encoder->encodePassword($team, $entity->getSalt()));
+            $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
         }
         
         if ("MatchBundle\Entity\Versus" == $this->entity['class']) {

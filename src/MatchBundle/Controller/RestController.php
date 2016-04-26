@@ -89,21 +89,22 @@ class RestController extends Controller
         if(!$id_team || !$id_match || !$scoreV){
             return new JsonResponse('Missing parameter(s)', 400);
         }
-        
         $em = $this->getDoctrine()->getManager();
         $team = $em->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id_team));
-        $match = $em->getRepository('MatchBundle:Match')->findOneBy(array('id' => $id_match));
+        $match = $em->getRepository('MatchBundle:Versus')->findOneBy(array('id' => $id_match));
+        $match->setFinished(true);
+        $em->persist($match);
         
         if(!$match || !$team){
             return new JsonResponse('Ressource(s) not found', 404);
         }
-        
         $score = new Score();
         $score->setTeam($team);
-        $score->setMatch($match);
+        $score->setVersus($match);
         $score->setScore($scoreV);
-        
         $em->persist($score);
         $em->flush();
+
+        return new JsonResponse('Success', 200); 
     }
 }

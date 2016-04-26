@@ -54,7 +54,7 @@ easy_admin:
             class: MatchBundle\Entity\Versus
             list:
                 title: "Liste des matchs"
-                fields: ['id', 'date_match', 'nb_table', 'team1', 'team2', 'finished']
+                fields: ['id', 'nb_table', 'team1', 'team2', 'finished']
             form:
                 title:  "Ajout d'une école"
                 fields: ['date_match', 'nb_table', 'team1', 'team2']

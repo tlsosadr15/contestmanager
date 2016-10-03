@@ -26,6 +26,7 @@
 /web/
 /nbproject/
 /app/check.php
+app/SymfonyRequirements.php
 
 # PHPUnit
 /app/phpunit.xml
@@ -39,3 +40,5 @@
 
 # Npm
 /npm-debug.log
+
+.idea

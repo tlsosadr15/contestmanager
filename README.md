@@ -14,9 +14,7 @@ composer install
 php app/console doctrine:database:create
 php app/console doctrine:schema:update --force
 
-php app/console fos:user:create admin admin@gmail.com admin2016!
-php app/console fos:user:activate admin
-php app/console fos:user:promote admin ROLE_ADMIN
+php app/console doctrine:fixtures:load --no-interaction
 ```
 
 ### Configuration host

@@ -27,7 +27,9 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "phpunit/phpunit": "^5.5",
+        "liip/functional-test-bundle": "^1.6"
     },
     "scripts": {
         "post-install-cmd": [

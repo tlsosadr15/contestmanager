@@ -2,7 +2,7 @@
 /**
  * LoadUserData class file
  *
- * PHP Version 7
+ * PHP Version 7.0
  *
  * @category Fixture
  * @package  CoreBundle\DataFixtures\ORM

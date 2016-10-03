@@ -3,6 +3,10 @@
 namespace MatchBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\SerializedName;
 
 /**
  * Versus
@@ -37,13 +41,22 @@ class Versus
     
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @MaxDepth(1)
     */
     private $team1;
     
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", cascade={"persist", "remove"})
+     * @MaxDepth(1)
     */
     private $team2;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="finished", type="boolean")
+     */
+    private $finished;
 
 
     /**
@@ -54,6 +67,11 @@ class Versus
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**
@@ -150,5 +168,29 @@ class Versus
     public function getTeam2()
     {
         return $this->team2;
+    }
+
+    /**
+     * Set finished
+     *
+     * @param boolean $finished
+     *
+     * @return Versus
+     */
+    public function setFinished($finished)
+    {
+        $this->finished = $finished;
+
+        return $this;
+    }
+
+    /**
+     * Get finished
+     *
+     * @return boolean
+     */
+    public function getFinished()
+    {
+        return $this->finished;
     }
 }

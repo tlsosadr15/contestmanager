@@ -3,12 +3,16 @@
 namespace TeamBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Team
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="TeamBundle\Entity\TeamRepository")
+ * @ExclusionPolicy("all")
  */
 class Team
 {
@@ -18,6 +22,7 @@ class Team
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -25,27 +30,35 @@ class Team
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Expose
      */
     private $name;
     
     /**
      * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Score", mappedBy="team", cascade={"persist", "remove"})
+     * @Expose
+     * @MaxDepth(1)
     */
     private $score;
 
     /**
-     * @ORM\OneToOne(targetEntity="UserBundle\Entity\User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Expose
+     * @MaxDepth(1)
     */
     private $arbiter;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="team", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="team")
+     * @Expose
+     * @MaxDepth(1)
     */
     private $users;
     
     /**
      * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Versus", mappedBy="team1")
+     * @MaxDepth(1)
     */
     private $versus;
 
@@ -57,6 +70,11 @@ class Team
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**

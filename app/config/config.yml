@@ -109,3 +109,15 @@ fos_rest:
         default_engine: twig
     routing_loader:
         default_format: json
+        
+nelmio_api_doc: 
+    name: Contest Manager API Documentation
+    sandbox:
+        enabled: true
+        
+jms_serializer:
+    metadata:
+        directories:
+            FOSUB:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "@UserBundle/Resources/serializer/fos"

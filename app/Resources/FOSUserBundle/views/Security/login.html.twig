@@ -5,11 +5,6 @@
     <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
 {% endif %}
 {% block head_stylesheets %}
-    <link rel="stylesheet" href="{{ asset('bundles/easyadmin/stylesheet/bootstrap.min.css') }}">
-    
-    <style>             
-        {{ easyadmin_config('_internal.custom_css')|raw }}
-    </style>
 
     <link rel="stylesheet" href="{{ asset('bundles/core/stylesheet/login.css') }}">
 {% endblock head_stylesheets %}

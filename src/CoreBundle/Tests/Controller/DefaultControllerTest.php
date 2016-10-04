@@ -14,4 +14,13 @@ class DefaultControllerTest extends WebTestCase
         $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
+    public function testDashboard()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/dashboard');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $client->followRedirect();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

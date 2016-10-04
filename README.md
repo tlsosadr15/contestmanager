@@ -1,5 +1,6 @@
 # ContestManager
 
+[![build status](https://gitlab.com/GuillaumeTorres/contestmanager/badges/master/build.svg)](https://gitlab.com/GuillaumeTorres/contestmanager/commits/master)
 
 ### Github app ###
  

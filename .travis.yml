@@ -2,7 +2,7 @@ language: php
 php:
   - "7.0"
 before_script:
-  - composer install
   - php app/console doctrine:database:create
   - php app/console doctrine:schema:update --force
+  - composer install
 script: php phpunit.phar --bootstrap app\autoload.php --configuration app\phpunit.xml.dist

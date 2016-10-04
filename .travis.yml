@@ -1,8 +1,12 @@
 language: php
 php:
   - "7.0"
+
 before_script:
-  - php app/console doctrine:database:create
-  - php app/console doctrine:schema:update --force
+  - cp app/config/parameters.yml.travis app/config/parameters.yml
   - composer install
+  - php app/console doctrine:database:create --env=test
+  - php app/console doctrine:schema:create --env=test
+  - php app/console doctrine:fixtures:load -n --env=test
+
 script: php phpunit.phar --bootstrap app\autoload.php --configuration app\phpunit.xml.dist

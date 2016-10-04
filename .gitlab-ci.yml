@@ -12,3 +12,5 @@ variables:
 test:
     script:
     - php phpunit.phar --bootstrap app\autoload.php --configuration app\phpunit.xml.dist
+
+    

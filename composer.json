@@ -29,7 +29,8 @@
         "sensio/generator-bundle": "~2.3",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "phpunit/phpunit": "^5.5",
-        "liip/functional-test-bundle": "^1.6"
+        "liip/functional-test-bundle": "^1.6",
+        "satooshi/php-coveralls": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

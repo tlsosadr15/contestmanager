@@ -17,4 +17,4 @@ script:
   - php phpunit.phar --bootstrap app/autoload.php --configuration app/phpunit.xml.dist --coverage-clover build/logs/clover.xml
 
 after_script:
- - php vendor/bin/coveralls -v
+ - php scripts/coveralls -v

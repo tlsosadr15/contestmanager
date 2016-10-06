@@ -1,6 +1,7 @@
 # ContestManager
 
 [![Build Status](https://travis-ci.org/GuillaumeTorres/contestmanager.svg?branch=master)](https://travis-ci.org/GuillaumeTorres/contestmanager)
+[![Coverage Status](https://coveralls.io/repos/github/GuillaumeTorres/contestmanager/badge.svg?branch=master)](https://coveralls.io/github/GuillaumeTorres/contestmanager?branch=master)
 
 ### Github app ###
  

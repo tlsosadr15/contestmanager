@@ -14,7 +14,6 @@ before_script:
   - php app/console doctrine:fixtures:load -n --env=test
 
 script:
-  - php vendor/bin/phpunit -c phpunit.xml.dist
   - php phpunit.phar --bootstrap app/autoload.php --configuration app/phpunit.xml.dist --coverage-clover build/logs/clover.xml
 
 after_success:

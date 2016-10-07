@@ -8,14 +8,10 @@ services:
 before_script:
   - mkdir -p build/logs
   - cp app/config/parameters.yml.travis app/config/parameters.yml
-  - curl -s getcomposer.org/installer | php -d detect_unicode=Off
-  - php composer.phar install --dev --prefer-source --no-interaction
+  - composer install -n --no-interaction
   - php app/console doctrine:database:create --env=test
   - php app/console doctrine:schema:create --env=test
   - php app/console doctrine:fixtures:load -n --env=test
 
 script:
   - php phpunit.phar --bootstrap app/autoload.php --configuration app/phpunit.xml.dist --coverage-clover build/logs/clover.xml
-
-after_success:
-  - php scripts/coveralls -v --exclude-no-stmt

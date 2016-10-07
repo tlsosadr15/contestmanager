@@ -6,6 +6,7 @@ services:
   - mysql
 
 before_script:
+  - mkdir -p build/logs
   - cp app/config/parameters.yml.travis app/config/parameters.yml
   - composer install -n --no-interaction
   - php app/console doctrine:database:create --env=test
@@ -13,8 +14,9 @@ before_script:
   - php app/console doctrine:fixtures:load -n --env=test
 
 script:
-  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c phpunit.xml.dist
   - php phpunit.phar --bootstrap app/autoload.php --configuration app/phpunit.xml.dist --coverage-clover build/logs/clover.xml
 
-after_script:
- - php scripts/coveralls -v
+after_success:
+  - travis_retry php vendor/bin/coveralls
+  - travis_retry php vendor/bin/coveralls -v

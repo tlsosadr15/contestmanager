@@ -30,7 +30,7 @@
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "phpunit/phpunit": "^5.5",
         "liip/functional-test-bundle": "^1.6",
-        "satooshi/php-coveralls": "dev-master"
+        "codeclimate/php-test-reporter": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

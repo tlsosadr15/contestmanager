@@ -1,7 +1,9 @@
 # ContestManager
 
 [![Build Status](https://travis-ci.org/GuillaumeTorres/contestmanager.svg?branch=master)](https://travis-ci.org/GuillaumeTorres/contestmanager)
-[![Coverage Status](https://coveralls.io/repos/github/GuillaumeTorres/contestmanager/badge.svg?branch=master)](https://coveralls.io/github/GuillaumeTorres/contestmanager?branch=master)
+[![Code Climate](https://codeclimate.com/github/GuillaumeTorres/contestmanager/badges/gpa.svg)](https://codeclimate.com/github/GuillaumeTorres/contestmanager)
+[![Test Coverage](https://codeclimate.com/github/GuillaumeTorres/contestmanager/badges/coverage.svg)](https://codeclimate.com/github/GuillaumeTorres/contestmanager/coverage)
+[![Issue Count](https://codeclimate.com/github/GuillaumeTorres/contestmanager/badges/issue_count.svg)](https://codeclimate.com/github/GuillaumeTorres/contestmanager)
 
 ### Github app ###
  

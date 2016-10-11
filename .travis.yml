@@ -1,6 +1,8 @@
 language: php
 php:
-  - "7.0"
+  - 5.6
+  - 7.0
+  - hhvm
 
 services:
   - mysql
@@ -8,10 +10,15 @@ services:
 before_script:
   - mkdir -p build/logs
   - cp app/config/parameters.yml.travis app/config/parameters.yml
+  - composer require codeclimate/php-test-reporter --dev
   - composer install -n --no-interaction
   - php app/console doctrine:database:create --env=test
   - php app/console doctrine:schema:create --env=test
   - php app/console doctrine:fixtures:load -n --env=test
 
 script:
-  - php phpunit.phar --bootstrap app/autoload.php --configuration app/phpunit.xml.dist --coverage-clover build/logs/clover.xml
+  - php phpunit.phar --bootstrap app/autoload.php --configuration app/phpunit.xml.dist --testsuite=unit --coverage-text --coverage-clover build/logs/clover.xml
+
+after_script:
+- CODECLIMATE_REPO_TOKEN="073ba2e23fe017b08a98bec817830935ad88748a828fa6f70f9039ae231416f2" vendor/bin/test-reporter --stdout > codeclimate.json
+- "sh -c 'if [ \"$TRAVIS_PHP_VERSION\" != \"hhvm\" ]; then curl -X POST -d @codeclimate.json -H \"Content-Type: application/json\" -H \"User-Agent: Code Climate (PHP Test Reporter v0.1.1)\" https://codeclimate.com/test_reports  ; fi'"

@@ -47,7 +47,7 @@ class Team
      * @Expose
      * @MaxDepth(1)
     */
-    private $arbiter;
+    private $teacher;
 
     /**
      * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="team")
@@ -100,30 +100,7 @@ class Team
     {
         return $this->name;
     }
-
-    /**
-     * Set arbiter
-     *
-     * @param \UserBundle\Entity\User $arbiter
-     *
-     * @return Team
-     */
-    public function setArbiter(\UserBundle\Entity\User $arbiter)
-    {
-        $this->arbiter = $arbiter;
-
-        return $this;
-    }
-
-    /**
-     * Get arbiter
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getArbiter()
-    {
-        return $this->arbiter;
-    }
+    
     /**
      * Constructor
      */
@@ -232,5 +209,29 @@ class Team
     public function getVersus()
     {
         return $this->versus;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param \UserBundle\Entity\User $teacher
+     *
+     * @return Team
+     */
+    public function setTeacher(\UserBundle\Entity\User $teacher)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
     }
 }

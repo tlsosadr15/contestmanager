@@ -35,21 +35,9 @@ class Versus
     /**
      * @var string
      *
-     * @ORM\Column(name="nb_table", type="string", length=255)
+     * @ORM\Column(name="table_number", type="string", length=255)
      */
-    private $nbTable;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", cascade={"persist", "remove"})
-     * @MaxDepth(1)
-    */
-    private $team1;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", cascade={"persist", "remove"})
-     * @MaxDepth(1)
-    */
-    private $team2;
+    private $tableNumber;
     
     /**
      * @var boolean
@@ -58,6 +46,12 @@ class Versus
      */
     private $finished;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="step", type="integer", nullable=false)
+     */
+    private $step = 1;
 
     /**
      * Get id
@@ -67,11 +61,6 @@ class Versus
     public function getId()
     {
         return $this->id;
-    }
-    
-    public function __toString()
-    {
-        return $this->name;
     }
 
     /**
@@ -99,75 +88,27 @@ class Versus
     }
 
     /**
-     * Set nbTable
+     * Set tableNumber
      *
-     * @param string $nbTable
+     * @param string $tableNumber
      *
      * @return Versus
      */
-    public function setNbTable($nbTable)
+    public function setTableNumber($tableNumber)
     {
-        $this->nbTable = $nbTable;
+        $this->tableNumber = $tableNumber;
 
         return $this;
     }
 
     /**
-     * Get nbTable
+     * Get tableNumber
      *
      * @return string
      */
-    public function getNbTable()
+    public function getTableNumber()
     {
-        return $this->nbTable;
-    }
-
-    /**
-     * Set team1
-     *
-     * @param \TeamBundle\Entity\Team $team1
-     *
-     * @return Versus
-     */
-    public function setTeam1(\TeamBundle\Entity\Team $team1 = null)
-    {
-        $this->team1 = $team1;
-
-        return $this;
-    }
-
-    /**
-     * Get team1
-     *
-     * @return \TeamBundle\Entity\Team
-     */
-    public function getTeam1()
-    {
-        return $this->team1;
-    }
-
-    /**
-     * Set team2
-     *
-     * @param \TeamBundle\Entity\Team $team2
-     *
-     * @return Versus
-     */
-    public function setTeam2(\TeamBundle\Entity\Team $team2 = null)
-    {
-        $this->team2 = $team2;
-
-        return $this;
-    }
-
-    /**
-     * Get team2
-     *
-     * @return \TeamBundle\Entity\Team
-     */
-    public function getTeam2()
-    {
-        return $this->team2;
+        return $this->tableNumber;
     }
 
     /**
@@ -192,5 +133,29 @@ class Versus
     public function getFinished()
     {
         return $this->finished;
+    }
+
+    /**
+     * Set step
+     *
+     * @param integer $step
+     *
+     * @return Versus
+     */
+    public function setStep($step)
+    {
+        $this->step = $step;
+
+        return $this;
+    }
+
+    /**
+     * Get step
+     *
+     * @return integer
+     */
+    public function getStep()
+    {
+        return $this->step;
     }
 }

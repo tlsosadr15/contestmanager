@@ -1,6 +1,6 @@
 <?php
 /**
- * SchoolAdmin class file
+ * StudentAdmin class file
  *
  * PHP Version 7.0
  *
@@ -12,7 +12,7 @@
  */
 namespace CoreBundle\Admin;
 
-use SchoolBundle\Entity\School;
+use SchoolBundle\Entity\Student;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -20,7 +20,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Class SchoolAdmin
+ * Class StudentAdmin
  *
  * @category Admin
  * @package  CoreBundle\Admin
@@ -28,19 +28,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  * @license  All right reserved
  * @link     Null
  */
-class SchoolAdmin extends AbstractAdmin
+class StudentAdmin extends AbstractAdmin
 {
 
     /**
-     * @param School $object Student object
+     * @param Student $object Student object
      *
      * @return string
      */
     public function toString($object)
     {
-        return $object instanceof School
-            ? 'School '.$object->getName()
-            : 'School';
+        return $object instanceof Student
+            ? 'Student '.$object->getFirstName()
+            : 'Student';
     }
 
     /**
@@ -48,7 +48,8 @@ class SchoolAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', TextType::class);
+        $formMapper->add('firstName', TextType::class);
+        $formMapper->add('lastName', TextType::class);
     }
 
     /**
@@ -56,7 +57,7 @@ class SchoolAdmin extends AbstractAdmin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
+        $datagridMapper->add('firstName');
     }
 
     /**
@@ -64,7 +65,8 @@ class SchoolAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
+        $listMapper->addIdentifier('firstName');
+        $listMapper->add('lastName', TextType::class);
     }
 
 }

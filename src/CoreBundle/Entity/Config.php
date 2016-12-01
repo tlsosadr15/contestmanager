@@ -24,7 +24,7 @@ class Config
     /**
      * @var integer
      *
-     * @ORM\Column(name="tournamentLenght", type="integer")
+     * @ORM\Column(name="tournament_lenght", type="integer")
      */
     private $tournamentLenght;
 

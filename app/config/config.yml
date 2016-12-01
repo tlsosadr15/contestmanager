@@ -96,6 +96,24 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts: [admin]
 
+sonata_admin:
+    dashboard:
+        groups:
+            app.admin:
+                label: dashboard.admin
+                label_catalogue: Admin
+                roles: [ ROLE_ADMIN ]
+                items:
+                    - admin.school
+                    - admin.config
+            app.teacher:
+                label: dashboard.teacher
+                label_catalogue: Admin
+                roles: [ ROLE_USER ]
+                items:
+                    - admin.student
+                    - admin.team
+
 fos_rest:
     param_fetcher_listener: true
     body_listener: true

@@ -4,8 +4,23 @@ parameters:
 #    parameter_name: value
 
 services:
-    admin.category:
+    admin.school:
         class: CoreBundle\Admin\SchoolAdmin
         arguments: [~, SchoolBundle\Entity\School, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Category }
+            - { name: sonata.admin, manager_type: orm, label: School }
+    admin.student:
+        class: CoreBundle\Admin\StudentAdmin
+        arguments: [~, SchoolBundle\Entity\Student, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Student }
+    admin.config:
+        class: CoreBundle\Admin\ConfigAdmin
+        arguments: [~, CoreBundle\Entity\Config, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Config }
+    admin.team:
+        class: CoreBundle\Admin\TeamAdmin
+        arguments: [~, TeamBundle\Entity\Team, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Team }

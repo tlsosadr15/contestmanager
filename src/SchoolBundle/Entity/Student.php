@@ -24,17 +24,29 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255)
      */
     private $lastName;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="student")
+     */
+    private $team;
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->firstName.' '.$this->lastName;
+    }
 
     /**
      * Get id
@@ -93,5 +105,28 @@ class Student
     {
         return $this->lastName;
     }
-}
 
+    /**
+     * Set team
+     *
+     * @param \TeamBundle\Entity\Team $team
+     *
+     * @return Student
+     */
+    public function setTeam(\TeamBundle\Entity\Team $team = null)
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * Get team
+     *
+     * @return \TeamBundle\Entity\Team
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+}

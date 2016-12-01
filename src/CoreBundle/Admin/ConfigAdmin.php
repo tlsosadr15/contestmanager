@@ -1,6 +1,6 @@
 <?php
 /**
- * SchoolAdmin class file
+ * ConfigAdmin class file
  *
  * PHP Version 7.0
  *
@@ -12,7 +12,7 @@
  */
 namespace CoreBundle\Admin;
 
-use SchoolBundle\Entity\School;
+use CoreBundle\Entity\Config;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -20,7 +20,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Class SchoolAdmin
+ * Class ConfigAdmin
  *
  * @category Admin
  * @package  CoreBundle\Admin
@@ -28,19 +28,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  * @license  All right reserved
  * @link     Null
  */
-class SchoolAdmin extends AbstractAdmin
+class ConfigAdmin extends AbstractAdmin
 {
 
     /**
-     * @param School $object Student object
+     * @param Config $object Student object
      *
      * @return string
      */
     public function toString($object)
     {
-        return $object instanceof School
-            ? 'School '.$object->getName()
-            : 'School';
+        return $object instanceof Config
+            ? 'Config '.$object->getId()
+            : 'Config';
     }
 
     /**
@@ -48,15 +48,7 @@ class SchoolAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', TextType::class);
-    }
-
-    /**
-     * @param DatagridMapper $datagridMapper Datagrid mapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper->add('name');
+        $formMapper->add('tournamentLenght', TextType::class);
     }
 
     /**
@@ -64,7 +56,8 @@ class SchoolAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
+        $listMapper->addIdentifier('id');
+        $listMapper->add('$tournamentLenght', TextType::class);
     }
 
 }

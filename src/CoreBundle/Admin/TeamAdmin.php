@@ -1,6 +1,6 @@
 <?php
 /**
- * SchoolAdmin class file
+ * TeamAdmin class file
  *
  * PHP Version 7.0
  *
@@ -12,15 +12,17 @@
  */
 namespace CoreBundle\Admin;
 
-use SchoolBundle\Entity\School;
+use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use TeamBundle\Entity\Team;
 
 /**
- * Class SchoolAdmin
+ * Class TeamAdmin
  *
  * @category Admin
  * @package  CoreBundle\Admin
@@ -28,19 +30,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  * @license  All right reserved
  * @link     Null
  */
-class SchoolAdmin extends AbstractAdmin
+class TeamAdmin extends AbstractAdmin
 {
 
     /**
-     * @param School $object Student object
+     * @param Team $object Team object
      *
      * @return string
      */
     public function toString($object)
     {
-        return $object instanceof School
-            ? 'School '.$object->getName()
-            : 'School';
+        return $object instanceof Team
+            ? 'Team '.$object->getName()
+            : 'Team';
     }
 
     /**
@@ -48,7 +50,18 @@ class SchoolAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', TextType::class);
+        $formMapper
+            ->add('name', TextType::class)
+            ->add('student', 'entity', array(
+                'class' => 'SchoolBundle\Entity\Student',
+                'multiple' => true,
+                )
+            )
+            ->add('teacher', 'entity', array(
+                    'class' => 'UserBundle\Entity\User',
+                    'multiple' => false,
+                )
+            );
     }
 
     /**

@@ -33,16 +33,17 @@ class Team
      * @Expose
      */
     private $name;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Score", mappedBy="team", cascade={"persist", "remove"})
+     * @var integer
+     *
+     * @ORM\Column(name="score", type="integer", nullable=true)
      * @Expose
-     * @MaxDepth(1)
-    */
+     */
     private $score;
 
     /**
-     * @ORM\OneToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="team")
      * @ORM\JoinColumn(nullable=false)
      * @Expose
      * @MaxDepth(1)
@@ -50,17 +51,11 @@ class Team
     private $teacher;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="team")
      * @Expose
      * @MaxDepth(1)
     */
-    private $users;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Versus", mappedBy="team1")
-     * @MaxDepth(1)
-    */
-    private $versus;
+    private $student;
 
     /**
      * Get id
@@ -144,33 +139,23 @@ class Team
     }
 
     /**
-     * Add score
+     * Set score
      *
-     * @param \MatchBundle\Entity\Score $score
+     * @param integer $score
      *
      * @return Team
      */
-    public function addScore(\MatchBundle\Entity\Score $score)
+    public function setScore($score)
     {
-        $this->score[] = $score;
+        $this->score = $score;
 
         return $this;
     }
 
     /**
-     * Remove score
-     *
-     * @param \MatchBundle\Entity\Score $score
-     */
-    public function removeScore(\MatchBundle\Entity\Score $score)
-    {
-        $this->score->removeElement($score);
-    }
-
-    /**
      * Get score
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return integer
      */
     public function getScore()
     {
@@ -178,37 +163,37 @@ class Team
     }
 
     /**
-     * Add versus
+     * Add student
      *
-     * @param \MatchBundle\Entity\Versus $versus
+     * @param \SchoolBundle\Entity\Student $student
      *
      * @return Team
      */
-    public function addVersus(\MatchBundle\Entity\Versus $versus)
+    public function addStudent(\SchoolBundle\Entity\Student $student)
     {
-        $this->versus[] = $versus;
+        $this->student[] = $student;
 
         return $this;
     }
 
     /**
-     * Remove versus
+     * Remove student
      *
-     * @param \MatchBundle\Entity\Versus $versus
+     * @param \SchoolBundle\Entity\Student $student
      */
-    public function removeVersus(\MatchBundle\Entity\Versus $versus)
+    public function removeStudent(\SchoolBundle\Entity\Student $student)
     {
-        $this->versus->removeElement($versus);
+        $this->student->removeElement($student);
     }
 
     /**
-     * Get versus
+     * Get student
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVersus()
+    public function getStudent()
     {
-        return $this->versus;
+        return $this->student;
     }
 
     /**

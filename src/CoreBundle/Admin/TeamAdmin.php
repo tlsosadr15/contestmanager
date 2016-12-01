@@ -60,6 +60,7 @@ class TeamAdmin extends AbstractAdmin
             ->add('teacher', 'entity', array(
                     'class' => 'UserBundle\Entity\User',
                     'multiple' => false,
+                    'required => false'
                 )
             );
     }
@@ -78,6 +79,7 @@ class TeamAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('name');
+        $listMapper->add('teacher');
     }
 
 }

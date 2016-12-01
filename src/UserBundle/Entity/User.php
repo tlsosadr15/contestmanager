@@ -49,7 +49,7 @@ class User extends BaseUser
 
     /**
      * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="teacher")
-     * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="team_id", referencedColumnName="id", nullable=true)
      */
     private $team;
 
@@ -132,33 +132,23 @@ class User extends BaseUser
     }
 
     /**
-     * Add team
+     * Set team
      *
-     * @param \TeamBundle\Entity\Team $team
+     * @param string $team
      *
      * @return User
      */
-    public function addTeam(\TeamBundle\Entity\Team $team)
+    public function setTeam($team)
     {
-        $this->team[] = $team;
+        $this->team = $team;
 
         return $this;
     }
 
     /**
-     * Remove team
-     *
-     * @param \TeamBundle\Entity\Team $team
-     */
-    public function removeTeam(\TeamBundle\Entity\Team $team)
-    {
-        $this->team->removeElement($team);
-    }
-
-    /**
      * Get team
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return string
      */
     public function getTeam()
     {

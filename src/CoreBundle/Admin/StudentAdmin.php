@@ -48,8 +48,21 @@ class StudentAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('firstName', TextType::class);
-        $formMapper->add('lastName', TextType::class);
+        $formMapper
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class)
+            ->add('school', 'entity', array(
+                    'class' => 'SchoolBundle\Entity\School',
+                    'multiple' => false,
+                    'required' => false,
+                )
+            )
+            ->add('team', 'entity', array(
+                    'class' => 'TeamBundle\Entity\Team',
+                    'multiple' => false,
+                    'required' => false,
+                )
+            );
     }
 
     /**
@@ -57,7 +70,11 @@ class StudentAdmin extends AbstractAdmin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('firstName');
+        $datagridMapper
+            ->add('firstName')
+            ->add('lastName')
+            ->add('team')
+            ->add('school');
     }
 
     /**
@@ -66,7 +83,10 @@ class StudentAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('firstName');
-        $listMapper->add('lastName', TextType::class);
+        $listMapper
+            ->add('lastName', TextType::class)
+            ->add('team')
+            ->add('school');
     }
 
 }

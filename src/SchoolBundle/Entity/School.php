@@ -34,11 +34,16 @@ class School
      * @Expose
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="school")
+     */
+    private $student;
     
     /**
      * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="school")
     */
-    private $user;
+    private $teacher;
     
     public function __toString()
     {
@@ -87,36 +92,70 @@ class School
     }
 
     /**
-     * Add user
+     * Add student
      *
-     * @param \UserBundle\Entity\User $user
+     * @param \SchoolBundle\Entity\Student $student
      *
      * @return School
      */
-    public function addUser(\UserBundle\Entity\User $user)
+    public function addStudent(\SchoolBundle\Entity\Student $student)
     {
-        $this->user[] = $user;
+        $this->student[] = $student;
 
         return $this;
     }
 
     /**
-     * Remove user
+     * Remove student
      *
-     * @param \UserBundle\Entity\User $user
+     * @param \SchoolBundle\Entity\Student $student
      */
-    public function removeUser(\UserBundle\Entity\User $user)
+    public function removeStudent(\SchoolBundle\Entity\Student $student)
     {
-        $this->user->removeElement($user);
+        $this->student->removeElement($student);
     }
 
     /**
-     * Get user
+     * Get student
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUser()
+    public function getStudent()
     {
-        return $this->user;
+        return $this->student;
+    }
+
+    /**
+     * Add teacher
+     *
+     * @param \UserBundle\Entity\User $teacher
+     *
+     * @return School
+     */
+    public function addTeacher(\UserBundle\Entity\User $teacher)
+    {
+        $this->teacher[] = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Remove teacher
+     *
+     * @param \UserBundle\Entity\User $teacher
+     */
+    public function removeTeacher(\UserBundle\Entity\User $teacher)
+    {
+        $this->teacher->removeElement($teacher);
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
     }
 }

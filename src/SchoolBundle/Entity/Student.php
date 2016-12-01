@@ -37,8 +37,15 @@ class Student
 
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="student")
+     * @ORM\Column(nullable=true)
      */
     private $team;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="student")
+     * @ORM\Column(nullable=true)
+     */
+    private $school;
 
     /**
      * @return string
@@ -128,5 +135,29 @@ class Student
     public function getTeam()
     {
         return $this->team;
+    }
+
+    /**
+     * Set school
+     *
+     * @param \SchoolBundle\Entity\School $school
+     *
+     * @return Student
+     */
+    public function setSchool(\SchoolBundle\Entity\School $school = null)
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    /**
+     * Get school
+     *
+     * @return \SchoolBundle\Entity\School
+     */
+    public function getSchool()
+    {
+        return $this->school;
     }
 }

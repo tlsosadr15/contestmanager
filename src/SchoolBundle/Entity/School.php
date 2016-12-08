@@ -5,8 +5,6 @@ namespace SchoolBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * School
@@ -36,18 +34,29 @@ class School
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="school")
+     * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="school", orphanRemoval=true)
+     * @ORM\Column(nullable=true)
      */
     private $student;
     
     /**
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="school")
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="school", orphanRemoval=true)
+     * @ORM\Column(nullable=true)
     */
     private $teacher;
     
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->student = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->teacher = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -83,13 +92,7 @@ class School
     {
         return $this->name;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
     /**
      * Add student

@@ -30,6 +30,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 class ConfigAdmin extends AbstractAdmin
 {
+    protected $baseRoutePattern = 'config';
 
     /**
      * @param Config $object Student object

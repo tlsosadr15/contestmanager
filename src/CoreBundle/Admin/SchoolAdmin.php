@@ -31,6 +31,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class SchoolAdmin extends AbstractAdmin
 {
 
+    protected $baseRoutePattern = 'school';
+
     /**
      * @param School $object Student object
      *
@@ -64,7 +66,19 @@ class SchoolAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
+        $listMapper
+            ->addIdentifier('name')
+            ->add(
+                '_action',
+                'actions',
+                array(
+                    'actions' => array(
+                        'showModules' => array(
+                            'template' => 'CoreBundle:Admin:block_student.html.twig',
+                        ),
+                    ),
+                )
+            );
     }
 
 }

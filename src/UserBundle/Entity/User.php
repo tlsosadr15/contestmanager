@@ -40,7 +40,7 @@ class User extends BaseUser
     private $lastName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="teacher", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="teacher", cascade={"persist"})
      * @ORM\JoinColumn(name="school_id", referencedColumnName="id")
      * @Expose
      * @MaxDepth(1)
@@ -48,8 +48,8 @@ class User extends BaseUser
     private $school;
 
     /**
-     * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="teacher")
-     * @ORM\JoinColumn(name="team_id", referencedColumnName="id", nullable=true)
+     * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="teacher", orphanRemoval=true)
+     * @ORM\Column(nullable=true)
      */
     private $team;
 

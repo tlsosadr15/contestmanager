@@ -44,18 +44,18 @@ class Team
 
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="team")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", onDelete="set null", nullable=true)
      * @Expose
      * @MaxDepth(1)
     */
     private $teacher;
 
     /**
-     * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="team", orphanRemoval=true)
      * @Expose
      * @MaxDepth(1)
     */
-    private $student;
+    protected $student;
 
     /**
      * Get id
@@ -101,7 +101,7 @@ class Team
      */
     public function __construct()
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->student = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -126,6 +126,30 @@ class Team
     public function getScore()
     {
         return $this->score;
+    }
+    
+    /**
+     * Get teacher
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param \UserBundle\Entity\User $teacher
+     *
+     * @return Team
+     */
+    public function setTeacher(\UserBundle\Entity\User $teacher = null)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
     }
 
     /**
@@ -160,29 +184,5 @@ class Team
     public function getStudent()
     {
         return $this->student;
-    }
-
-    /**
-     * Set teacher
-     *
-     * @param \UserBundle\Entity\User $teacher
-     *
-     * @return Team
-     */
-    public function setTeacher(\UserBundle\Entity\User $teacher)
-    {
-        $this->teacher = $teacher;
-
-        return $this;
-    }
-
-    /**
-     * Get teacher
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getTeacher()
-    {
-        return $this->teacher;
     }
 }

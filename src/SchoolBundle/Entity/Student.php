@@ -37,12 +37,14 @@ class Student
 
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="student")
+     * @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="set null", nullable=true)
      * @ORM\Column(nullable=true)
      */
     private $team;
 
     /**
      * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="student")
+     * @ORM\JoinColumn(name="school_id", referencedColumnName="id", onDelete="set null", nullable=true)
      * @ORM\Column(nullable=true)
      */
     private $school;
@@ -116,11 +118,11 @@ class Student
     /**
      * Set team
      *
-     * @param \TeamBundle\Entity\Team $team
+     * @param string $team
      *
      * @return Student
      */
-    public function setTeam(\TeamBundle\Entity\Team $team = null)
+    public function setTeam($team)
     {
         $this->team = $team;
 
@@ -130,7 +132,7 @@ class Student
     /**
      * Get team
      *
-     * @return \TeamBundle\Entity\Team
+     * @return string
      */
     public function getTeam()
     {
@@ -140,11 +142,11 @@ class Student
     /**
      * Set school
      *
-     * @param \SchoolBundle\Entity\School $school
+     * @param string $school
      *
      * @return Student
      */
-    public function setSchool(\SchoolBundle\Entity\School $school = null)
+    public function setSchool($school)
     {
         $this->school = $school;
 
@@ -154,7 +156,7 @@ class Student
     /**
      * Get school
      *
-     * @return \SchoolBundle\Entity\School
+     * @return string
      */
     public function getSchool()
     {

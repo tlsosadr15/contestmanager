@@ -12,12 +12,10 @@
  */
 namespace CoreBundle\Admin;
 
-use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use TeamBundle\Entity\Team;
 
@@ -52,15 +50,10 @@ class TeamAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('name', TextType::class)
-            ->add('student', 'entity', array(
-                'class' => 'SchoolBundle\Entity\Student',
-                'multiple' => true,
-                )
-            )
             ->add('teacher', 'entity', array(
                     'class' => 'UserBundle\Entity\User',
                     'multiple' => false,
-                    'required => false'
+                    'required' => false,
                 )
             );
     }

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\MaxDepth;
+use TeamBundle\Entity\Team;
 
 /**
  * @ORM\Entity
@@ -56,7 +57,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $this->team = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -132,23 +133,33 @@ class User extends BaseUser
     }
 
     /**
-     * Set team
+     * Add team
      *
-     * @param string $team
+     * @param Team $team
      *
      * @return User
      */
-    public function setTeam($team)
+    public function addTeam(Team $team)
     {
-        $this->team = $team;
+        $this->team[] = $team;
 
         return $this;
     }
 
     /**
+     * Remove team
+     *
+     * @param Team $team
+     */
+    public function removeTeam(Team $team)
+    {
+        $this->team->removeElement($team);
+    }
+
+    /**
      * Get team
      *
-     * @return string
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTeam()
     {

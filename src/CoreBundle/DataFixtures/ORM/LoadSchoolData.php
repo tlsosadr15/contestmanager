@@ -1,6 +1,6 @@
 <?php
 /**
- * LoadTeamData class file
+ * LoadSchoolData class file
  *
  * PHP Version 7.0
  *
@@ -15,11 +15,11 @@ namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use SchoolBundle\Entity\Student;
+use SchoolBundle\Entity\School;
 use TeamBundle\Entity\Team;
 
 /**
- * Class LoadTeamData
+ * Class LoadSchoolData
  *
  * @category Fixture
  * @package  CoreBundle\DataFixtures\ORM
@@ -27,7 +27,7 @@ use TeamBundle\Entity\Team;
  * @license  All right reserved
  * @link     Null
  */
-class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
+class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
@@ -42,15 +42,13 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
         $lorem = 'Lorem ipsum dolor amet consectetur adipiscing elit sed eiusmod tempor incididunt labore dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat';
         $nameList = explode(' ', $lorem);
 
-        for ($i = 0; $i < 6; $i++) {
-            $team = new Team();
-            $teamName = $nameList[array_rand($nameList)];
-            $team->setName($teamName);
-            $team->setScore(666);
-            $team->setTeacher($this->getReference('teacher'));
+        for ($i = 0; $i < 2; $i++) {
+            $school = new School();
+            $schoolName = $nameList[array_rand($nameList)];
+            $school->setName($schoolName);
 
-            $manager->persist($team);
-            $this->addReference('team'.$i, $team);
+            $manager->persist($school);
+            $this->addReference('school'.$i, $school);
         }
         $manager->flush();
     }
@@ -60,6 +58,6 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2;
+        return 0;
     }
 }

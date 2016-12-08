@@ -1,6 +1,6 @@
 <?php
 /**
- * LoadStudentData class file
+ * LoadGroupData class file
  *
  * PHP Version 7.0
  *
@@ -15,13 +15,14 @@ namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use MatchBundle\Entity\GroupMatch;
 use SchoolBundle\Entity\Student;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use UserBundle\Entity\User;
 
 /**
- * Class LoadStudentData
+ * Class LoadGroupData
  *
  * @category Fixture
  * @package  CoreBundle\DataFixtures\ORM
@@ -29,7 +30,7 @@ use UserBundle\Entity\User;
  * @license  All right reserved
  * @link     Null
  */
-class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
+class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
@@ -44,20 +45,19 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $lorem = 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat';
         $nameList = explode(' ', $lorem);
 
-        $teamCpt = 1;
-        for ($i = 1; $i <= 24; $i++) {
-            $student = new Student();
-            $lastName = $nameList[array_rand($nameList)];
-            $firstName = $nameList[array_rand($nameList)];
-            $student->setFirstName($firstName);
-            $student->setLastName($lastName);
-            $student->setTeam($this->getReference('team'.$teamCpt));
+        $schoolCpt = 0;
+        for ($i = 1; $i <= 4; $i++) {
+            $group = New GroupMatch();
+            $groupName = $nameList[array_rand($nameList)];
+            $group->setName($groupName);
+            $group->setSchool($this->getReference('school'.$schoolCpt));
+            $group->setTeacher($this->getReference('teacher'));
 
-            $manager->persist($student);
-            $this->addReference('student'.$i, $student);
+            $manager->persist($group);
+            $this->addReference('group'.$i, $group);
 
             if ($i%2 == 0) {
-                $teamCpt++;
+                $schoolCpt++;
             }
         }
         $manager->flush();
@@ -68,6 +68,6 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 4;
+        return 2;
     }
 }

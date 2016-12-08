@@ -27,6 +27,23 @@ class GroupMatch
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="groups")
+     * @ORM\JoinColumn(name="school_id", referencedColumnName="id", onDelete="set null", nullable=true)
+     */
+    private $school;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="group")
+     * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", onDelete="set null", nullable=true)
+     */
+    private $teacher;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="group", orphanRemoval=true)
+     */
+    protected $team;
     
     /**
      * Get id
@@ -61,5 +78,94 @@ class GroupMatch
     {
         return $this->name;
     }
-}
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->team = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add team
+     *
+     * @param \TeamBundle\Entity\Team $team
+     *
+     * @return GroupMatch
+     */
+    public function addTeam(\TeamBundle\Entity\Team $team)
+    {
+        $this->team[] = $team;
+
+        return $this;
+    }
+
+    /**
+     * Remove team
+     *
+     * @param \TeamBundle\Entity\Team $team
+     */
+    public function removeTeam(\TeamBundle\Entity\Team $team)
+    {
+        $this->team->removeElement($team);
+    }
+
+    /**
+     * Get team
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * Set school
+     *
+     * @param \SchoolBundle\Entity\School $school
+     *
+     * @return GroupMatch
+     */
+    public function setSchool(\SchoolBundle\Entity\School $school = null)
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    /**
+     * Get school
+     *
+     * @return \SchoolBundle\Entity\School
+     */
+    public function getSchool()
+    {
+        return $this->school;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param \UserBundle\Entity\User $teacher
+     *
+     * @return GroupMatch
+     */
+    public function setTeacher(\UserBundle\Entity\User $teacher = null)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
+}

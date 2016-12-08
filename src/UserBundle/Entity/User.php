@@ -42,7 +42,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="teacher", cascade={"persist"})
-     * @ORM\JoinColumn(name="school_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="school_id", referencedColumnName="id", onDelete="set null")
      * @Expose
      * @MaxDepth(1)
     */
@@ -54,10 +54,16 @@ class User extends BaseUser
      */
     private $team;
 
+    /**
+     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\GroupMatch", mappedBy="teacher", orphanRemoval=true)
+     */
+    private $group;
+
     public function __construct()
     {
         parent::__construct();
         $this->team = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -164,5 +170,29 @@ class User extends BaseUser
     public function getTeam()
     {
         return $this->team;
+    }
+
+    /**
+     * Set team
+     *
+     * @param string $team
+     *
+     * @return User
+     */
+    public function setTeam($team)
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

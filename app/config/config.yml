@@ -113,6 +113,7 @@ sonata_admin:
                 items:
                     - admin.student
                     - admin.team
+                    - admin.group
 
 fos_rest:
     param_fetcher_listener: true

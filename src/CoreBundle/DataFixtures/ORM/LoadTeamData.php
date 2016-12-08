@@ -42,15 +42,21 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
         $lorem = 'Lorem ipsum dolor amet consectetur adipiscing elit sed eiusmod tempor incididunt labore dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat';
         $nameList = explode(' ', $lorem);
 
-        for ($i = 0; $i < 6; $i++) {
+        $groupCpt = 1;
+        for ($i = 1; $i <= 12; $i++) {
             $team = new Team();
             $teamName = $nameList[array_rand($nameList)];
             $team->setName($teamName);
             $team->setScore(666);
             $team->setTeacher($this->getReference('teacher'));
+            $team->setGroup($this->getReference('group'.$groupCpt));
 
             $manager->persist($team);
             $this->addReference('team'.$i, $team);
+
+            if ($i%3 == 0) {
+                $groupCpt++;
+            }
         }
         $manager->flush();
     }
@@ -60,6 +66,6 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }

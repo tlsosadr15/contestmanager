@@ -51,6 +51,14 @@ class Team
     private $teacher;
 
     /**
+     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\GroupMatch", inversedBy="team")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="set null", nullable=true)
+     * @Expose
+     * @MaxDepth(1)
+     */
+    private $group;
+
+    /**
      * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="team", orphanRemoval=true)
      * @Expose
      * @MaxDepth(1)
@@ -184,5 +192,29 @@ class Team
     public function getStudent()
     {
         return $this->student;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \MatchBundle\Entity\GroupMatch $group
+     *
+     * @return Team
+     */
+    public function setGroup(\MatchBundle\Entity\GroupMatch $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \MatchBundle\Entity\GroupMatch
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

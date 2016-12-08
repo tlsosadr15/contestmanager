@@ -29,12 +29,6 @@ class GroupMatch
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="groups")
-     * @ORM\JoinColumn(name="school_id", referencedColumnName="id", onDelete="set null", nullable=true)
-     */
-    private $school;
-
-    /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="group")
      * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", onDelete="set null", nullable=true)
      */
@@ -119,30 +113,6 @@ class GroupMatch
     public function getTeam()
     {
         return $this->team;
-    }
-
-    /**
-     * Set school
-     *
-     * @param \SchoolBundle\Entity\School $school
-     *
-     * @return GroupMatch
-     */
-    public function setSchool(\SchoolBundle\Entity\School $school = null)
-    {
-        $this->school = $school;
-
-        return $this;
-    }
-
-    /**
-     * Get school
-     *
-     * @return \SchoolBundle\Entity\School
-     */
-    public function getSchool()
-    {
-        return $this->school;
     }
 
     /**

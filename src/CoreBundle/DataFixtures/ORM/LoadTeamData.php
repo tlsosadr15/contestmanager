@@ -48,7 +48,6 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
             $teamName = $nameList[array_rand($nameList)];
             $team->setName($teamName);
             $team->setScore(666);
-            $team->setTeacher($this->getReference('teacher'));
             $team->setGroup($this->getReference('group'.$groupCpt));
 
             $manager->persist($team);

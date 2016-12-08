@@ -49,12 +49,6 @@ class User extends BaseUser
     private $school;
 
     /**
-     * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="teacher", orphanRemoval=true)
-     * @ORM\Column(nullable=true)
-     */
-    private $team;
-
-    /**
      * @ORM\OneToMany(targetEntity="MatchBundle\Entity\GroupMatch", mappedBy="teacher", orphanRemoval=true)
      */
     private $group;
@@ -62,7 +56,6 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->team = new \Doctrine\Common\Collections\ArrayCollection();
         $this->group = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -136,40 +129,6 @@ class User extends BaseUser
     public function getSchool()
     {
         return $this->school;
-    }
-
-    /**
-     * Add team
-     *
-     * @param Team $team
-     *
-     * @return User
-     */
-    public function addTeam(Team $team)
-    {
-        $this->team[] = $team;
-
-        return $this;
-    }
-
-    /**
-     * Remove team
-     *
-     * @param Team $team
-     */
-    public function removeTeam(Team $team)
-    {
-        $this->team->removeElement($team);
-    }
-
-    /**
-     * Get team
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTeam()
-    {
-        return $this->team;
     }
 
     /**

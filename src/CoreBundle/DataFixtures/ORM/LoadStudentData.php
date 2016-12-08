@@ -18,6 +18,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use SchoolBundle\Entity\Student;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use TeamBundle\Entity\Team;
 use UserBundle\Entity\User;
 
 /**
@@ -51,7 +52,10 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $firstName = $nameList[array_rand($nameList)];
             $student->setFirstName($firstName);
             $student->setLastName($lastName);
-            $student->setTeam($this->getReference('team'.$teamCpt));
+            /** @var Team $team */
+            $team = $this->getReference('team'.$teamCpt);
+            $student->setTeam($team);
+            $student->setSchool($team->getGroup()->getTeacher()->getSchool());
 
             $manager->persist($student);
             $this->addReference('student'.$i, $student);

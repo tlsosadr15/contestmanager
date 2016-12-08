@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use TeamBundle\Entity\Team;
+use UserBundle\Entity\User;
 
 /**
  * Class TeamAdmin
@@ -51,8 +52,8 @@ class TeamAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('name', TextType::class)
-            ->add('teacher', 'entity', array(
-                    'class' => 'UserBundle\Entity\User',
+            ->add('group', 'entity', array(
+                    'class' => 'MatchBundle\Entity\GroupMatch',
                     'multiple' => false,
                     'required' => false,
                 )

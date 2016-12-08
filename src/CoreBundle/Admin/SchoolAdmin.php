@@ -60,7 +60,7 @@ class SchoolAdmin extends AbstractAdmin
     {
         $datagridMapper->add('name');
     }
-
+    
     /**
      * @param ListMapper $listMapper List mapper
      */

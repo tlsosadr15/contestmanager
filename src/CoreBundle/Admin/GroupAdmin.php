@@ -19,6 +19,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use TeamBundle\Entity\Team;
+use UserBundle\Entity\User;
 
 /**
  * Class GroupAdmin
@@ -46,24 +47,37 @@ class GroupAdmin extends AbstractAdmin
     }
 
     /**
+     * @param GroupMatch $object Student
+     */
+    public function prePersist($object) {
+        /** @var User $user */
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if (!in_array('ROLE_SUPER_ADMIN', $roles)) {
+            $object->setTeacher($user);
+        }
+    }
+
+    /**
      * @param FormMapper $formMapper Form mapper
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper
-            ->add('name', TextType::class)
-            ->add('teacher', 'entity', array(
-                    'class' => 'UserBundle\Entity\User',
-                    'multiple' => false,
-                    'required' => false,
-                )
-            )
-            ->add('school', 'entity', array(
-                    'class' => 'SchoolBundle\Entity\School',
-                    'multiple' => false,
-                    'required' => false,
-                )
-            );
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+        $roles = $user->getRoles();
+
+        $formMapper->add('name', TextType::class);
+
+        if (in_array('ROLE_SUPER_ADMIN', $roles)) {
+            $formMapper
+                ->add('teacher', 'entity', array(
+                        'class' => 'UserBundle\Entity\User',
+                        'multiple' => false,
+                        'required' => false,
+                    )
+                );
+        }
+
     }
 
     /**

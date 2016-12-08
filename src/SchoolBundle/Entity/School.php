@@ -42,11 +42,6 @@ class School
      * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="school", orphanRemoval=true, cascade={"persist"})
     */
     private $teacher;
-
-    /**
-     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\GroupMatch", mappedBy="school", orphanRemoval=true)
-     */
-    protected $groups;
     
     public function __toString()
     {
@@ -60,7 +55,6 @@ class School
     {
         $this->student = new \Doctrine\Common\Collections\ArrayCollection();
         $this->teacher = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -192,39 +186,5 @@ class School
         $this->teacher = $teacher;
 
         return $this;
-    }
-
-    /**
-     * Add group
-     *
-     * @param \MatchBundle\Entity\GroupMatch $group
-     *
-     * @return School
-     */
-    public function addGroup(\MatchBundle\Entity\GroupMatch $group)
-    {
-        $this->groups[] = $group;
-
-        return $this;
-    }
-
-    /**
-     * Remove group
-     *
-     * @param \MatchBundle\Entity\GroupMatch $group
-     */
-    public function removeGroup(\MatchBundle\Entity\GroupMatch $group)
-    {
-        $this->groups->removeElement($group);
-    }
-
-    /**
-     * Get groups
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroups()
-    {
-        return $this->groups;
     }
 }

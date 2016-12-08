@@ -43,14 +43,6 @@ class Team
     private $score;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="team")
-     * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", onDelete="set null", nullable=true)
-     * @Expose
-     * @MaxDepth(1)
-    */
-    private $teacher;
-
-    /**
      * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\GroupMatch", inversedBy="team")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="set null", nullable=true)
      * @Expose
@@ -134,30 +126,6 @@ class Team
     public function getScore()
     {
         return $this->score;
-    }
-    
-    /**
-     * Get teacher
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getTeacher()
-    {
-        return $this->teacher;
-    }
-
-    /**
-     * Set teacher
-     *
-     * @param \UserBundle\Entity\User $teacher
-     *
-     * @return Team
-     */
-    public function setTeacher(\UserBundle\Entity\User $teacher = null)
-    {
-        $this->teacher = $teacher;
-
-        return $this;
     }
 
     /**

@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use UserBundle\Entity\User;
 
 /**
  * Class StudentAdmin
@@ -44,6 +45,21 @@ class StudentAdmin extends AbstractAdmin
             : 'Student';
     }
 
+
+    /**
+     * @param Student $object Student
+     */
+    public function prePersist($object) {
+        /** @var User $user */
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if (in_array('ROLE_SUPER_ADMIN', $roles)) {
+           $object->setSchool($object->getTeam()->getGroup()->getTeacher()->getSchool());
+        } else {
+            $object->setSchool($user->getSchool());
+        }
+    }
+
     /**
      * @param FormMapper $formMapper Form mapper
      */
@@ -52,12 +68,6 @@ class StudentAdmin extends AbstractAdmin
         $formMapper
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('school', 'entity', array(
-                    'class' => 'SchoolBundle\Entity\School',
-                    'multiple' => false,
-                    'required' => false,
-                )
-            )
             ->add('team', 'entity', array(
                     'class' => 'TeamBundle\Entity\Team',
                     'multiple' => false,

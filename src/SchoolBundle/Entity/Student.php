@@ -116,11 +116,11 @@ class Student
     /**
      * Set team
      *
-     * @param string $team
+     * @param \TeamBundle\Entity\Team $team
      *
      * @return Student
      */
-    public function setTeam($team)
+    public function setTeam(\TeamBundle\Entity\Team $team = null)
     {
         $this->team = $team;
 
@@ -130,7 +130,7 @@ class Student
     /**
      * Get team
      *
-     * @return string
+     * @return \TeamBundle\Entity\Team
      */
     public function getTeam()
     {
@@ -140,11 +140,11 @@ class Student
     /**
      * Set school
      *
-     * @param string $school
+     * @param \SchoolBundle\Entity\School $school
      *
      * @return Student
      */
-    public function setSchool($school)
+    public function setSchool(\SchoolBundle\Entity\School $school = null)
     {
         $this->school = $school;
 
@@ -154,7 +154,7 @@ class Student
     /**
      * Get school
      *
-     * @return string
+     * @return \SchoolBundle\Entity\School
      */
     public function getSchool()
     {

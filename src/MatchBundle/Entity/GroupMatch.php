@@ -38,6 +38,11 @@ class GroupMatch
      * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="group", orphanRemoval=true)
      */
     protected $team;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
     
     /**
      * Get id

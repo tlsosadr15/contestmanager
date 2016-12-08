@@ -65,7 +65,9 @@ class TeamAdmin extends AbstractAdmin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
+        $datagridMapper
+            ->add('name')
+            ->add('group');
     }
 
     /**
@@ -74,7 +76,7 @@ class TeamAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('name');
-        $listMapper->add('teacher');
+        $listMapper->add('group');
     }
 
 }

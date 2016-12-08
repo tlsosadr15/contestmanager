@@ -38,14 +38,12 @@ class Student
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="student")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="set null", nullable=true)
-     * @ORM\Column(nullable=true)
      */
     private $team;
 
     /**
      * @ORM\ManyToOne(targetEntity="SchoolBundle\Entity\School", inversedBy="student")
      * @ORM\JoinColumn(name="school_id", referencedColumnName="id", onDelete="set null", nullable=true)
-     * @ORM\Column(nullable=true)
      */
     private $school;
 

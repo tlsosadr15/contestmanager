@@ -161,4 +161,32 @@ class School
     {
         return $this->teacher;
     }
+
+    /**
+     * Set student
+     *
+     * @param string $student
+     *
+     * @return School
+     */
+    public function setStudent($student)
+    {
+        $this->student = $student;
+
+        return $this;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param string $teacher
+     *
+     * @return School
+     */
+    public function setTeacher($teacher)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
 }

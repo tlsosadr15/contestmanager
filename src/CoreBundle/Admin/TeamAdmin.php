@@ -30,6 +30,7 @@ use TeamBundle\Entity\Team;
  */
 class TeamAdmin extends AbstractAdmin
 {
+    protected $baseRoutePattern = 'team';
 
     /**
      * @param Team $object Team object

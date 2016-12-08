@@ -30,7 +30,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 class StudentAdmin extends AbstractAdmin
 {
-//    protected $baseRoutePattern = 'student';
+    protected $baseRoutePattern = 'student';
 
     /**
      * @param Student $object Student object

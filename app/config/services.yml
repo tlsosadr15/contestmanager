@@ -35,3 +35,10 @@ services:
             - { name: sonata.admin, manager_type: orm, label: Group }
         calls:
             - [addChild, ['@admin.team']]
+    admin.user:
+        class: CoreBundle\Admin\UserAdmin
+        arguments: [~, UserBundle\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: User }
+        calls:
+            - [addChild, ['@admin.group']]

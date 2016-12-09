@@ -102,14 +102,15 @@ sonata_admin:
             app.admin:
                 label: dashboard.admin
                 label_catalogue: Admin
-                roles: [ ROLE_ADMIN ]
+                roles: [ ROLE_SUPER_ADMIN ]
                 items:
                     - admin.school
                     - admin.config
+                    - admin.user
             app.teacher:
                 label: dashboard.teacher
                 label_catalogue: Admin
-                roles: [ ROLE_USER ]
+                roles: [ ROLE_ADMIN ]
                 items:
                     - admin.student
                     - admin.team

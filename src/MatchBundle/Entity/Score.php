@@ -28,23 +28,32 @@ class Score
     /**
      * @var integer
      *
-     * @ORM\Column(name="score", type="integer")
+     * @ORM\Column(name="score", type="integer", nullable=true)
      * @Expose
      */
     private $score;
     
     /**
-     * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="score", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="score")
      * @MaxDepth(1)
     */
     private $team;
     
     /**
-     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Versus", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Versus", inversedBy="score")
      * @MaxDepth(1)
      * @Expose
     */
     private $versus;
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return 'team';
+//        return $this->team;
+    }
 
     /**
      * Get id

@@ -42,3 +42,8 @@ services:
             - { name: sonata.admin, manager_type: orm, label: User }
         calls:
             - [addChild, ['@admin.group']]
+    admin.versus:
+        class: CoreBundle\Admin\VersusAdmin
+        arguments: [~, MatchBundle\Entity\Versus, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Match }

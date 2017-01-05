@@ -40,7 +40,12 @@ class Versus
      *
      * @ORM\Column(name="finished", type="boolean")
      */
-    private $finished;
+    private $finished = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Score", mappedBy="versus", cascade={"persist", "remove"})
+     */
+    private $score;
 
     /**
      * @var string
@@ -108,30 +113,6 @@ class Versus
     }
 
     /**
-     * Set finished
-     *
-     * @param boolean $finished
-     *
-     * @return Versus
-     */
-    public function setFinished($finished)
-    {
-        $this->finished = $finished;
-
-        return $this;
-    }
-
-    /**
-     * Get finished
-     *
-     * @return boolean
-     */
-    public function isFinished()
-    {
-        return $this->finished;
-    }
-
-    /**
      * Set step
      *
      * @param integer $step
@@ -153,5 +134,71 @@ class Versus
     public function getStep()
     {
         return $this->step;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->score = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add score
+     *
+     * @param \MatchBundle\Entity\Score $score
+     *
+     * @return Versus
+     */
+    public function addScore(\MatchBundle\Entity\Score $score)
+    {
+        $score->setVersus($this);
+        $this->score[] = $score;
+
+        return $this;
+    }
+
+    /**
+     * Remove score
+     *
+     * @param \MatchBundle\Entity\Score $score
+     */
+    public function removeScore(\MatchBundle\Entity\Score $score)
+    {
+        $this->score->removeElement($score);
+    }
+
+    /**
+     * Get score
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    /**
+     * Set finished
+     *
+     * @param boolean $finished
+     *
+     * @return Versus
+     */
+    public function setFinished($finished)
+    {
+        $this->finished = $finished;
+
+        return $this;
+    }
+
+    /**
+     * Get finished
+     *
+     * @return boolean
+     */
+    public function getFinished()
+    {
+        return $this->finished;
     }
 }

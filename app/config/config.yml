@@ -115,6 +115,8 @@ sonata_admin:
                     - admin.student
                     - admin.team
                     - admin.group
+                    - admin.versus
+                    - admin.score
 
 fos_rest:
     param_fetcher_listener: true

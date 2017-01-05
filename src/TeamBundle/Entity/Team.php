@@ -37,8 +37,13 @@ class Team
     /**
      * @var integer
      *
-     * @ORM\Column(name="score", type="integer", nullable=true)
+     * @ORM\Column(name="best_score", type="integer", nullable=true)
      * @Expose
+     */
+    private $bestScore;
+
+    /**
+     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Score", mappedBy="team", cascade={"persist", "remove"})
      */
     private $score;
 
@@ -66,7 +71,10 @@ class Team
     {
         return $this->id;
     }
-    
+
+    /**
+     * @return strin
+     */
     public function __toString()
     {
         return $this->name;
@@ -184,5 +192,53 @@ class Team
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Set bestScore
+     *
+     * @param integer $bestScore
+     *
+     * @return Team
+     */
+    public function setBestScore($bestScore)
+    {
+        $this->bestScore = $bestScore;
+
+        return $this;
+    }
+
+    /**
+     * Get bestScore
+     *
+     * @return integer
+     */
+    public function getBestScore()
+    {
+        return $this->bestScore;
+    }
+
+    /**
+     * Add score
+     *
+     * @param \MatchBundle\Entity\Score $score
+     *
+     * @return Team
+     */
+    public function addScore(\MatchBundle\Entity\Score $score)
+    {
+        $this->score[] = $score;
+
+        return $this;
+    }
+
+    /**
+     * Remove score
+     *
+     * @param \MatchBundle\Entity\Score $score
+     */
+    public function removeScore(\MatchBundle\Entity\Score $score)
+    {
+        $this->score->removeElement($score);
     }
 }

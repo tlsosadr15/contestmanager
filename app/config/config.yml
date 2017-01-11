@@ -95,6 +95,7 @@ sonata_block:
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
             contexts: [admin]
+        admin.block.tournament: ~
 
 sonata_admin:
     dashboard:
@@ -116,6 +117,14 @@ sonata_admin:
                     - admin.team
                     - admin.group
                     - admin.versus
+        blocks:
+            -
+                position: left
+                type: sonata.admin.block.admin_list
+            -
+                position: right
+                type: admin.block.tournament
+                roles: [ ROLE_SUPER_ADMIN ]
 
 fos_rest:
     param_fetcher_listener: true

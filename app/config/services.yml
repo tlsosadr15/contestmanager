@@ -47,3 +47,11 @@ services:
         arguments: [~, MatchBundle\Entity\Versus, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Match }
+    admin.block.tournament:
+        class: CoreBundle\Block\TournamentBlock
+        arguments:
+            - "admin.block.tournament"
+            - "@templating"
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: sonata.block }

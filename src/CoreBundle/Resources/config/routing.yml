@@ -1,0 +1,4 @@
+
+tournament:
+    path:     /tournament
+    defaults: { _controller: CoreBundle:Default:tournament }

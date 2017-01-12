@@ -34,6 +34,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 class ScoreAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'score';
+    protected $translationDomain = 'Admin';
 
     /**
      * @param Versus $object Match object

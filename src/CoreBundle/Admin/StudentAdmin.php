@@ -32,6 +32,7 @@ use UserBundle\Entity\User;
 class StudentAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'student';
+    protected $translationDomain = 'Admin';
 
     /**
      * @param Student $object Student object

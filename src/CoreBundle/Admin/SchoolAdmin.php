@@ -32,6 +32,7 @@ class SchoolAdmin extends AbstractAdmin
 {
 
     protected $baseRoutePattern = 'school';
+    protected $translationDomain = 'Admin';
 
     /**
      * @param School $object Student object

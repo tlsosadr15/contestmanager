@@ -32,6 +32,7 @@ use UserBundle\Entity\User;
 class TeamAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'team';
+    protected $translationDomain = 'Admin';
 
     /**
      * @param Team $object Team object

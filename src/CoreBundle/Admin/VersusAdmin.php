@@ -34,6 +34,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 class VersusAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'match';
+    protected $translationDomain = 'Admin';
 
     /**
      * @param Versus $object Match object

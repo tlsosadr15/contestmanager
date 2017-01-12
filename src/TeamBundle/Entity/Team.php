@@ -73,7 +73,7 @@ class Team
     }
 
     /**
-     * @return strin
+     * @return string
      */
     public function __toString()
     {

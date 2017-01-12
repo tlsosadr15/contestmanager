@@ -108,6 +108,7 @@ sonata_admin:
                     - admin.school
                     - admin.config
                     - admin.user
+                    - admin.tournament
             app.teacher:
                 label: dashboard.teacher
                 label_catalogue: Admin

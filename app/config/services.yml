@@ -47,6 +47,13 @@ services:
         arguments: [~, MatchBundle\Entity\Versus, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Match }
+    admin.tournament:
+        class: CoreBundle\Admin\TournamentAdmin
+        arguments: [~, MatchBundle\Entity\Tournament, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Tournament }
+        calls:
+            - [addChild, ['@admin.group']]
     admin.block.tournament:
         class: CoreBundle\Block\TournamentBlock
         arguments:

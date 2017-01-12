@@ -37,7 +37,12 @@ class GroupMatch
     /**
      * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="group", orphanRemoval=true)
      */
-    protected $team;
+    private $team;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Tournament", inversedBy="group")
+     */
+    private $tournament;
 
     public function __toString()
     {
@@ -142,5 +147,29 @@ class GroupMatch
     public function getTeacher()
     {
         return $this->teacher;
+    }
+
+    /**
+     * Set tournament
+     *
+     * @param \MatchBundle\Entity\Tournament $tournament
+     *
+     * @return GroupMatch
+     */
+    public function setTournament(\MatchBundle\Entity\Tournament $tournament = null)
+    {
+        $this->tournament = $tournament;
+
+        return $this;
+    }
+
+    /**
+     * Get tournament
+     *
+     * @return \MatchBundle\Entity\Tournament
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
     }
 }

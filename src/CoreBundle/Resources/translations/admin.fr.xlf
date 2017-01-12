@@ -23,7 +23,7 @@
                 <source>dashboard.start</source>
                 <target>Lancer</target>
             </trans-unit>
-            <trans-unit id="dashboard.tournament">
+            <trans-unit id="block.tournament">
                 <source>dashboard.tournament</source>
                 <target>Tournoi</target>
             </trans-unit>
@@ -158,6 +158,36 @@
                 <source>Config List</source>
                 <target>Configuration</target>
             </trans-unit>
+
+            <trans-unit id="dashboard.tournament">
+                <source>Tournament</source>
+                <target>Tournoi</target>
+            </trans-unit>
+            <trans-unit id="tournament.list">
+                <source>Tournament List</source>
+                <target>Liste des tournois</target>
+            </trans-unit>
+            <trans-unit id="tournament.add">
+                <source>Tournament Create</source>
+                <target>Créer un tournoi</target>
+            </trans-unit>
+            <trans-unit id="tournament.halfday">
+                <source>Half Day</source>
+                <target>Demi journée</target>
+            </trans-unit>
+            <trans-unit id="dashboard.groups">
+                <source>Groups</source>
+                <target>Groupes</target>
+            </trans-unit>
+            <trans-unit id="dashboard.room1">
+                <source>Room 1</source>
+                <target>Salle 1</target>
+            </trans-unit>
+            <trans-unit id="dashboard.room2">
+                <source>Room 2</source>
+                <target>Salle 2 </target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

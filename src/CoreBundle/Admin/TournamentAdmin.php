@@ -12,6 +12,7 @@
  */
 namespace CoreBundle\Admin;
 
+use MatchBundle\Entity\GroupMatch;
 use MatchBundle\Entity\Tournament;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -20,7 +21,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use TeamBundle\Entity\Team;
-use UserBundle\Entity\User;
 
 /**
  * Class TournamentAdmin
@@ -49,6 +49,31 @@ class TournamentAdmin extends AbstractAdmin
     }
 
     /**
+     * @param Tournament $object Student
+     */
+    public function prePersist($object) {
+        $groups = array(
+            $this->getForm()->get('group1')->getData(),
+            $this->getForm()->get('group2')->getData(),
+        );
+        $this->addGroups($object, $groups);
+    }
+
+    /**
+     * Add groups in the tournament
+     *
+     * @param Tournament $object Tournament
+     * @param array $groupsList Groups
+     */
+    private function addGroups($object, $groupsList) {
+        foreach ($groupsList as $groups) {
+            foreach ($groups as $group) {
+                $object->addGroup($group);
+            }
+        }
+    }
+    
+    /**
      * @param FormMapper $formMapper Form mapper
      */
     protected function configureFormFields(FormMapper $formMapper)
@@ -56,6 +81,12 @@ class TournamentAdmin extends AbstractAdmin
         $formMapper
             ->with('Tournament')
                 ->add('name', TextType::class)
+                ->add('halfDay', 'choice', array(
+                    'choices' => array(
+                        'Am' => 'Morning',
+                        'Pm' => 'Afternoon',
+                    )
+                ))
                 ->add('date', DateTimeType::class)
             ->end()
             ->with('Room 1')
@@ -64,7 +95,7 @@ class TournamentAdmin extends AbstractAdmin
                         'multiple' => true,
                         'required' => false,
                         'mapped' => false,
-                        'label' => 'Group',
+                        'label' => 'Groups',
                     )
                 )
             ->end()
@@ -74,7 +105,7 @@ class TournamentAdmin extends AbstractAdmin
                         'multiple' => true,
                         'required' => false,
                         'mapped' => false,
-                        'label' => 'Group',
+                        'label' => 'Groups',
                     )
                 )
             ->end();
@@ -95,8 +126,10 @@ class TournamentAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
-        $listMapper->add('date');
+        $listMapper
+            ->addIdentifier('name')
+            ->add('date')
+            ->add('halfDay');
     }
 
 }

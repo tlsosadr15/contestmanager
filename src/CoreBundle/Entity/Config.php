@@ -22,12 +22,18 @@ class Config
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string")
+     */
+    private $name;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="tournament_lenght", type="integer")
+     * @ORM\Column(name="room_number", type="integer", nullable=true)
      */
-    private $tournamentLenght;
-
+    private $roomNumber;
 
     /**
      * Get id
@@ -40,27 +46,51 @@ class Config
     }
 
     /**
-     * Set tournamentLenght
+     * Set roomNumber
      *
-     * @param integer $tournamentLenght
+     * @param integer $roomNumber
      *
      * @return Config
      */
-    public function setTournamentLenght($tournamentLenght)
+    public function setRoomNumber($roomNumber)
     {
-        $this->tournamentLenght = $tournamentLenght;
+        $this->roomNumber = $roomNumber;
 
         return $this;
     }
 
     /**
-     * Get tournamentLenght
+     * Get roomNumber
      *
      * @return integer
      */
-    public function getTournamentLenght()
+    public function getRoomNumber()
     {
-        return $this->tournamentLenght;
+        return $this->roomNumber;
+    }
+    
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Config
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
-

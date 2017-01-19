@@ -16,3 +16,13 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            AMDKD7395LFCSHS68KEKIEO9395OMMD00
+
+    am_match_schedule:
+        - 10:00
+        - 10:20
+        - 10:40
+    pm_match_schedule:
+        - 14:00
+        - 14:20
+        - 14:40
+    room_number: 2

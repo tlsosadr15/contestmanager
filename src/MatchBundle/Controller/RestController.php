@@ -32,6 +32,54 @@ class RestController extends Controller
         
         return $matchs;
     }
+
+    /**
+     * @ApiDoc(
+     * section="Groups",
+     * description= "Get all groups",
+     * statusCodes={
+     *      200="Returned when successful",
+     * }
+     * )
+    */
+    public function groupsMatchsAction()  
+    {
+        $em = $this->getDoctrine()->getManager();
+        $groups = $em->getRepository('MatchBundle:GroupMatch')->findAll();
+
+        //$groups = $groups[0]->__unset('team');
+        foreach ($groups as $group){
+            $group = $group->__unset('team');
+        }
+
+        return $groups;
+    }
+
+     /**
+     * @ApiDoc(
+     * section="Groups",
+     * description= "Get team of a group",
+     * requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Id Group"
+     *      }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when the group are not found"
+     * }
+     * )
+    */
+    public function getGroupMatchAction($id)  
+    {
+        $em = $this->getDoctrine()->getManager();
+        $matchs = $em->getRepository('MatchBundle:GroupMatch')->findBy(array('id' => $id));
+
+        return $matchs;
+    }
     
     /**
      * @Rest\Get("/matchs/team/{id}", requirements={"id" = "\d+"})

@@ -3,6 +3,9 @@
 namespace MatchBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializationContext;
 
 /**
  * GroupMatch
@@ -15,6 +18,7 @@ class GroupMatch
     /**
      * @var integer
      *
+     * @Serializer\MaxDepth(3)
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -23,12 +27,15 @@ class GroupMatch
 
     /**
      * @var string
+     * 
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
+     * @Serializer\MaxDepth(1)
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="group")
      * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", onDelete="set null", nullable=true)
      */
@@ -36,6 +43,7 @@ class GroupMatch
 
     /**
      * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="group", orphanRemoval=true)
+     * @Serializer\MaxDepth(1)
      */
     private $team;
 
@@ -171,5 +179,11 @@ class GroupMatch
     public function getTournament()
     {
         return $this->tournament;
+    }
+
+
+    public function __unset($key)
+    {
+        unset($this->$key);
     }
 }

@@ -25,3 +25,5 @@ parameters:
         - 14:00
         - 14:20
         - 14:40
+
+    deploy: test

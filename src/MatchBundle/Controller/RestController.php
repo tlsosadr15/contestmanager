@@ -82,6 +82,36 @@ class RestController extends Controller
     }
     
     /**
+     * @Rest\Get("/matchs/{id}", requirements={"id" = "\d+"})
+     * @ApiDoc(
+     * section="Matchs",
+     * description= "Get matchs of by id",
+     * requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Id Team"
+     *      }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when the matchs are not found"
+     * }
+     * )
+    */
+    public function idMatchsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $matchs = $em->getRepository('MatchBundle:Versus')->findBy(array('id' => $id));
+        if( empty($matchs) ){
+            return new JsonResponse('matchs not found', 404);
+        }
+        
+        return $matchs;
+    }
+    
+    /**
      * @Rest\Get("/matchs/team/{id}", requirements={"id" = "\d+"})
      * @ApiDoc(
      * section="Matchs",

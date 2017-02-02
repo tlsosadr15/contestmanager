@@ -50,7 +50,7 @@ class DefaultController extends Controller
             $records = json_decode($data)->records;
             $items = [];
             foreach ($records as $record) {
-                $coordinate = $record->fields->wgs84[0].', '.$record->fields->wgs84[1].', 500';
+                $coordinate = $record->fields->wgs84[0].', '.$record->fields->wgs84[1].', ';
                 $items[$coordinate] = $record->fields->structure;
             }
 
@@ -58,7 +58,7 @@ class DefaultController extends Controller
         }
         elseif ($request->isMethod('POST')) {
             $data = $request->request->all();
-            $url = 'https://data.iledefrance.fr/api/records/1.0/search/?dataset=positions-geographiques-des-stations-du-reseau-ratp&facet=departement&geofilter.distance='.$data['coordinate'];
+            $url = 'https://data.iledefrance.fr/api/records/1.0/search/?dataset=positions-geographiques-des-stations-du-reseau-ratp&facet=departement&geofilter.distance='.$data['coordinate'].$data['distance'];
             $results = json_decode(file_get_contents($url))->records;
 
             $stations = [];

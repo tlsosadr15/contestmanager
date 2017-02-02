@@ -50,16 +50,26 @@ class DefaultController extends Controller
             $records = json_decode($data)->records;
             $items = [];
             foreach ($records as $record) {
-                $items[$record->fields->adresse] = $record->fields->structure;
+                $coordinate = $record->fields->wgs84[0].', '.$record->fields->wgs84[1].', 500';
+                $items[$coordinate] = $record->fields->structure;
             }
 
             return new Response($this->render('UserBundle:Default:index.html.twig', array('items' => $items)));
         }
         elseif ($request->isMethod('POST')) {
             $data = $request->request->all();
-            $url = 'https://www.google.fr/maps/place/'.$data['address'];
+            $url = 'https://data.iledefrance.fr/api/records/1.0/search/?dataset=positions-geographiques-des-stations-du-reseau-ratp&facet=departement&geofilter.distance='.$data['coordinate'];
+            $results = json_decode(file_get_contents($url))->records;
 
-            return new RedirectResponse($url);
+            $stations = [];
+            foreach ($results as $result) {
+                $stations[$result->fields->stop_name] = $result->fields->stop_desc;
+            }
+
+            return new Response($this->render('UserBundle:Default:result.html.twig', array('stations' => $stations)));
+
+//            $url = 'https://www.google.fr/maps/place/'.$data['address'];
+//            return new RedirectResponse($url);
         }
 
     }

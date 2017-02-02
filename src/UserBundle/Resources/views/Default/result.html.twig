@@ -1,10 +1,63 @@
 
-<ul>
+<div class="divGen">
     {% for key, station in stations %}
-        <ul>
-            <li>Nom: {{ key }}</li>
-            <li>Adresse: {{ station }}</li>
-            <li><a href="https://www.google.fr/maps/place/{{ station }}">Clique</a> </li>
-        </ul>
+        <div class="divGenAll">
+            <div class="divGenAllInfo">
+                <p>
+                    <span>Nom: {{ key }}</span>
+                </p>
+                <p>
+                    <span>Adresse: {{ station }}</span>
+                </p>
+            </div>
+            <div class="divBtn">
+                <a class="btn goMap" href="https://www.google.fr/maps/place/{{ station }}"></a>
+            </div>
+        </div>
     {% endfor %}
-</ul>
+</div>
+
+
+
+<style>
+    .divGen{
+        width: 80%;
+        margin: auto;
+        font-family: Arial;
+        text-align: center;
+        background-color: #e3e3e3;
+        padding: 5%;
+    }
+        .divGenAll{
+            background-color: #eaeaea;
+            width: 100%;
+            margin: auto;
+            position: relative;
+            padding: 10px 0px 10px 20px;
+        }
+            .divGenAllInfo{
+                width: 80%;
+                text-align: left;
+            }
+
+            .divBtn {
+                position: absolute;
+                top: 34%;
+                right: 10%;
+            }
+
+            .goMap::after {
+                content:"";
+                position:absolute;
+                right: 0;
+                top: -8px;
+
+                /* taille */
+                height:0;width:0;
+
+                /* les bordures */
+                border-left:36px solid #AAAAAA;
+                border-bottom:18px solid transparent;
+                border-top:18px solid transparent;
+            }
+</style>

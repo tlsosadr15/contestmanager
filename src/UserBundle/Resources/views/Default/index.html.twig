@@ -1,1 +1,10 @@
-Hello {{ name }}!
+<h2>Choisi</h2>
+
+<form method="post" action="{{ path('select') }}">
+    <select name="address">
+        {% for key, item in items %}
+            <option value="{{ key }}">{{ item }}</option>
+        {% endfor %}
+        <input name="submit" type="submit" value="Envoyer">
+    </select>
+</form>

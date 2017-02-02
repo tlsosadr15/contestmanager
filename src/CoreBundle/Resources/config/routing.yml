@@ -2,3 +2,7 @@
 tournament:
     path:     /tournament
     defaults: { _controller: CoreBundle:Default:tournament }
+
+select:
+    path:     /select
+    defaults: { _controller: CoreBundle:Default:select }

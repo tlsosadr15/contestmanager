@@ -3,12 +3,16 @@
 namespace MatchBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Versus
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="MatchBundle\Entity\VersusRepository")
+ * @ExclusionPolicy("all")
  */
 class Versus
 {
@@ -18,6 +22,8 @@ class Versus
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
+     * @MaxDepth(1)
      */
     private $id;
 
@@ -25,6 +31,8 @@ class Versus
      * @var \DateTime
      *
      * @ORM\Column(name="date_match", type="datetimetz")
+     * @Expose
+     * @MaxDepth(1)
      */
     private $dateMatch;
 
@@ -32,6 +40,8 @@ class Versus
      * @var string
      *
      * @ORM\Column(name="table_number", type="string", length=255)
+     * @Expose
+     * @MaxDepth(1)
      */
     private $tableNumber;
     
@@ -39,11 +49,15 @@ class Versus
      * @var boolean
      *
      * @ORM\Column(name="finished", type="boolean")
+     * @Expose
+     * @MaxDepth(1)
      */
     private $finished = false;
 
     /**
      * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Score", mappedBy="versus", cascade={"persist", "remove"})
+     * @Expose
+     * @MaxDepth(1)
      */
     private $score;
 
@@ -51,6 +65,8 @@ class Versus
      * @var string
      *
      * @ORM\Column(name="step", type="integer", nullable=false)
+     * @Expose
+     * @MaxDepth(1)
      */
     private $step = 1;
 

@@ -1,10 +1,114 @@
-<h2>Choisi</h2>
-
-<form method="post" action="{{ path('select') }}">
-    <select name="address">
-        {% for key, item in items %}
-            <option value="{{ key }}">{{ item }}</option>
-        {% endfor %}
-        <input name="submit" type="submit" value="Envoyer">
-    </select>
+<div class="divLogo">
+    <h1>Easy Culture</h1>
+</div>
+<form class="form" method="post" action="{{ path('select') }}">
+    <label for="address">Choissisez votre lieu culturel</label>
+    <div>
+        <select id="coordinate" class="soflow coordinate" name="coordinate">
+            {% for key, item in items %}
+                <option value="{{ key }}">{{ item | lower}}</option>
+            {% endfor %}
+        </select>
+        <select id="metre" class="soflow distance" name="distance">
+                <option value="100">100</option>
+                <option value="250">250</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+        </select>
+    </div>
+    <div class="divSeparator">
+        <span>OU</span>
+    </div>
+    <label for="address">Choissisez votre station RATP</label>
+    <div>
+        <select id="ratp" class="soflow disable" name="ratp" disabled="disabled">
+            {% for key, item in items %}
+                <option value="{{ key }}">{{ item | lower}}</option>
+            {% endfor %}
+        </select>
+        <select id="metre" class="soflow distance disable" name="distance">
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+        </select>
+    </div>
+    <input  class="btn" name="submit" type="submit" value="Envoyer">
 </form>
+
+<style>
+    form{
+        width: 80%;
+        margin: auto;
+        font-family: Arial;
+        text-align: center;
+        background-color: #e3e3e3;
+        padding: 5%;
+    }
+        form label {
+            font-size: 26px;
+        }
+
+        .btn {
+            background: #939393;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 20px;
+            padding: 10px 20px 10px 20px;
+            text-decoration: none;
+            border: 0;
+            display: block;
+            margin: 5% auto auto auto;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #00930c;
+        }
+        /* -------------------- Select Box Styles: stackoverflow.com Method */
+        /* -------------------- Source: http://stackoverflow.com/a/5809186 */
+        select.soflow {
+            cursor: pointer;
+            -webkit-appearance: button;
+            -webkit-border-radius: 2px;
+            -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+            -webkit-padding-end: 20px;
+            -webkit-padding-start: 2px;
+            -webkit-user-select: none;
+            background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+            background-position: 97% center;
+            background-repeat: no-repeat;
+            border: 1px solid #AAA;
+            color: #555;
+            font-size: inherit;
+            margin: 20px;
+            overflow: hidden;
+            padding: 5px 5px;
+            text-overflow: ellipsis;
+            white-space: normal;
+            width: 80%;
+            margin: 10px auto;
+            display: inline-block;
+        }
+
+        .disable {
+            background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#bcbcbc, #bcbcbc, #bcbcbc) !important;
+            cursor: no-drop !important;
+        }
+
+        .divSeparator{
+            width: 100%;
+            margin: 5% auto;
+        }
+            .barre {
+
+            }
+
+        .distance {
+            width: 10% !important;
+        }
+
+        .divLogo {
+            width: 100%;
+        }
+</style>

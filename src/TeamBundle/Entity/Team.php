@@ -40,7 +40,7 @@ class Team
      * @ORM\Column(name="best_score", type="integer", nullable=true)
      * @Expose
      */
-    private $bestScore;
+    private $bestScore = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Score", mappedBy="team", cascade={"persist", "remove"})
@@ -195,30 +195,6 @@ class Team
     }
 
     /**
-     * Set bestScore
-     *
-     * @param integer $bestScore
-     *
-     * @return Team
-     */
-    public function setBestScore($bestScore)
-    {
-        $this->bestScore = $bestScore;
-
-        return $this;
-    }
-
-    /**
-     * Get bestScore
-     *
-     * @return integer
-     */
-    public function getBestScore()
-    {
-        return $this->bestScore;
-    }
-
-    /**
      * Add score
      *
      * @param \MatchBundle\Entity\Score $score
@@ -240,5 +216,29 @@ class Team
     public function removeScore(\MatchBundle\Entity\Score $score)
     {
         $this->score->removeElement($score);
+    }
+
+    /**
+     * Set bestScore
+     *
+     * @param integer $bestScore
+     *
+     * @return Team
+     */
+    public function setBestScore($bestScore)
+    {
+        $this->bestScore = $bestScore;
+
+        return $this;
+    }
+
+    /**
+     * Get bestScore
+     *
+     * @return integer
+     */
+    public function getBestScore()
+    {
+        return $this->bestScore;
     }
 }

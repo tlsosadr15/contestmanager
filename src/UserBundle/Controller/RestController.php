@@ -12,6 +12,7 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class RestController extends Controller
 {
@@ -109,5 +110,32 @@ class RestController extends Controller
     public function putUserAction($id)
     {
         //TODO
+    }
+
+    /**
+     * @Rest\Get("/musee", name="_login")
+     * @ApiDoc(
+     * section="Users",
+     * description= "User login",
+     * parameters={
+     *      {"name"="username", "dataType"="string", "required"=true, },
+     *      {"name"="password", "dataType"="string", "required"=true, }
+     * },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      401="Returned when invalid username/password"
+     * }
+     * )
+     */
+    public function projetApiAction(Request $request){
+        $data = file_get_contents('https://data.iledefrance.fr/api/records/1.0/search/?dataset=liste_des_etablissements_publics_culture&facet=ville&ville=PARIS');
+//        var_dump(json_decode($data)->records); exit;
+        $records = json_decode($data)->records;
+        $items = [];
+        foreach ($records as $record) {
+            $items[] = $record->fields->adresse;
+        }
+
+        return new Response($this->render('UserBundle:Default:index.html.twig', array('items' => $items)));
     }
 }

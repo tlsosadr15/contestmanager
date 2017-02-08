@@ -17,7 +17,7 @@ class GroupMatch
 {
     /**
      * @var integer
-     *
+     * 
      * @Serializer\MaxDepth(3)
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id

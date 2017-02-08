@@ -12,6 +12,9 @@
  */
 namespace CoreBundle\Admin;
 
+use DateTime;
+use MatchBundle\Entity\GroupMatch;
+use MatchBundle\Entity\Score;
 use MatchBundle\Entity\Tournament;
 use MatchBundle\Entity\Versus;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -39,6 +42,7 @@ class TournamentAdmin extends AbstractAdmin
     protected $translationDomain = 'Admin';
 
     protected $halfDay = "";
+    protected $tableNumber = 1;
 
     /**
      * @param Tournament $object Tournament object
@@ -52,25 +56,13 @@ class TournamentAdmin extends AbstractAdmin
             : 'Tournament';
     }
 
-    /**
-     * @param Tournament $object Student
-     */
-    public function prePersist($object) {
-        $this->halfDay = strtolower($object->getHalfDay());
-        $groupsList = $this->formatGroupsList();
-        $this->addGroups($object, $groupsList);
-//        $this->startTournament($groupsList);
-    }
+
     
     /**
      * @param FormMapper $formMapper Form mapper
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-//        $roomNumber = $this->getConfigurationPool()->getContainer()->getParameter('room_number');
-        $entityManager = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
-        $config = $entityManager->getRepository('CoreBundle:Config')->findOneBy(array());
-
         $formMapper
             ->with('Tournament')
                 ->add('name', TextType::class)
@@ -78,11 +70,11 @@ class TournamentAdmin extends AbstractAdmin
                     'choices' => array(
                         'Am' => $this->trans('Morning'),
                         'Pm' => $this->trans('Afternoon'),
-                    )
+                    ),
                 ))
                 ->add('date', DateTimeType::class)
             ->end();
-            for ($i = 1; $i <= $config->getRoomNumber(); $i++) {
+            for ($i = 1; $i <= $this->getRoomNumber(); $i++) {
                 $formMapper
                     ->with('Room '.$i)
                         ->add('group'.$i, 'entity', array(
@@ -119,6 +111,16 @@ class TournamentAdmin extends AbstractAdmin
     }
 
     /**
+     * @param Tournament $object Tournament
+     */
+    public function prePersist($object) {
+        $groupsList = $this->formatGroupsList();
+        $this->halfDay = $object->getHalfDay();
+        $this->addGroups($object, $groupsList);
+        $this->startTournament($groupsList, $object);
+    }
+
+    /**
      * Add groups in the tournament
      *
      * @param Tournament $object Tournament
@@ -139,9 +141,8 @@ class TournamentAdmin extends AbstractAdmin
      */
     private function formatGroupsList() {
         $groupsList = [];
-        $roomNumber = $this->getConfigurationPool()->getContainer()->getParameter('room_number');
 
-        for ($i = 1; $i <= $roomNumber; $i++) {
+        for ($i = 1; $i <= $this->getRoomNumber(); $i++) {
             $groupsList[] = $this->getForm()->get('group'.$i)->getData();
         }
 
@@ -152,10 +153,11 @@ class TournamentAdmin extends AbstractAdmin
      * Start the tournament
      *
      * @param array $groupsList Groups
+     * @param Tournament $tournament Tournament
      */
-    private function startTournament($groupsList) {
+    private function startTournament($groupsList, $tournament) {
         foreach ($groupsList as $groups) {
-            $this->SetRandomMatchs($groups);
+            $this->setRandomMatchs($groups, $tournament);
         }
     }
 
@@ -163,12 +165,108 @@ class TournamentAdmin extends AbstractAdmin
      * Set random matchs
      *
      * @param array $groups Groups
+     * @param Tournament $tournament Tournament
      */
-    private function SetRandomMatchs($groups) {
-//        $times = $this->getConfigurationPool()->getContainer()->getParameter($this->halfDay.'_match_schedule');
-//        foreach ($times as $time) {
-//            $match = new Versus();
-//        }
+    private function setRandomMatchs($groups, $tournament) {
+        $times = $this->getConfigurationPool()->getContainer()->getParameter($this->halfDay.'_match_schedule');
+        $entityManager = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
+        $teams = $this->formatTeamList($groups);
+//        var_dump($teams); exit;
+        $matchs = $this->formatTeamMatch($teams);
+
+        foreach ($matchs as $match) {
+            foreach ($times as $time) {
+                $versus = new Versus();
+                $versus->setDateMatch($this->formatDate($tournament->getDate(), $time));
+                $versus->setTableNumber($this->tableNumber);
+
+                foreach ($match as $matchItem) {
+                    $score = new Score();
+                    $score->setTeam($matchItem);
+                    $score->setVersus($versus);
+
+                    $entityManager->persist($score);
+                }
+                $entityManager->persist($versus);
+                $entityManager->flush();
+
+                $this->tableNumber++;
+            }
+        }
     }
 
+    /**
+     * Format team match
+     *
+     * @param array $teams Teams
+     *
+     * @return array
+     */
+    private function formatTeamMatch($teams) {
+        $matchs = [];
+        $cpt = 0;
+        while (count($teams) > 0) {
+            $idTeams = [$cpt, $cpt + 1];
+            $match = [];
+
+            foreach ($idTeams as $idTeam) {
+                if (array_key_exists($idTeam, $teams)) {
+                    $match[] = $teams[$idTeam];
+                    unset($teams[$idTeam]);
+                }
+            }
+            $matchs[] = $match;
+            $cpt += 2;
+        }
+
+        return $matchs;
+    }
+
+    /**
+     * Format team list
+     *
+     * @param array $groups Groups
+     *
+     * @return array
+     */
+    private function formatTeamList($groups) {
+        $teams = [];
+
+        /** @var GroupMatch $group */
+        foreach ($groups as $group) {
+            $teamsGroup = $group->getTeam();
+            foreach ($teamsGroup as $team) {
+                $teams[] = $team;
+            }
+        }
+
+        return $teams;
+    }
+
+    /**
+     * Format Date match
+     *
+     * @param DateTime $day Day
+     * @param string $time Time
+     *
+     * @return DateTime
+     */
+    private function formatDate($day, $time) {
+        $dayString = $day->format('Y-m-d');
+
+        return new DateTime($dayString.' '.$time);
+    }
+
+
+    /**
+     * Get Room number
+     *
+     * @return integer
+     */
+    private function getRoomNumber() {
+        $entityManager = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
+        $config = $entityManager->getRepository('CoreBundle:Config')->findOneBy(array());
+
+        return $config->getRoomNumber();
+    }
 }

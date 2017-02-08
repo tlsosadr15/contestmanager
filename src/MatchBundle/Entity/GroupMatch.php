@@ -48,7 +48,7 @@ class GroupMatch
     private $team;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Tournament", inversedBy="group")
+     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Tournament", inversedBy="group", cascade={"persist", "remove"})
      */
     private $tournament;
 

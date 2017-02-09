@@ -176,9 +176,8 @@ class RestController extends Controller
         if(!$match || !$team){
             return new JsonResponse('Ressource(s) not found', 404);
         }
-        $score = new Score();
-        $score->setTeam($team);
-        $score->setVersus($match);
+        //$score = new Score();
+        $score = $em->getRepository('MatchBundle:Score')->findOneBy(array('team' => $id_team, 'versus' => $id_match));
         $score->setScore($scoreV);
         $em->persist($score);
         $em->flush();

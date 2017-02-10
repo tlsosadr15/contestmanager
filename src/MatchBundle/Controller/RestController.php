@@ -164,8 +164,9 @@ class RestController extends Controller
         $id_match = $request->get('id_match');
         $scoreV = $request->get('score');
         
-        if(!$id_team || !$id_match || !$scoreV){
-            return new JsonResponse('Missing parameter(s)', 400);
+        if(!isset($id_team) || !isset($id_match) || !isset($scoreV)){
+            $test = 'Missing parameter(s) id_team = ' . $id_team . ' et id_match = ' . $id_match . ' et score = ' . $scoreV;
+            return new JsonResponse($test, 400);
         }
         $em = $this->getDoctrine()->getManager();
         $team = $em->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id_team));

@@ -169,9 +169,15 @@ class RestController extends Controller
             return new JsonResponse($test, 400);
         }
         $em = $this->getDoctrine()->getManager();
+        $scores = $em->getRepository('MatchBundle:Score')->findBy(array('versus' => $id_match));
+        $allFinish = true;
+        foreach ($scores as $score){
+            if ($score->getScore() == -1) $allFinish = false;
+        }
+
         $team = $em->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id_team));
         $match = $em->getRepository('MatchBundle:Versus')->findOneBy(array('id' => $id_match));
-        $match->setFinished(true);
+        if ($allFinish) $match->setFinished(true);
         $em->persist($match);
         
         if(!$match || !$team){

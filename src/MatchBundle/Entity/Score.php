@@ -3,18 +3,23 @@
 namespace MatchBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializationContext;
 
 /**
  * Score
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="MatchBundle\Entity\ScoreRepository")
+ * @ORM\Entity
  */
 class Score
 {
     /**
      * @var integer
      *
+     * @Serializer\MaxDepth(3)
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -24,17 +29,20 @@ class Score
     /**
      * @var integer
      *
+     * @Serializer\MaxDepth(3)
      * @ORM\Column(name="score", type="integer", nullable=true)
      */
-    private $score;
+    private $score = -1;
     
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="score")
+     * @Serializer\MaxDepth(3)
     */
     private $team;
     
     /**
      * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Versus", inversedBy="score")
+     * @Serializer\MaxDepth(3)
     */
     private $versus;
 

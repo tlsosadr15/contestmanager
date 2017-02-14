@@ -25,9 +25,9 @@ class RestController extends Controller
     */
     public function getSchoolsAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $schools = $em->getRepository('SchoolBundle:School')->findAll();
+        $schools = $entityManager->getRepository('SchoolBundle:School')->findAll();
         
         return $schools;
     }
@@ -52,8 +52,8 @@ class RestController extends Controller
     */
     public function getSchoolAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $school = $em->getRepository('SchoolBundle:School')->findOneBy(array('id' => $id));
+        $entityManager = $this->getDoctrine()->getManager();
+        $school = $entityManager->getRepository('SchoolBundle:School')->findOneBy(array('id' => $id));
         if( empty($school) ){
             return new JsonResponse('school not found', 404);
         }

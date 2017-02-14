@@ -27,8 +27,8 @@ class RestController extends Controller
     */
     public function getUsersAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('UserBundle:User')->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $users = $entityManager->getRepository('UserBundle:User')->findAll();
         
         return $users;
     }
@@ -81,61 +81,11 @@ class RestController extends Controller
     */
     public function getUserAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('UserBundle:User')->findOneBy(array('id' => $id));
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository('UserBundle:User')->findOneBy(array('id' => $id));
         if( empty($user) ){
             return new JsonResponse('user not found', 404);
         }
         return $user;
-    }
-    
-    /**
-     * @ApiDoc(
-     * section="Users",
-     * description= "TODO - Edit user by id",
-     * requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="Id of the user"
-     *      }
-     *  },
-     * statusCodes={
-     *      200="Returned when successful",
-     *      400="An error occured"
-     * }
-     * )
-    */
-    public function putUserAction($id)
-    {
-        //TODO
-    }
-
-    /**
-     * @Rest\Get("/musee", name="_login")
-     * @ApiDoc(
-     * section="Users",
-     * description= "User login",
-     * parameters={
-     *      {"name"="username", "dataType"="string", "required"=true, },
-     *      {"name"="password", "dataType"="string", "required"=true, }
-     * },
-     * statusCodes={
-     *      200="Returned when successful",
-     *      401="Returned when invalid username/password"
-     * }
-     * )
-     */
-    public function projetApiAction(Request $request){
-        $data = file_get_contents('https://data.iledefrance.fr/api/records/1.0/search/?dataset=liste_des_etablissements_publics_culture&facet=ville&ville=PARIS');
-//        var_dump(json_decode($data)->records); exit;
-        $records = json_decode($data)->records;
-        $items = [];
-        foreach ($records as $record) {
-            $items[] = $record->fields->adresse;
-        }
-
-        return new Response($this->render('UserBundle:Default:index.html.twig', array('items' => $items)));
     }
 }

@@ -27,8 +27,8 @@ class RestController extends Controller
     */
     public function matchsAction()  
     {
-        $em = $this->getDoctrine()->getManager();
-        $matchs = $em->getRepository('MatchBundle:Versus')->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $matchs = $entityManager->getRepository('MatchBundle:Versus')->findAll();
         
         return $matchs;
     }
@@ -44,8 +44,8 @@ class RestController extends Controller
     */
     public function groupsMatchsAction()  
     {
-        $em = $this->getDoctrine()->getManager();
-        $groups = $em->getRepository('MatchBundle:GroupMatch')->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $groups = $entityManager->getRepository('MatchBundle:GroupMatch')->findAll();
 
         //$groups = $groups[0]->__unset('team');
         foreach ($groups as $group){
@@ -75,8 +75,8 @@ class RestController extends Controller
     */
     public function getGroupMatchAction($id)  
     {
-        $em = $this->getDoctrine()->getManager();
-        $matchs = $em->getRepository('MatchBundle:GroupMatch')->findBy(array('id' => $id));
+        $entityManager = $this->getDoctrine()->getManager();
+        $matchs = $entityManager->getRepository('MatchBundle:GroupMatch')->findBy(array('id' => $id));
 
         return $matchs;
     }
@@ -102,8 +102,8 @@ class RestController extends Controller
     */
     public function idMatchsAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $matchs = $em->getRepository('MatchBundle:Versus')->findBy(array('id' => $id));
+        $entityManager = $this->getDoctrine()->getManager();
+        $matchs = $entityManager->getRepository('MatchBundle:Versus')->findBy(array('id' => $id));
         if( empty($matchs) ){
             return new JsonResponse('matchs not found', 404);
         }
@@ -132,8 +132,8 @@ class RestController extends Controller
     */
     public function teamMatchsAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $matchs = $em->getRepository('MatchBundle:Score')->findBy(array('team' => $id));
+        $entityManager = $this->getDoctrine()->getManager();
+        $matchs = $entityManager->getRepository('MatchBundle:Score')->findBy(array('team' => $id));
         if( empty($matchs) ){
             return new JsonResponse('matchs not found', 404);
         }
@@ -160,34 +160,34 @@ class RestController extends Controller
     */
     public function scoreTeamMatchAction(Request $request)
     {
-        $id_team = $request->get('id_team');
-        $id_match = $request->get('id_match');
+        $idTeam = $request->get('id_team');
+        $idMatch = $request->get('id_match');
         $scoreV = $request->get('score');
         
-        if(!isset($id_team) || !isset($id_match) || !isset($scoreV)){
-            $test = 'Missing parameter(s) id_team = ' . $id_team . ' et id_match = ' . $id_match . ' et score = ' . $scoreV;
+        if(!isset($idTeam) || !isset($idMatch) || !isset($scoreV)){
+            $test = 'Missing parameter(s) id_team = ' . $idTeam . ' et id_match = ' . $idMatch . ' et score = ' . $scoreV;
             return new JsonResponse($test, 400);
         }
-        $em = $this->getDoctrine()->getManager();
-        $scores = $em->getRepository('MatchBundle:Score')->findBy(array('versus' => $id_match));
+        $entityManager = $this->getDoctrine()->getManager();
+        $scores = $entityManager->getRepository('MatchBundle:Score')->findBy(array('versus' => $idMatch));
         $allFinish = true;
         foreach ($scores as $score){
             if ($score->getScore() == -1) $allFinish = false;
         }
 
-        $team = $em->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id_team));
-        $match = $em->getRepository('MatchBundle:Versus')->findOneBy(array('id' => $id_match));
+        $team = $entityManager->getRepository('TeamBundle:Team')->findOneBy(array('id' => $idTeam));
+        $match = $entityManager->getRepository('MatchBundle:Versus')->findOneBy(array('id' => $idMatch));
         if ($allFinish) $match->setFinished(true);
-        $em->persist($match);
+        $entityManager->persist($match);
         
         if(!$match || !$team){
             return new JsonResponse('Ressource(s) not found', 404);
         }
         //$score = new Score();
-        $score = $em->getRepository('MatchBundle:Score')->findOneBy(array('team' => $id_team, 'versus' => $id_match));
+        $score = $entityManager->getRepository('MatchBundle:Score')->findOneBy(array('team' => $idTeam, 'versus' => $idMatch));
         $score->setScore($scoreV);
-        $em->persist($score);
-        $em->flush();
+        $entityManager->persist($score);
+        $entityManager->flush();
 
         return new JsonResponse('Success', 200); 
     }

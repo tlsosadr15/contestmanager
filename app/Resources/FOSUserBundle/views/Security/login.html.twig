@@ -16,6 +16,7 @@
         <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <h2>{{ "Please sign in"|trans({}, 'Admin') }}</h2>
+            <h2>{{ "Please"|trans({}, 'Admin') }}</h2>
             <div class="form-group">
                 <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
                 <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="Username" required autofocus />

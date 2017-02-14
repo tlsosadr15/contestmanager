@@ -2,6 +2,14 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
+            <trans-unit id="login">
+                <source>Please sign in</source>
+                <target>Veuillez vous connecter</target>
+            </trans-unit>
+            <trans-unit id="logout">
+                <source>Logout</source>
+                <target>Déconnection</target>
+            </trans-unit>
             <trans-unit id="dashboard">
                 <source>Dashboard</source>
                 <target>Accueil</target>

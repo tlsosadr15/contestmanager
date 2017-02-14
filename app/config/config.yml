@@ -98,6 +98,8 @@ sonata_block:
         admin.block.tournament: ~
 
 sonata_admin:
+    templates:
+        layout: "CoreBundle:Admin:standard_layout.html.twig"
     dashboard:
         groups:
             app.admin:

@@ -1,4 +1,4 @@
-{% spaceless %}{% trans_default_domain("admin") %}
+{% spaceless %}
     {% for flash_message in app.session.flashBag.get('notice') %}
         <div class="flash-notice">
             {{ flash_message }}

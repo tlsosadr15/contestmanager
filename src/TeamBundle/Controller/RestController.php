@@ -34,7 +34,7 @@ class RestController extends Controller
      * description= "Get team by id",
      * requirements={
      *      {
-     *          "name"="id",
+     *          "name"="idTeam",
      *          "dataType"="integer",
      *          "requirement"="\d+",
      *          "description"="Id of the team"
@@ -42,10 +42,10 @@ class RestController extends Controller
      *  }
      * )
     */
-    public function getTeamAction($id)
+    public function getTeamAction($idTeam)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $team = $entityManager->getRepository('TeamBundle:Team')->findOneBy(array('id' => $id));
+        $team = $entityManager->getRepository('TeamBundle:Team')->findOneBy(array('id' => $idTeam));
         
         return $team;
     }

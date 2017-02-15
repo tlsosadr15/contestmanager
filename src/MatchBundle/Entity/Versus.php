@@ -213,7 +213,7 @@ class Versus
      *
      * @return boolean
      */
-    public function getFinished()
+    public function isFinished()
     {
         return $this->finished;
     }

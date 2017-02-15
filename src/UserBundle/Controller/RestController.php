@@ -67,7 +67,7 @@ class RestController extends Controller
      * description= "Get user by id",
      * requirements={
      *      {
-     *          "name"="id",
+     *          "name"="idUser",
      *          "dataType"="integer",
      *          "requirement"="\d+",
      *          "description"="Id user"
@@ -79,10 +79,10 @@ class RestController extends Controller
      * }
      * )
     */
-    public function getUserAction($id)
+    public function getUserAction($idUser)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository('UserBundle:User')->findOneBy(array('id' => $id));
+        $user = $entityManager->getRepository('UserBundle:User')->findOneBy(array('id' => $idUser));
         if( empty($user) ){
             return new JsonResponse('user not found', 404);
         }

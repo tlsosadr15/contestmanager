@@ -38,7 +38,7 @@ class RestController extends Controller
      * description= "Get school by id",
      * requirements={
      *      {
-     *          "name"="id",
+     *          "name"="idSchool",
      *          "dataType"="integer",
      *          "requirement"="\d+",
      *          "description"="Id school"
@@ -50,10 +50,10 @@ class RestController extends Controller
      * }
      * )
     */
-    public function getSchoolAction($id)
+    public function getSchoolAction($idSchool)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $school = $entityManager->getRepository('SchoolBundle:School')->findOneBy(array('id' => $id));
+        $school = $entityManager->getRepository('SchoolBundle:School')->findOneBy(array('id' => $idSchool));
         if( empty($school) ){
             return new JsonResponse('school not found', 404);
         }

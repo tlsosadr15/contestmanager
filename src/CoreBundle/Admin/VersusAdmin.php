@@ -49,17 +49,18 @@ class VersusAdmin extends AbstractAdmin
     /**
      * @param GroupMatch $object Student
      */
-    public function prePersist($object) {
+    public function prePersist($object)
+    {
         $entityManager = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
         $team1 = $this->getForm()->get('team1')->getData();
         $team2 = $this->getForm()->get('team2')->getData();
 
-        $score1 = New Score();
+        $score1 = new Score();
         $score1->setTeam($team1);
         $score1->setVersus($object);
         $entityManager->persist($score1);
 
-        $score2 = New Score();
+        $score2 = new Score();
         $score2->setTeam($team2);
         $score2->setVersus($object);
         $entityManager->persist($score2);
@@ -107,12 +108,12 @@ class VersusAdmin extends AbstractAdmin
 
         $listMapper->addIdentifier('id')
             ->add('dateMatch')
-            ->add('tableNumber');
-//            ->add('team', 'string', array(
-//                    'label' => 'Team1',
-//                    'template' => 'CoreBundle:Admin:list_match_team1.html.twig'
-//                )
-//            );
+            ->add('tableNumber')
+            ->add('team', 'string', array(
+                    'label' => 'Team1',
+                    'template' => 'CoreBundle:Admin:list_match_team.html.twig',
+                )
+            );
     }
 
 }

@@ -1,0 +1,28 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+    <strong>{{ "Finished"|trans({}, 'Admin') }}</strong>:
+    {% if object.finished == TRUE %} <i class="fa fa-ok fa-fw"></i> {% else %} <i class="fa fa-remove"></i> {% endif %}
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th></th>
+                {% for score in object.score %}
+                    <th>{{ "Team"|trans({}, 'Admin') }} {{ loop.index }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>{{ "Name"|trans({}, 'Admin') }}</td>
+                {% for score in object.score %}
+                    <td>{{ score.team.name }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>{{ "Score"|trans({}, 'Admin') }}</td>
+                {% for score in object.score %}
+                    <td>{{ score.score }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+{% endblock %}

@@ -157,6 +157,14 @@
                 <source>Team2</source>
                 <target>Equipe 2</target>
             </trans-unit>
+            <trans-unit id="match.finished">
+                <source>Finished</source>
+                <target>Fini</target>
+            </trans-unit>
+            <trans-unit id="match.score">
+                <source>Score</source>
+                <target>Score</target>
+            </trans-unit>
 
             <trans-unit id="dashboard.config">
                 <source>Config</source>

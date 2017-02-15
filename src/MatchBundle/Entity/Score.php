@@ -30,9 +30,9 @@ class Score
      * @var integer
      *
      * @Serializer\MaxDepth(3)
-     * @ORM\Column(name="score", type="integer", nullable=true)
+     * @ORM\Column(name="score", type="integer")
      */
-    private $score = -1;
+    private $score = 0;
     
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="score")
@@ -63,30 +63,6 @@ class Score
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set score
-     *
-     * @param integer $score
-     *
-     * @return Score
-     */
-    public function setScore($score)
-    {
-        $this->score = $score;
-
-        return $this;
-    }
-
-    /**
-     * Get score
-     *
-     * @return integer
-     */
-    public function getScore()
-    {
-        return $this->score;
     }
 
     /**
@@ -135,5 +111,29 @@ class Score
     public function getVersus()
     {
         return $this->versus;
+    }
+
+    /**
+     * Set score
+     *
+     * @param integer $score
+     *
+     * @return Score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+
+        return $this;
+    }
+
+    /**
+     * Get score
+     *
+     * @return integer
+     */
+    public function getScore()
+    {
+        return $this->score;
     }
 }

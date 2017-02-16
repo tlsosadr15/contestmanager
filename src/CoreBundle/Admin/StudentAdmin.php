@@ -54,11 +54,10 @@ class StudentAdmin extends AbstractAdmin
         /** @var User $user */
         $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
         $roles = $user->getRoles();
-        if (in_array('ROLE_SUPER_ADMIN', $roles)) {
-           $object->setSchool($object->getTeam()->getGroup()->getTeacher()->getSchool());
-        } else {
-            $object->setSchool($user->getSchool());
-        }
+
+        in_array('ROLE_SUPER_ADMIN', $roles) ?
+          $object->setSchool($object->getTeam()->getGroup()->getTeacher()->getSchool()) :
+          $object->setSchool($user->getSchool());
     }
 
     /**

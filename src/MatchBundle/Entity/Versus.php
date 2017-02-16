@@ -24,6 +24,8 @@ class Versus
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
      * @MaxDepth(1)
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     private $id;
 

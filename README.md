@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/GuillaumeTorres/contestmanager.svg?branch=master)](https://travis-ci.org/GuillaumeTorres/contestmanager)
 [![Code Climate](https://codeclimate.com/github/GuillaumeTorres/contestmanager/badges/gpa.svg)](https://codeclimate.com/github/GuillaumeTorres/contestmanager)
-[![Test Coverage](https://codeclimate.com/github/GuillaumeTorres/contestmanager/badges/coverage.svg)](https://codeclimate.com/github/GuillaumeTorres/contestmanager/coverage)
 [![Issue Count](https://codeclimate.com/github/GuillaumeTorres/contestmanager/badges/issue_count.svg)](https://codeclimate.com/github/GuillaumeTorres/contestmanager)
 
 ### Github app ###
@@ -17,6 +16,7 @@ https://github.com/GuillaumeTorres/contestmanagerapp
 composer install
 php app/console doctrine:database:create
 php app/console doctrine:schema:update --force
+php app/console assets:install
 
 php app/console doctrine:fixtures:load --no-interaction
 ```
@@ -40,6 +40,7 @@ php app/console doctrine:fixtures:load --no-interaction
 
 ### .htaccess
 
+Changer app_dev.php par app.php pour passer en production
 ```
 DirectoryIndex app_dev.php
 <IfModule mod_rewrite.c>

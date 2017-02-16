@@ -23,6 +23,8 @@ class Team
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     private $id;
 

@@ -21,6 +21,8 @@ class User extends BaseUser
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     protected $id;
     

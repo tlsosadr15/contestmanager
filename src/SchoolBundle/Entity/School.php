@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\Expose;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="SchoolBundle\Entity\SchoolRepository")
- * @ExclusionPolicy("all") 
+ * @ExclusionPolicy("all")
  */
 class School
 {
@@ -22,6 +22,8 @@ class School
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     private $id;
 

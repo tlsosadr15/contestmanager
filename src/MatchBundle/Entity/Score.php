@@ -23,6 +23,8 @@ class Score
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     private $id;
     
@@ -30,9 +32,9 @@ class Score
      * @var integer
      *
      * @Serializer\MaxDepth(3)
-     * @ORM\Column(name="score", type="integer")
+     * @ORM\Column(name="score", type="integer", nullable=true)
      */
-    private $score = 0;
+    private $score;
     
     /**
      * @ORM\ManyToOne(targetEntity="TeamBundle\Entity\Team", inversedBy="score")
@@ -45,15 +47,6 @@ class Score
      * @Serializer\MaxDepth(3)
     */
     private $versus;
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return 'team';
-//        return $this->team;
-    }
 
     /**
      * Get id

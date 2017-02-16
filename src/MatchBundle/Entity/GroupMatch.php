@@ -23,6 +23,7 @@ class GroupMatch
      * @Serializer\MaxDepth(3)
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -53,6 +54,9 @@ class GroupMatch
      */
     private $tournament;
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->name;

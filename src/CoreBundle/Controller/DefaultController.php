@@ -13,10 +13,10 @@
 namespace CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
@@ -50,28 +50,26 @@ class DefaultController extends Controller
     public function mobileAppUploadAction(Request $request)
     {
         $form = $this->createFormBuilder()
-          ->add('app', 'file')
+          ->add('app', FileType::class)
           ->getForm();
 
         if ($request->isMethod('GET')) {
             return $this->render('CoreBundle:Default:app_upload.html.twig', array('form' => $form->createView()));
         }
-        else {
-            foreach ($request->files as $uploadedFile) {
-                $file = $uploadedFile['app'];
+        foreach ($request->files as $uploadedFile) {
+            $file = $uploadedFile['app'];
 
-                $directory = $this->container->get('kernel')->getRootDir().'/../web/upload';
-                if (!is_dir($directory)) {
-                    mkdir($directory);
-                }
-                $file->move($directory, 'ContestManager.'.$file->getClientOriginalExtension());
+            $directory = $this->container->get('kernel')->getRootDir().'/../web/upload';
+            if (!is_dir($directory)) {
+                mkdir($directory);
             }
+            $file->move($directory, 'ContestManager.'.$file->getClientOriginalExtension());
+        }
 
-            return $this->render('CoreBundle:Default:app_upload.html.twig', array(
+        return $this->render('CoreBundle:Default:app_upload.html.twig', array(
               'success' => 'File uploaded',
               'form' => $form->createView(),
-            ));
-        }
+        ));
     }
 
     /**
@@ -79,7 +77,7 @@ class DefaultController extends Controller
      *
      * @return BinaryFileResponse
      */
-    public function mobileAppDownloadAction(Request $request)
+    public function mobileAppDownloadAction()
     {
         return $this->render('CoreBundle:Default:app_download.html.twig');
     }

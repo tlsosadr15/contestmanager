@@ -18,3 +18,5 @@ ratings:
 exclude_paths:
   - "app/*"
   - "web/*"
+  - "phpunit.phar"
+  - "**/Entity/*"

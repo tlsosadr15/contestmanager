@@ -12,12 +12,14 @@ use JMS\Serializer\SerializationContext;
  *
  * @ORM\Table()
  * @ORM\Entity
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class GroupMatch
 {
     /**
      * @var integer
-     * 
+     *
      * @Serializer\MaxDepth(3)
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -27,7 +29,7 @@ class GroupMatch
 
     /**
      * @var string
-     * 
+     *
      * @Serializer\MaxDepth(1)
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -52,6 +54,9 @@ class GroupMatch
      */
     private $tournament;
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->name;

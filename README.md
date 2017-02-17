@@ -17,8 +17,14 @@ composer install
 php app/console doctrine:database:create
 php app/console doctrine:schema:update --force
 php app/console assets:install
+ ```
 
+### Commandes utiles ###
+
+```
+php app/console doctrine:database:drop --force
 php app/console doctrine:fixtures:load --no-interaction
+php app/console cache:clear [--env=prod]
 ```
 
 ### Configuration host

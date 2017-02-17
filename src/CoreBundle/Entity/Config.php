@@ -19,7 +19,7 @@ class Config
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @SuppressWarnings(PHPMD.ShortVariable)
+     * @SuppressWarnings(PHPMD)
      */
     private $id;
 

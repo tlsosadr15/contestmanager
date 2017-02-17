@@ -29,7 +29,10 @@ class RestController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
         $matchs = $entityManager->getRepository('MatchBundle:Versus')->findAll();
-        
+
+        if( empty($matchs) ){
+            return new JsonResponse('matchs not found', 404);
+        }
         return $matchs;
     }
 
@@ -47,6 +50,9 @@ class RestController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $groups = $entityManager->getRepository('MatchBundle:GroupMatch')->findAll();
 
+        if( empty($groups) ){
+            return new JsonResponse('matchs not found', 404);
+        }
         //$groups = $groups[0]->__unset('team');
         foreach ($groups as $group){
             $group = $group->__unset('team');
@@ -77,12 +83,15 @@ class RestController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
         $matchs = $entityManager->getRepository('MatchBundle:GroupMatch')->findBy(array('id' => $idGroup));
+        if( empty($matchs) ){
+            return new JsonResponse('groups not found', 404);
+        }
 
         return $matchs;
     }
     
     /**
-     * @Rest\Get("/matchs/{id}", requirements={"id" = "\d+"})
+     * @Rest\Get("/matchs/{$idTeam}", requirements={"$idTeam" = "\d+"})
      * @ApiDoc(
      * section="Matchs",
      * description= "Get matchs by id",
@@ -112,7 +121,7 @@ class RestController extends Controller
     }
     
     /**
-     * @Rest\Get("/matchs/team/{id}", requirements={"id" = "\d+"})
+     * @Rest\Get("/matchs/team/{idTeam}", requirements={"idTeam" = "\d+"})
      * @ApiDoc(
      * section="Matchs",
      * description= "Get matchs of a team",
@@ -169,10 +178,15 @@ class RestController extends Controller
             return new JsonResponse($test, 400);
         }
         $entityManager = $this->getDoctrine()->getManager();
+
+        $score = $entityManager->getRepository('MatchBundle:Score')->findOneBy(array('team' => $idTeam, 'versus' => $idMatch));
+        $score->setScore($scoreV);
+        $entityManager->persist($score);
+
         $scores = $entityManager->getRepository('MatchBundle:Score')->findBy(array('versus' => $idMatch));
         $allFinish = true;
         foreach ($scores as $score){
-            if ($score->getScore() == -1) $allFinish = false;
+            if (empty($score->getScore())) $allFinish = false;
         }
 
         $team = $entityManager->getRepository('TeamBundle:Team')->findOneBy(array('id' => $idTeam));
@@ -183,10 +197,6 @@ class RestController extends Controller
         if(!$match || !$team){
             return new JsonResponse('Ressource(s) not found', 404);
         }
-        //$score = new Score();
-        $score = $entityManager->getRepository('MatchBundle:Score')->findOneBy(array('team' => $idTeam, 'versus' => $idMatch));
-        $score->setScore($scoreV);
-        $entityManager->persist($score);
         $entityManager->flush();
 
         return new JsonResponse('Success', 200); 

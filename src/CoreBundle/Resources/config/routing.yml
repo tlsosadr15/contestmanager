@@ -2,3 +2,15 @@
 tournament:
     path:     /tournament
     defaults: { _controller: CoreBundle:Default:tournament }
+
+app_upload:
+    path:     /app_upload
+    defaults: { _controller: CoreBundle:Default:mobileAppUpload }
+
+app_download_view:
+    path:     /app_dowload
+    defaults: { _controller: CoreBundle:Default:mobileAppDownload }
+
+app_download_action:
+    path:     /app_dowload_action
+    defaults: { _controller: CoreBundle:Default:appDownload }

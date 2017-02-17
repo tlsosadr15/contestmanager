@@ -104,13 +104,11 @@ class VersusAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-//        $entityManager = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
-
         $listMapper->addIdentifier('id')
             ->add('dateMatch')
             ->add('tableNumber')
             ->add('team', 'string', array(
-                    'label' => 'Team1',
+                    'label' => 'Teams',
                     'template' => 'CoreBundle:Admin:list_match_team.html.twig',
                 )
             );

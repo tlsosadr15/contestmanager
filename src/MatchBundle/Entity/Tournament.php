@@ -45,7 +45,7 @@ class Tournament
     private $halfDay;
 
     /**
-     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\GroupMatch", mappedBy="tournament", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\GroupMatch", mappedBy="tournament", cascade={"persist"})
      */
     private $group;
 

@@ -1,5 +1,8 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    <a href="{{ path('app_download_action') }}" download>Download</a>
+    {% if error is defined %}
+        <p>{{ error }}</p>
+    {% endif %}
+    <a href="{{ path('app_download_action') }}" >Download</a>
 {% endblock %}

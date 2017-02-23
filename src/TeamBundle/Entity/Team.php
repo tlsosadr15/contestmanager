@@ -58,7 +58,7 @@ class Team
     private $group;
 
     /**
-     * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="team", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="SchoolBundle\Entity\Student", mappedBy="team")
      * @Expose
      * @MaxDepth(1)
     */

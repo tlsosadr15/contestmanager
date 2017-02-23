@@ -44,15 +44,10 @@ class GroupMatch
     private $teacher;
 
     /**
-     * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="group", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="group")
      * @Serializer\MaxDepth(1)
      */
     private $team;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Tournament", inversedBy="group", cascade={"persist", "remove"})
-     */
-    private $tournament;
 
     /**
      * @return string

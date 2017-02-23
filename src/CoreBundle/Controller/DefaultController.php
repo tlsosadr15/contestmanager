@@ -90,6 +90,10 @@ class DefaultController extends Controller
     public function appDownloadAction()
     {
         $filePath = $this->container->get('kernel')->getRootDir().'/../web/upload/ContestManager.apk';
+
+        if (!is_file($filePath)) {
+            return $this->render('CoreBundle:Default:app_download.html.twig', array('error' => 'File ContestManager.apk not found'));
+        }
         $response = new BinaryFileResponse($filePath);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'ContestManager.apk');
 

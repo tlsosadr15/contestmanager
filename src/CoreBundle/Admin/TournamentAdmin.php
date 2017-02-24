@@ -116,22 +116,7 @@ class TournamentAdmin extends AbstractAdmin
     public function prePersist($object) {
         $groupsList = $this->formatGroupsList();
         $this->halfDay = $object->getHalfDay();
-        $this->addGroups($object, $groupsList);
         $this->startTournament($groupsList, $object);
-    }
-
-    /**
-     * Add groups in the tournament
-     *
-     * @param Tournament $object Tournament
-     * @param array $groupsList Groups
-     */
-    private function addGroups($object, $groupsList) {
-        foreach ($groupsList as $groups) {
-            foreach ($groups as $group) {
-                $object->addGroup($group);
-            }
-        }
     }
 
     /**
@@ -171,7 +156,6 @@ class TournamentAdmin extends AbstractAdmin
         $times = $this->getConfigurationPool()->getContainer()->getParameter($this->halfDay.'_match_schedule');
         $entityManager = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
         $teams = $this->formatTeamList($groups);
-//        var_dump($teams); exit;
         $matchs = $this->formatTeamMatch($teams);
 
         foreach ($matchs as $match) {
@@ -179,6 +163,7 @@ class TournamentAdmin extends AbstractAdmin
                 $versus = new Versus();
                 $versus->setDateMatch($this->formatDate($tournament->getDate(), $time));
                 $versus->setTableNumber($this->tableNumber);
+                $versus->setTournament($tournament);
 
                 foreach ($match as $matchItem) {
                     $score = new Score();

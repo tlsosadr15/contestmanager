@@ -73,6 +73,11 @@ class Versus
     private $step = 1;
 
     /**
+     * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Tournament", inversedBy="match", cascade={"persist"})
+     */
+    private $tournament;
+
+    /**
      * Get id
      *
      * @return integer
@@ -153,6 +158,7 @@ class Versus
     {
         return $this->step;
     }
+    
     /**
      * Constructor
      */
@@ -218,5 +224,39 @@ class Versus
     public function isFinished()
     {
         return $this->finished;
+    }
+
+    /**
+     * Get finished
+     *
+     * @return boolean
+     */
+    public function getFinished()
+    {
+        return $this->finished;
+    }
+
+    /**
+     * Set tournament
+     *
+     * @param \MatchBundle\Entity\Tournament $tournament
+     *
+     * @return Versus
+     */
+    public function setTournament(\MatchBundle\Entity\Tournament $tournament = null)
+    {
+        $this->tournament = $tournament;
+
+        return $this;
+    }
+
+    /**
+     * Get tournament
+     *
+     * @return \MatchBundle\Entity\Tournament
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
     }
 }

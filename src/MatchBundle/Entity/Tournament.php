@@ -45,9 +45,9 @@ class Tournament
     private $halfDay;
 
     /**
-     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\GroupMatch", mappedBy="tournament", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="MatchBundle\Entity\Versus", mappedBy="tournament", cascade={"persist", "remove"})
      */
-    private $group;
+    private $match;
 
 
     /**
@@ -112,42 +112,7 @@ class Tournament
      */
     public function __construct()
     {
-        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add group
-     *
-     * @param \MatchBundle\Entity\GroupMatch $group
-     *
-     * @return Tournament
-     */
-    public function addGroup(\MatchBundle\Entity\GroupMatch $group)
-    {
-        $group->setTournament($this);
-        $this->group[] = $group;
-
-        return $this;
-    }
-
-    /**
-     * Remove group
-     *
-     * @param \MatchBundle\Entity\GroupMatch $group
-     */
-    public function removeGroup(\MatchBundle\Entity\GroupMatch $group)
-    {
-        $this->group->removeElement($group);
-    }
-
-    /**
-     * Get group
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroup()
-    {
-        return $this->group;
+        $this->match = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -172,5 +137,40 @@ class Tournament
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add match
+     *
+     * @param \MatchBundle\Entity\Versus $match
+     *
+     * @return Tournament
+     */
+    public function addMatch(\MatchBundle\Entity\Versus $match)
+    {
+        $match->setTournament($this);
+        $this->match[] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove match
+     *
+     * @param \MatchBundle\Entity\Versus $match
+     */
+    public function removeMatch(\MatchBundle\Entity\Versus $match)
+    {
+        $this->match->removeElement($match);
+    }
+
+    /**
+     * Get match
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatch()
+    {
+        return $this->match;
     }
 }

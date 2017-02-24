@@ -15,6 +15,7 @@ namespace CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -50,20 +51,25 @@ class DefaultController extends Controller
     public function mobileAppUploadAction(Request $request)
     {
         $form = $this->createFormBuilder()
-          ->add('app', FileType::class)
+          ->add('appAndroid', FileType::class, array('required' => false))
+          ->add('appIos', FileType::class, array('required' => false))
           ->getForm();
 
         if ($request->isMethod('GET')) {
             return $this->render('CoreBundle:Default:app_upload.html.twig', array('form' => $form->createView()));
         }
-        foreach ($request->files as $uploadedFile) {
-            $file = $uploadedFile['app'];
 
-            $directory = $this->container->get('kernel')->getRootDir().'/../web/upload';
-            if (!is_dir($directory)) {
-                mkdir($directory);
+        foreach ($request->files as $uploadedFiles) {
+            /** @var UploadedFile $uploadedFile */
+            foreach ($uploadedFiles as $uploadedFile) {
+                if ($uploadedFile) {
+                    $directory = $this->container->get('kernel')->getRootDir().'/../web/upload';
+                    if (!is_dir($directory)) {
+                        mkdir($directory);
+                    }
+                    $uploadedFile->move($directory, $uploadedFile->getClientOriginalName());
+                }
             }
-            $file->move($directory, 'ContestManager.'.$file->getClientOriginalExtension());
         }
 
         return $this->render('CoreBundle:Default:app_upload.html.twig', array(
@@ -75,27 +81,27 @@ class DefaultController extends Controller
     /**
      * Mobile app action
      *
-     * @return BinaryFileResponse
-     */
-    public function mobileAppDownloadAction()
-    {
-        return $this->render('CoreBundle:Default:app_download.html.twig');
-    }
-
-    /**
-     * Mobile app action
+     * @param Request $request
      *
      * @return BinaryFileResponse
      */
-    public function appDownloadAction()
+    public function mobileAppDownloadAction(Request $request)
     {
-        $filePath = $this->container->get('kernel')->getRootDir().'/../web/upload/ContestManager.apk';
+        $device = $request->query->get('device');
+        $version = $request->query->get('version');
+
+        if (!$device) {
+            return $this->render('CoreBundle:Default:app_download.html.twig');
+        }
+
+        $extenxion = $device == 'android' ? 'apk' : 'ios';
+        $filePath = $this->container->get('kernel')->getRootDir().'/../web/upload/ContestManager-'.$version.'.'.$extenxion;
 
         if (!is_file($filePath)) {
-            return $this->render('CoreBundle:Default:app_download.html.twig', array('error' => 'File ContestManager.apk not found'));
+            return $this->render('CoreBundle:Default:app_download.html.twig', array('error' => 'File ContestManager.'.$extenxion.' not found'));
         }
         $response = new BinaryFileResponse($filePath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'ContestManager.apk');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'ContestManager.'.$extenxion);
 
         return $response;
     }

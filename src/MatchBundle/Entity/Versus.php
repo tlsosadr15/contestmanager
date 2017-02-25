@@ -74,6 +74,8 @@ class Versus
 
     /**
      * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Tournament", inversedBy="match", cascade={"persist"})
+     * @Expose
+     * @MaxDepth(1)
      */
     private $tournament;
 

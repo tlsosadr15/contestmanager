@@ -2,6 +2,7 @@
 
 namespace MatchBundle\Controller;
 
+use MatchBundle\Entity\Tournament;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializationContext;
@@ -44,8 +45,8 @@ class RestController extends Controller
      *      200="Returned when successful",
      * }
      * )
-    */
-    public function groupsMatchsAction()  
+     */
+    public function groupsMatchsAction()
     {
         $entityManager = $this->getDoctrine()->getManager();
         $groups = $entityManager->getRepository('MatchBundle:GroupMatch')->findAll();
@@ -59,6 +60,26 @@ class RestController extends Controller
         }
 
         return $groups;
+    }
+
+    /**
+     * @ApiDoc(
+     * section="Tournois",
+     * description= "Get all Tournament",
+     * statusCodes={
+     *      200="Returned when successful",
+     * }
+     * )
+     */
+    public function tournamentsAction()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findAll();
+
+        if( empty($tournament) ){
+            return new JsonResponse('matchs not found', 404);
+        }
+        return $tournament;
     }
 
      /**
@@ -200,5 +221,94 @@ class RestController extends Controller
         $entityManager->flush();
 
         return new JsonResponse('Success', 200); 
+    }
+
+    /**
+     * @Rest\Get("/score/{idTournaments}", requirements={"idTournaments" = "\d+"})
+     * @ApiDoc(
+     * section="Scores",
+     * description= "Get score of a Tournaments",
+     * requirements={
+     *      {
+     *          "name"="idTournaments",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Id Tournaments"
+     *      }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when the matchs are not found"
+     * }
+     * )
+     */
+    public function scoresTournamentsAction($idTournaments)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTournaments));
+        if( empty($tournaments) ){
+            return new JsonResponse('matchs not found', 404);
+        }
+        $idGroups = $this->getGroupsId($tournament);
+        echo 'On a les droits <br/>';
+        var_dump($idGroups);
+
+
+        exit;
+
+        return $tournaments;
+    }
+
+    /**
+     * Get id tournaments of a team
+     *
+     * @param Tournament $tournaments Tournament
+     * @param int $idTeam idTeam
+     *
+     * @return array
+     */
+    private function getTournamentsId($tournaments, $idTeam) {
+        $allYourTournament = [];
+        foreach ($tournaments as $tournament){
+            $matchs = $tournament->getMatch()->toArray();
+            $idTournament = $tournament->getId();
+            $teamIn = false;
+            foreach ($matchs as $match){
+                $scores = $match->getScore()->toArray();
+                foreach ($scores as $score){
+                    $idTeams = $score->getTeam()->getId();
+                    var_dump($idTeams);
+                    if($idTeams == $idTeam) $teamIn = true;
+                }
+                if($teamIn) break;
+            }
+            if($teamIn) $allYourTournament[] = $idTournament;
+        }
+
+        return $allYourTournament;
+    }
+
+    /**
+     * Get id tournaments of a team
+     *
+     * @param Tournament $tournament Tournament
+     *
+     * @return array
+     */
+    private function getGroupsId($tournament) {
+        $allGroups = [];
+        $matchs = $tournament->getMatch()->toArray();
+        foreach ($matchs as $match){
+            $scores = $match->getScore()->toArray();
+            $inser = true;
+            foreach ($scores as $score){
+                $idGroup = $score->getTeam()->getGroup()->getId();
+                foreach ($allGroups as $group){
+                    if($group == $idGroup) $inser = false;
+                }
+                if($inser) $allGroups[] = $idGroup;
+            }
+        }
+        return $allGroups;
     }
 }

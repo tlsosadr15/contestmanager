@@ -157,30 +157,6 @@ class GroupMatch
         return $this->teacher;
     }
 
-    /**
-     * Set tournament
-     *
-     * @param \MatchBundle\Entity\Tournament $tournament
-     *
-     * @return GroupMatch
-     */
-    public function setTournament(\MatchBundle\Entity\Tournament $tournament = null)
-    {
-        $this->tournament = $tournament;
-
-        return $this;
-    }
-
-    /**
-     * Get tournament
-     *
-     * @return \MatchBundle\Entity\Tournament
-     */
-    public function getTournament()
-    {
-        return $this->tournament;
-    }
-
 
     public function __unset($key)
     {

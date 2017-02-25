@@ -10,6 +10,10 @@
                 <source>Logout</source>
                 <target>Déconnection</target>
             </trans-unit>
+            <trans-unit id="download">
+                <source>Download</source>
+                <target>Téléchargement</target>
+            </trans-unit>
             <trans-unit id="dashboard">
                 <source>Dashboard</source>
                 <target>Accueil</target>

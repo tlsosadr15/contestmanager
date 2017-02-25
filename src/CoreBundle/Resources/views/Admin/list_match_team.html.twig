@@ -2,7 +2,7 @@
 
 {% block field%}
     <strong>{{ "Finished"|trans({}, 'Admin') }}</strong>:
-    {% if object.finished == TRUE %} <i class="fa fa-ok fa-fw"></i> {% else %} <i class="fa fa-remove"></i> {% endif %}
+    {% if object.finished == TRUE %} <i class="glyphicon glyphicon-ok"></i> {% else %} <i class="glyphicon glyphicon-remove"></i> {% endif %}
     <div>
         <table class="table table-bordered">
             <tr>

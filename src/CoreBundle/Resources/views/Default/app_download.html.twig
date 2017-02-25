@@ -4,5 +4,13 @@
     {% if error is defined %}
         <p>{{ error }}</p>
     {% endif %}
-    <a href="{{ path('app_download_action') }}" >Download</a>
+    <div>
+        <h3>Android</h3>
+        <a href="{{ path('app_download', { device: 'android', version: 'latest' }) }}" >{{ "Download"|trans({}, 'Admin') }} latest</a>
+        <a href="{{ path('app_download', { device: 'android', version: '4.2' }) }}" >{{ "Download"|trans({}, 'Admin') }} v.4.2</a>
+    </div>
+    <div>
+        <h3>Ios</h3>
+        <a href="{{ path('app_download', { device: 'ios' }) }}" >{{ "Download"|trans({}, 'Admin') }}</a>
+    </div>
 {% endblock %}

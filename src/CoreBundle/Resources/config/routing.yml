@@ -7,10 +7,6 @@ app_upload:
     path:     /app_upload
     defaults: { _controller: CoreBundle:Default:mobileAppUpload }
 
-app_download_view:
-    path:     /app/download
+app_download:
+    path:     /app_download
     defaults: { _controller: CoreBundle:Default:mobileAppDownload }
-
-app_download_action:
-    path:     /app/dowload_action
-    defaults: { _controller: CoreBundle:Default:appDownload }

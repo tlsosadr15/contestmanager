@@ -174,9 +174,8 @@ class TournamentAdmin extends AbstractAdmin
                 }
                 $entityManager->persist($versus);
                 $entityManager->flush();
-
-                $this->tableNumber++;
             }
+            $this->tableNumber++;
         }
     }
 

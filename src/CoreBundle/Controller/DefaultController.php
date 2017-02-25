@@ -143,6 +143,9 @@ class DefaultController extends Controller
         foreach ($matchs as $match){
             $scores = $match->getScore()->toArray();
             foreach ($scores as $score){
+                $firstNameTeacher = $score->getTeam()->getGroup()->getTeacher()->getFirstName();
+                $lastNameTeacher = $score->getTeam()->getGroup()->getTeacher()->getLastName();
+                $school = $score->getTeam()->getGroup()->getTeacher()->getSchool()->getName();
                 $inser = true;
                 $idGroup = $score->getTeam()->getGroup()->getId();
                 $nameGroup = $score->getTeam()->getGroup()->getName();
@@ -152,6 +155,9 @@ class DefaultController extends Controller
                 if($inser) {
                     $allGroups[$var]['idGroup'] = $idGroup;
                     $allGroups[$var]['nameGroup'] = $nameGroup;
+                    $allGroups[$var]['firstNameTeacher'] = $firstNameTeacher;
+                    $allGroups[$var]['lastNameTeacher'] = $lastNameTeacher;
+                    $allGroups[$var]['school'] = $school;
                     $var++;
                 }
             }
@@ -174,10 +180,16 @@ class DefaultController extends Controller
             $teamsGroups = [];
             $idGroup = $group['idGroup'];
             $nameGroup = $group['nameGroup'];
+            $firstNameTeacher = $group['firstNameTeacher'];
+            $lastNameTeacher = $group['lastNameTeacher'];
+            $school = $group['school'];
             $entityManager = $this->getDoctrine()->getManager();
             $teams = $entityManager->getRepository('TeamBundle:Team')->findBy(array('group' => $idGroup));
             $allTeams[$var]['idGroup'] = $idGroup;
             $allTeams[$var]['nameGroup'] = $nameGroup;
+            $allTeams[$var]['firstNameTeacher'] = $firstNameTeacher;
+            $allTeams[$var]['lastNameTeacher'] = $lastNameTeacher;
+            $allTeams[$var]['school'] = $school;
             foreach ($teams as $team){
                 $teamsGroups[] = $team;
             }                                                                                                                       
@@ -199,14 +211,15 @@ class DefaultController extends Controller
         $array = [];
         $teamsGroups = [];
         foreach ($allTeams as $team){ 
-            $scores[] = $team->getBestScore();
+            $scores[$team->getId()] = $team->getBestScore();
         }
         arsort($scores);
-        foreach ($scores as $score){ 
+        foreach ($scores as $idTeam => $score){ 
             foreach ($allTeams as $team){ 
                 $teamBestScore = $team->getBestScore();
+                $oldIdTeam = $team->getId();
                 $nameTeam = $team->getName();
-                if($score == $teamBestScore){
+                if($idTeam == $oldIdTeam){
                     $array['nameTeam'] = $nameTeam;
                     $array['bestScoreTeam'] = $teamBestScore;
                     $teamsGroups[] = $array;

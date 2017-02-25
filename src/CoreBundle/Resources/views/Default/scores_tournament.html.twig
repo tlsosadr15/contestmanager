@@ -6,13 +6,13 @@
 	<table class="table-bordered" style="width:40%; float: right; margin:50px 5%; padding:20px;">
 		<thead>
 			<tr>
-			    <th style="padding:20px;">{{ group.nameGroup }}</th>
+			    <th style="padding:20px;">Ecole {{ group.school }}, {{ group.nameGroup }} de {{ group.firstNameTeacher }}{{ group.lastNameTeacher }}</th>
 			    <th style="width:30%; text-align:right; padding:20px;" >Score</th>
 			</tr>
 		</thead>
 		<tbody>     
 			{% for team in group.teams %}
-				<tr style="{{ loop.first ? 'background-color: #adffca;' }} {{ loop.last ? 'background-color: #ffa4a4;' }}">
+				<tr style="{{ loop.first ? 'background-color: #3aff80;' }}">
 				    <td style="padding:20px;">{{ team.nameTeam }}</td>
 				    <td style=" text-align:right;padding:20px;">{{ team.bestScoreTeam }}</td>
 				</tr>

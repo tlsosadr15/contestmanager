@@ -119,12 +119,11 @@ class DefaultController extends Controller
 
         $entityManager = $this->getDoctrine()->getManager();
         $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTourament));
-        $groups = $entityManager->getRepository('MatchBundle:GroupMatch')->findAll();
 
-       /* if( empty($tournaments) ){
-            return new JsonResponse('matchs not found', 404);
+        if( empty($tournament) ){
+            return $this->render('CoreBundle:Default:scores_tournament.html.twig', array('error' => 'Ce tournois n\'existe pas', 'scores' => 'nop'));
         }
-        */
+        
         $idGroups = $this->getGroupsId($tournament);
         $scores = $this->getTeamsOfGroups($idGroups);
         return $this->render('CoreBundle:Default:scores_tournament.html.twig', array('scores' => $scores));
@@ -139,7 +138,7 @@ class DefaultController extends Controller
      */
     private function getGroupsId($tournament) {
         $allGroups = [];
-        $i=0;
+        $var=0;
         $matchs = $tournament->getMatch();
         foreach ($matchs as $match){
             $scores = $match->getScore()->toArray();
@@ -151,9 +150,9 @@ class DefaultController extends Controller
                     if($group['idGroup'] == $idGroup) $inser = false;
                 }
                 if($inser) {
-                    $allGroups[$i]['idGroup'] = $idGroup;
-                    $allGroups[$i]['nameGroup'] = $nameGroup;
-                    $i++;
+                    $allGroups[$var]['idGroup'] = $idGroup;
+                    $allGroups[$var]['nameGroup'] = $nameGroup;
+                    $var++;
                 }
             }
         }
@@ -161,42 +160,38 @@ class DefaultController extends Controller
     }
 
     /**
-     * Get id tournaments of a team
+     * Get team of groups
      *
-     * @param Tournament $tournament Tournament
+     * @param array $allGroups allGroups
      *
      * @return array
      */
     private function getTeamsOfGroups($allGroups) {
         $allTeams = [];
-        $i=0;
+        $var=0;
+        $inser = true;
         foreach ($allGroups as $group){ 
             $teamsGroups = [];
             $idGroup = $group['idGroup'];
             $nameGroup = $group['nameGroup'];
             $entityManager = $this->getDoctrine()->getManager();
             $teams = $entityManager->getRepository('TeamBundle:Team')->findBy(array('group' => $idGroup));
-            $allTeams[$i]['idGroup'] = $idGroup;
-            $allTeams[$i]['nameGroup'] = $nameGroup;
-            foreach ($teams as $team){ 
-                $teamBestScore = $team->getBestScore();
-                $teamGroupId = $team->getGroup()->getId();
-                $nameTeam = $team->getName();
-                $teams['nameTeam'] = $nameTeam;
-                $teams['bestScoreTeam'] = $teamBestScore;
-                $teamsGroups[] = $teams;
-            }
+            $allTeams[$var]['idGroup'] = $idGroup;
+            $allTeams[$var]['nameGroup'] = $nameGroup;
+            foreach ($teams as $team){
+                $teamsGroups[] = $team;
+            }                                                                                                                       
             $teamsGroups = $this->trieTeam($teamsGroups);
-            $allTeams[$i]['teams'] = $teamsGroups;
-            $i++;
+            $allTeams[$var]['teams'] = $teamsGroups;
+            $var++;
         }
         return $allTeams;
     }
 
     /**
-     * Get id tournaments of a team
+     * Tri des scores
      *
-     * @param Tournament $tournament Tournament
+     * @param array $allTeams allTeams
      *
      * @return array
      */
@@ -204,14 +199,14 @@ class DefaultController extends Controller
         $array = [];
         $teamsGroups = [];
         foreach ($allTeams as $team){ 
-            $scores[] = $team['bestScoreTeam'];
+            $scores[] = $team->getBestScore();
         }
         arsort($scores);
         foreach ($scores as $score){ 
             foreach ($allTeams as $team){ 
-                $teamBestScore = $team['bestScoreTeam'];
-                $nameTeam = $team['nameTeam'];
-                if($score == $team['bestScoreTeam']){
+                $teamBestScore = $team->getBestScore();
+                $nameTeam = $team->getName();
+                if($score == $teamBestScore){
                     $array['nameTeam'] = $nameTeam;
                     $array['bestScoreTeam'] = $teamBestScore;
                     $teamsGroups[] = $array;

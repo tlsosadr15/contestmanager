@@ -258,9 +258,6 @@ class RestController extends Controller
         echo 'On a les droits <br/>';
         var_dump($idGroups);
 
-
-        exit;
-
         return $tournaments;
     }
 

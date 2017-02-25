@@ -1,5 +1,7 @@
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> 
-{% for group in scores %}
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    {% for group in scores %}
 
 	<table class="table-bordered" style="width:40%; float: right; margin:50px 5%; padding:20px;">
 		<thead>
@@ -8,13 +10,18 @@
 			    <th style="width:30%; text-align:right; padding:20px;" >Score</th>
 			</tr>
 		</thead>
-		{% for team in group.teams %}
-			<tbody>     
-				<tr>
+		<tbody>     
+			{% for team in group.teams %}
+				<tr style="{{ loop.first ? 'background-color: #adffca;' }} {{ loop.last ? 'background-color: #ffa4a4;' }}">
 				    <td style="padding:20px;">{{ team.nameTeam }}</td>
 				    <td style=" text-align:right;padding:20px;">{{ team.bestScoreTeam }}</td>
 				</tr>
-			</tbody>
-		{% endfor %}
+			{% endfor %}
+		</tbody>
 	</table>
 {% endfor %}
+{% endblock %}
+
+
+
+

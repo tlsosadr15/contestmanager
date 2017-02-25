@@ -211,6 +211,11 @@ class RestController extends Controller
         }
 
         $team = $entityManager->getRepository('TeamBundle:Team')->findOneBy(array('id' => $idTeam));
+        $bestScoreTeam = $team->getBestScore();
+        if($scoreV > $bestScoreTeam){
+            $team->setBestScore($scoreV);
+            $entityManager->persist($team);
+        }
         $match = $entityManager->getRepository('MatchBundle:Versus')->findOneBy(array('id' => $idMatch));
         if ($allFinish) $match->setFinished(true);
         $entityManager->persist($match);

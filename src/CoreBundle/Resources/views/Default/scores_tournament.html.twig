@@ -1,0 +1,20 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> 
+{% for group in scores %}
+
+	<table class="table-bordered" style="width:50%; margin:50px auto; padding:20px;">
+		<thead>
+			<tr>
+			    <th style="padding:20px;">{{ group.nameGroup }}</th>
+			    <th style="width:30%; text-align:right; padding:20px;" >Score</th>
+			</tr>
+		</thead>
+		{% for team in group.teams %}
+			<tbody>     
+				<tr>
+				    <td style="padding:20px;">{{ team.nameTeam }}</td>
+				    <td style=" text-align:right;padding:20px;">{{ team.bestScoreTeam }}</td>
+				</tr>
+			</tbody>
+		{% endfor %}
+	</table>
+{% endfor %}

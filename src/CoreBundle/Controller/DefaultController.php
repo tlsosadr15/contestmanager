@@ -105,4 +105,119 @@ class DefaultController extends Controller
 
         return $response;
     }
+
+    /**
+     * Mobile app action
+     *
+     * @param Request $request
+     *
+     * @return BinaryFileResponse
+     */
+    public function scoreTournamentsAction(Request $request)
+    {
+        $idTourament = $request->query->get('id');
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTourament));
+        $groups = $entityManager->getRepository('MatchBundle:GroupMatch')->findAll();
+
+       /* if( empty($tournaments) ){
+            return new JsonResponse('matchs not found', 404);
+        }
+        */
+        $idGroups = $this->getGroupsId($tournament);
+        $scores = $this->getTeamsOfGroups($idGroups);
+        return $this->render('CoreBundle:Default:scores_tournament.html.twig', array('scores' => $scores));
+    }
+
+    /**
+     * Get id tournaments of a team
+     *
+     * @param Tournament $tournament Tournament
+     *
+     * @return array
+     */
+    private function getGroupsId($tournament) {
+        $allGroups = [];
+        $i=0;
+        $matchs = $tournament->getMatch();
+        foreach ($matchs as $match){
+            $scores = $match->getScore()->toArray();
+            foreach ($scores as $score){
+                $inser = true;
+                $idGroup = $score->getTeam()->getGroup()->getId();
+                $nameGroup = $score->getTeam()->getGroup()->getName();
+                foreach ($allGroups as $group){
+                    if($group['idGroup'] == $idGroup) $inser = false;
+                }
+                if($inser) {
+                    $allGroups[$i]['idGroup'] = $idGroup;
+                    $allGroups[$i]['nameGroup'] = $nameGroup;
+                    $i++;
+                }
+            }
+        }
+        return $allGroups;
+    }
+
+    /**
+     * Get id tournaments of a team
+     *
+     * @param Tournament $tournament Tournament
+     *
+     * @return array
+     */
+    private function getTeamsOfGroups($allGroups) {
+        $allTeams = [];
+        $i=0;
+        foreach ($allGroups as $group){ 
+            $teamsGroups = [];
+            $idGroup = $group['idGroup'];
+            $nameGroup = $group['nameGroup'];
+            $entityManager = $this->getDoctrine()->getManager();
+            $teams = $entityManager->getRepository('TeamBundle:Team')->findBy(array('group' => $idGroup));
+            $allTeams[$i]['idGroup'] = $idGroup;
+            $allTeams[$i]['nameGroup'] = $nameGroup;
+            foreach ($teams as $team){ 
+                $teamBestScore = $team->getBestScore();
+                $teamGroupId = $team->getGroup()->getId();
+                $nameTeam = $team->getName();
+                $teams['nameTeam'] = $nameTeam;
+                $teams['bestScoreTeam'] = $teamBestScore;
+                $teamsGroups[] = $teams;
+            }
+            $teamsGroups = $this->trieTeam($teamsGroups);
+            $allTeams[$i]['teams'] = $teamsGroups;
+            $i++;
+        }
+        return $allTeams;
+    }
+
+    /**
+     * Get id tournaments of a team
+     *
+     * @param Tournament $tournament Tournament
+     *
+     * @return array
+     */
+    private function trieTeam($allTeams) {
+        $array = [];
+        $teamsGroups = [];
+        foreach ($allTeams as $team){ 
+            $scores[] = $team['bestScoreTeam'];
+        }
+        arsort($scores);
+        foreach ($scores as $score){ 
+            foreach ($allTeams as $team){ 
+                $teamBestScore = $team['bestScoreTeam'];
+                $nameTeam = $team['nameTeam'];
+                if($score == $team['bestScoreTeam']){
+                    $array['nameTeam'] = $nameTeam;
+                    $array['bestScoreTeam'] = $teamBestScore;
+                    $teamsGroups[] = $array;
+                }
+            }
+        }
+        return $teamsGroups;
+    }
 }

@@ -33,16 +33,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class DefaultController extends Controller
 {
     /**
-     * tournament action
-     *
-     * @return RedirectResponse
-     */
-    public function tournamentAction()
-    {
-        return new RedirectResponse('/');
-    }
-
-    /**
      * Mobile app action
      *
      * @param Request $request
@@ -174,10 +164,11 @@ class DefaultController extends Controller
      *
      * @return array
      */
-    private function getTeamsOfGroups($allGroups) {
+    private function getTeamsOfGroups($allGroups)
+    {
         $allTeams = [];
-        $var=0;
-        foreach ($allGroups as $group){
+        $var = 0;
+        foreach ($allGroups as $group) {
             $teamsGroups = [];
             $idGroup = $group['idGroup'];
             $nameGroup = $group['nameGroup'];
@@ -191,9 +182,9 @@ class DefaultController extends Controller
             $allTeams[$var]['firstNameTeacher'] = $firstNameTeacher;
             $allTeams[$var]['lastNameTeacher'] = $lastNameTeacher;
             $allTeams[$var]['school'] = $school;
-            foreach ($teams as $team){
+            foreach ($teams as $team) {
                 $teamsGroups[] = $team;
-            }                                                                                                                       
+            }
             $teamsGroups = $this->sortTeam($teamsGroups);
             $allTeams[$var]['teams'] = $teamsGroups;
             $var++;
@@ -204,6 +195,7 @@ class DefaultController extends Controller
 
     /**
      * Tri des scores
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      *
      * @param array $allTeams allTeams
      *

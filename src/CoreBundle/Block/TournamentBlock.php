@@ -14,6 +14,8 @@ namespace CoreBundle\Block;
 
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -30,17 +32,20 @@ class TournamentBlock extends BaseBlockService
 {
     protected $type;
     protected $templating;
+    protected $container;
 
     /**
      * TournamentBlock constructor.
      *
      * @param string                                                     $type       Type
      * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating Templating
+     * @param ContainerInterface                                         $container  Container
      */
-    public function __construct($type, $templating)
+    public function __construct($type, $templating, $container)
     {
         $this->type = $type;
         $this->templating = $templating;
+        $this->container = $container;
 
         parent::__construct($type, $templating);
     }
@@ -55,6 +60,10 @@ class TournamentBlock extends BaseBlockService
      */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
-        return $this->renderResponse('CoreBundle:Block:tournament_block.html.twig');
+        /** @var FormFactory $formFactory */
+        $formFactory = $this->container->get('form.factory');
+        $form = $formFactory->create('MatchBundle\Form\TournamentType');
+
+        return $this->renderResponse('CoreBundle:Block:tournament_block.html.twig', array('form' => $form->createView()));
     }
 }

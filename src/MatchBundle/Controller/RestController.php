@@ -230,13 +230,13 @@ class RestController extends Controller
     }
 
     /**
-     * @Rest\Get("/score/{idTournaments}", requirements={"idTournaments" = "\d+"})
+     * @Rest\Get("/score/{idTournament}", requirements={"idTournament" = "\d+"})
      * @ApiDoc(
      * section="Scores",
      * description= "Get score of a Tournaments",
      * requirements={
      *      {
-     *          "name"="idTournaments",
+     *          "name"="idTournament",
      *          "dataType"="integer",
      *          "requirement"="\d+",
      *          "description"="Id Tournaments"
@@ -248,15 +248,15 @@ class RestController extends Controller
      * }
      * )
      */
-    public function scoresTournamentsAction($idTournaments)
+    public function scoresTournamentsAction($idTournament)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTournaments));
-        if( empty($tournaments) ){
+        $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTournament));
+        if( empty($tournament) ){
             return new JsonResponse('matchs not found', 404);
         }
 
-        return $tournaments;
+        return $tournament;
     }
 
     /**
@@ -295,20 +295,20 @@ class RestController extends Controller
      *
      * @return array
      */
-    private function getGroupsId($tournament) {
-        $allGroups = [];
-        $matchs = $tournament->getMatch()->toArray();
-        foreach ($matchs as $match){
-            $scores = $match->getScore()->toArray();
-            $inser = true;
-            foreach ($scores as $score){
-                $idGroup = $score->getTeam()->getGroup()->getId();
-                foreach ($allGroups as $group){
-                    if($group == $idGroup) $inser = false;
-                }
-                if($inser) $allGroups[] = $idGroup;
-            }
-        }
-        return $allGroups;
-    }
+//    private function getGroupsId($tournament) {
+//        $allGroups = [];
+//        $matchs = $tournament->getMatch()->toArray();
+//        foreach ($matchs as $match){
+//            $scores = $match->getScore()->toArray();
+//            $inser = true;
+//            foreach ($scores as $score){
+//                $idGroup = $score->getTeam()->getGroup()->getId();
+//                foreach ($allGroups as $group){
+//                    if($group == $idGroup) $inser = false;
+//                }
+//                if($inser) $allGroups[] = $idGroup;
+//            }
+//        }
+//        return $allGroups;
+//    }
 }

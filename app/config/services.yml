@@ -59,6 +59,6 @@ services:
         arguments:
             - "admin.block.tournament"
             - "@templating"
-            - "@doctrine.orm.entity_manager"
+            - "@service_container"
         tags:
             - { name: sonata.block }

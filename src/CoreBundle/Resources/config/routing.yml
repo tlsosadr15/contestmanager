@@ -1,7 +1,7 @@
 
 tournament:
     path:     /tournament
-    defaults: { _controller: CoreBundle:Default:tournament }
+    defaults: { _controller: CoreBundle:Tournament:tournament }
 
 scoreTournament:
     path:     /scores_tournament

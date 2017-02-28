@@ -12,6 +12,7 @@
  */
 namespace CoreBundle\Controller;
 
+use MatchBundle\Entity\Tournament;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -120,12 +121,13 @@ class DefaultController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTourament));
 
-        if( empty($tournament) ){
+        if (empty($tournament)) {
             return $this->render('CoreBundle:Default:scores_tournament.html.twig', array('error' => 'Ce tournois n\'existe pas', 'scores' => 'nop'));
         }
         
         $idGroups = $this->getGroupsId($tournament);
         $scores = $this->getTeamsOfGroups($idGroups);
+
         return $this->render('CoreBundle:Default:scores_tournament.html.twig', array('scores' => $scores));
     }
 
@@ -175,8 +177,7 @@ class DefaultController extends Controller
     private function getTeamsOfGroups($allGroups) {
         $allTeams = [];
         $var=0;
-        $inser = true;
-        foreach ($allGroups as $group){ 
+        foreach ($allGroups as $group){
             $teamsGroups = [];
             $idGroup = $group['idGroup'];
             $nameGroup = $group['nameGroup'];
@@ -193,10 +194,11 @@ class DefaultController extends Controller
             foreach ($teams as $team){
                 $teamsGroups[] = $team;
             }                                                                                                                       
-            $teamsGroups = $this->trieTeam($teamsGroups);
+            $teamsGroups = $this->sortTeam($teamsGroups);
             $allTeams[$var]['teams'] = $teamsGroups;
             $var++;
         }
+
         return $allTeams;
     }
 
@@ -207,7 +209,7 @@ class DefaultController extends Controller
      *
      * @return array
      */
-    private function trieTeam($allTeams) {
+    private function sortTeam($allTeams) {
         $array = [];
         $teamsGroups = [];
         foreach ($allTeams as $team){ 

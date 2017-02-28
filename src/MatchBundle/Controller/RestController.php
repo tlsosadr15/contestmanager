@@ -164,7 +164,7 @@ class RestController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
         $matchs = $entityManager->getRepository('MatchBundle:Score')->findBy(array('team' => $idTeam));
-        if( empty($matchs) ){
+        if ( empty($matchs) ) {
             return new JsonResponse('matchs not found', 404);
         }
         
@@ -194,9 +194,10 @@ class RestController extends Controller
         $idMatch = $request->get('id_match');
         $scoreV = $request->get('score');
         
-        if(!isset($idTeam) || !isset($idMatch) || !isset($scoreV)){
-            $test = 'Missing parameter(s) id_team = ' . $idTeam . ' et id_match = ' . $idMatch . ' et score = ' . $scoreV;
-            return new JsonResponse($test, 400);
+        if (!isset($idTeam) || !isset($idMatch) || !isset($scoreV)) {
+            $error = 'Missing parameter(s) id_team = '.$idTeam.' & id_match = '.$idMatch.' & score = '.$scoreV;
+
+            return new JsonResponse($error, 400);
         }
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -206,13 +207,13 @@ class RestController extends Controller
 
         $scores = $entityManager->getRepository('MatchBundle:Score')->findBy(array('versus' => $idMatch));
         $allFinish = true;
-        foreach ($scores as $score){
-            if (empty($score->getScore())) $allFinish = false;
+        foreach ($scores as $score) {
+            empty($score->getScore()) ? $allFinish = false : $allFinish = true;
         }
 
         $team = $entityManager->getRepository('TeamBundle:Team')->findOneBy(array('id' => $idTeam));
         $bestScoreTeam = $team->getBestScore();
-        if($scoreV > $bestScoreTeam){
+        if ($scoreV > $bestScoreTeam) {
             $team->setBestScore($scoreV);
             $entityManager->persist($team);
         }
@@ -220,7 +221,7 @@ class RestController extends Controller
         if ($allFinish) $match->setFinished(true);
         $entityManager->persist($match);
         
-        if(!$match || !$team){
+        if (!$match || !$team) {
             return new JsonResponse('Ressource(s) not found', 404);
         }
         $entityManager->flush();
@@ -254,9 +255,6 @@ class RestController extends Controller
         if( empty($tournaments) ){
             return new JsonResponse('matchs not found', 404);
         }
-        $idGroups = $this->getGroupsId($tournament);
-        echo 'On a les droits <br/>';
-        var_dump($idGroups);
 
         return $tournaments;
     }
@@ -269,26 +267,26 @@ class RestController extends Controller
      *
      * @return array
      */
-    private function getTournamentsId($tournaments, $idTeam) {
-        $allYourTournament = [];
-        foreach ($tournaments as $tournament){
-            $matchs = $tournament->getMatch()->toArray();
-            $idTournament = $tournament->getId();
-            $teamIn = false;
-            foreach ($matchs as $match){
-                $scores = $match->getScore()->toArray();
-                foreach ($scores as $score){
-                    $idTeams = $score->getTeam()->getId();
-                    var_dump($idTeams);
-                    if($idTeams == $idTeam) $teamIn = true;
-                }
-                if($teamIn) break;
-            }
-            if($teamIn) $allYourTournament[] = $idTournament;
-        }
-
-        return $allYourTournament;
-    }
+//    private function getTournamentsId($tournaments, $idTeam) {
+//        $allYourTournament = [];
+//        foreach ($tournaments as $tournament){
+//            $matchs = $tournament->getMatch()->toArray();
+//            $idTournament = $tournament->getId();
+//            $teamIn = false;
+//            foreach ($matchs as $match){
+//                $scores = $match->getScore()->toArray();
+//                foreach ($scores as $score){
+//                    $idTeams = $score->getTeam()->getId();
+//                    var_dump($idTeams);
+//                    if($idTeams == $idTeam) $teamIn = true;
+//                }
+//                if($teamIn) break;
+//            }
+//            if($teamIn) $allYourTournament[] = $idTournament;
+//        }
+//
+//        return $allYourTournament;
+//    }
 
     /**
      * Get id tournaments of a team

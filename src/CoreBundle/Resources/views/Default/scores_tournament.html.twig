@@ -1,25 +1,26 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    {% for group in scores %}
-
-	<table class="table-bordered" style="width:40%; float: right; margin:50px 5%; padding:20px;">
-		<thead>
+	<div class="container">
+	{% for group in scores %}
+		<table class="table-bordered table">
+			<thead>
 			<tr>
-			    <th style="padding:20px;">Ecole {{ group.school }}, {{ group.nameGroup }} de {{ group.firstNameTeacher }}{{ group.lastNameTeacher }}</th>
-			    <th style="width:30%; text-align:right; padding:20px;" >Score</th>
+				<th class="padding">Ecole {{ group.teacher.school }} {{ group.name }},  de {{ group.teacher.firstName }} {{ group.teacher.lastName }}</th>
+				<th class="nameScore" >Score</th>
 			</tr>
-		</thead>
-		<tbody>     
-			{% for team in group.teams %}
-				<tr style="{{ loop.first ? 'background-color: #3aff80;' }}">
-				    <td style="padding:20px;">{{ team.nameTeam }}</td>
-				    <td style=" text-align:right;padding:20px;">{{ team.bestScoreTeam }}</td>
+			</thead>
+			<tbody>
+			{% for team in group.team %}
+				<tr class="{{ loop.first ? 'first' }}">
+					<td class="padding">{{ team.name }}</td>
+					<td class="score">{{ team.bestScore }}</td>
 				</tr>
 			{% endfor %}
-		</tbody>
-	</table>
-{% endfor %}
+			</tbody>
+		</table>
+	{% endfor %}
+	</div>
 {% endblock %}
 
 

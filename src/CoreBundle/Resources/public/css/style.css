@@ -1,0 +1,25 @@
+.table {
+    width:40%;
+    float: right;
+    margin:50px 5%;
+    padding:20px;
+}
+
+.nameScore {
+    width:30%;
+    text-align:right;
+    padding:20px;
+}
+
+.padding {
+    padding:20px;
+}
+
+.first {
+    background-color: #3aff80;
+}
+
+.score {
+    text-align:right;
+    padding:20px;
+}

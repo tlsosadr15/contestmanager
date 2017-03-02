@@ -205,22 +205,23 @@ class DefaultController extends Controller
     {
         $array = [];
         $teamsGroups = [];
-        foreach ($allTeams as $team){ 
+        foreach ($allTeams as $team) {
             $scores[$team->getId()] = $team->getBestScore();
         }
         arsort($scores);
-        foreach ($scores as $idTeam => $score){ 
-            foreach ($allTeams as $team){ 
+        foreach ($scores as $idTeam => $score) {
+            foreach ($allTeams as $team) {
                 $teamBestScore = $team->getBestScore();
                 $oldIdTeam = $team->getId();
                 $nameTeam = $team->getName();
-                if($idTeam == $oldIdTeam){
+                if ($idTeam == $oldIdTeam) {
                     $array['nameTeam'] = $nameTeam;
                     $array['bestScoreTeam'] = $teamBestScore;
                     $teamsGroups[] = $array;
                 }
             }
         }
+        
         return $teamsGroups;
     }
 }

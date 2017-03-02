@@ -201,7 +201,8 @@ class DefaultController extends Controller
      *
      * @return array
      */
-    private function sortTeam($allTeams) {
+    private function sortTeam($allTeams)
+    {
         $array = [];
         $teamsGroups = [];
         foreach ($allTeams as $team){ 

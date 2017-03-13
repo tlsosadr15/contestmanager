@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use MatchBundle\Entity\Score;
+use MatchBundle\Helper\TournamentManager;
 
 class RestController extends Controller
 {
@@ -77,7 +78,7 @@ class RestController extends Controller
         $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findAll();
 
         if( empty($tournament) ){
-            return new JsonResponse('matchs not found', 404);
+            return new JsonResponse('tournois not found', 404);
         }
         return $tournament;
     }
@@ -257,5 +258,37 @@ class RestController extends Controller
         }
 
         return $tournament;
+    }
+
+    /**
+     * @Rest\Get("/tournaments/groups/{idTournament}", requirements={"idTournament" = "\d+"})
+     * @ApiDoc(
+     * section="Scores",
+     * description= "Get al groups of a Tournaments",
+     * requirements={
+     *      {
+     *          "name"="idTournament",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Id Tournaments"
+     *      }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when the matchs are not found"
+     * }
+     * )
+     */
+    public function groupsTournamentsAction($idTournament)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTournament));
+        if( empty($tournament) ){
+            return new JsonResponse('matchs not found', 404);
+        }
+
+        $groups = TournamentManager::getTournamentGroup($tournament);
+
+        return $groups;
     }
 }

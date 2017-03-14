@@ -43,6 +43,9 @@ class TournamentManager
         foreach ($matchs as $match) {
             /** @var Score $score */
             $score = $match->getScore()->first();
+            if (!$score) {
+                continue;
+            }
             $group = $score->getTeam()->getGroup();
             if (!array_key_exists($group->getId(), $groups)) {
                 $groups[$group->getId()] = $group;

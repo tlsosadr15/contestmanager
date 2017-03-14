@@ -1,0 +1,32 @@
+.table {
+    width: 22%;
+    min-width: 300px;
+    margin: 10px 0 0 0;
+    padding: 0;
+    display: inline-table;
+}
+
+.nameScore {
+    width:10%;
+    text-align:right;
+    padding:20px;
+}
+
+.padding {
+    padding:20px;
+}
+
+.first {
+    background-color: #3aff80;
+}
+
+.score {
+    text-align:right;
+    padding:20px;
+}
+
+.container {
+    width: 100%;
+    text-align: center;
+    margin-top: 200px;
+}

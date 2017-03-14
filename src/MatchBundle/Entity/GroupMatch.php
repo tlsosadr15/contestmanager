@@ -45,6 +45,7 @@ class GroupMatch
 
     /**
      * @ORM\OneToMany(targetEntity="TeamBundle\Entity\Team", mappedBy="group")
+     * @ORM\OrderBy({"bestScore" = "DESC"})
      * @Serializer\MaxDepth(1)
      */
     private $team;

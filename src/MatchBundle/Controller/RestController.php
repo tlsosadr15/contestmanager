@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use MatchBundle\Entity\Score;
+use MatchBundle\Helper\TournamentManager;
 
 class RestController extends Controller
 {
@@ -77,7 +78,7 @@ class RestController extends Controller
         $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findAll();
 
         if( empty($tournament) ){
-            return new JsonResponse('matchs not found', 404);
+            return new JsonResponse('tournois not found', 404);
         }
         return $tournament;
     }
@@ -260,55 +261,34 @@ class RestController extends Controller
     }
 
     /**
-     * Get id tournaments of a team
-     *
-     * @param Tournament $tournaments Tournament
-     * @param int $idTeam idTeam
-     *
-     * @return array
+     * @Rest\Get("/tournaments/groups/{idTournament}", requirements={"idTournament" = "\d+"})
+     * @ApiDoc(
+     * section="Scores",
+     * description= "Get al groups of a Tournaments",
+     * requirements={
+     *      {
+     *          "name"="idTournament",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Id Tournaments"
+     *      }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when the matchs are not found"
+     * }
+     * )
      */
-//    private function getTournamentsId($tournaments, $idTeam) {
-//        $allYourTournament = [];
-//        foreach ($tournaments as $tournament){
-//            $matchs = $tournament->getMatch()->toArray();
-//            $idTournament = $tournament->getId();
-//            $teamIn = false;
-//            foreach ($matchs as $match){
-//                $scores = $match->getScore()->toArray();
-//                foreach ($scores as $score){
-//                    $idTeams = $score->getTeam()->getId();
-//                    var_dump($idTeams);
-//                    if($idTeams == $idTeam) $teamIn = true;
-//                }
-//                if($teamIn) break;
-//            }
-//            if($teamIn) $allYourTournament[] = $idTournament;
-//        }
-//
-//        return $allYourTournament;
-//    }
+    public function groupsTournamentsAction($idTournament)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTournament));
+        if( empty($tournament) ){
+            return new JsonResponse('matchs not found', 404);
+        }
 
-    /**
-     * Get id tournaments of a team
-     *
-     * @param Tournament $tournament Tournament
-     *
-     * @return array
-     */
-//    private function getGroupsId($tournament) {
-//        $allGroups = [];
-//        $matchs = $tournament->getMatch()->toArray();
-//        foreach ($matchs as $match){
-//            $scores = $match->getScore()->toArray();
-//            $inser = true;
-//            foreach ($scores as $score){
-//                $idGroup = $score->getTeam()->getGroup()->getId();
-//                foreach ($allGroups as $group){
-//                    if($group == $idGroup) $inser = false;
-//                }
-//                if($inser) $allGroups[] = $idGroup;
-//            }
-//        }
-//        return $allGroups;
-//    }
+        $groups = TournamentManager::getTournamentGroup($tournament);
+
+        return $groups;
+    }
 }

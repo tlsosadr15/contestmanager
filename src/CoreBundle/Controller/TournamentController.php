@@ -39,11 +39,10 @@ class TournamentController extends Controller
      */
     public function tournamentAction(Request $request)
     {
-//        var_dump($request->request->has('test')); exit;
         $data = $request->request->get('matchbundle_tournament');
         $tournamentId = $data['tournament'];
 
-        if ($request->request->has('test')) {
+        if ($request->request->has('score')) {
             return new RedirectResponse($this->generateUrl('tournament_score', array('idTourament' => $tournamentId)));
         }
         $tournament = $this->container->get('doctrine')->getManager()->getRepository('MatchBundle:Tournament')->findBy(array('id' => $tournamentId))[0];

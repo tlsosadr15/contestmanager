@@ -22,10 +22,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use TeamBundle\Entity\Team;
+use MatchBundle\Helper\TournamentManager;
 
 /**
  * Class TournamentAdmin
@@ -74,19 +73,19 @@ class TournamentAdmin extends AbstractAdmin
                 ))
                 ->add('date', DateTimeType::class)
             ->end();
-            for ($i = 1; $i <= $this->getRoomNumber(); $i++) {
-                $formMapper
-                    ->with('Room '.$i)
-                        ->add('group'.$i, 'entity', array(
-                                'class' => 'MatchBundle\Entity\GroupMatch',
-                                'multiple' => true,
-                                'required' => false,
-                                'mapped' => false,
-                                'label' => 'Groups',
-                            )
+        for ($i = 1; $i <= $this->getRoomNumber(); $i++) {
+            $formMapper
+                ->with('Room '.$i)
+                    ->add('group'.$i, 'entity', array(
+                            'class' => 'MatchBundle\Entity\GroupMatch',
+                            'multiple' => true,
+                            'required' => false,
+                            'mapped' => false,
+                            'label' => 'Groups',
                         )
-                    ->end();
-            }
+                    )
+                ->end();
+        }
     }
 
     /**
@@ -152,7 +151,8 @@ class TournamentAdmin extends AbstractAdmin
      * @param array $groups Groups
      * @param Tournament $tournament Tournament
      */
-    private function setRandomMatchs($groups, $tournament) {
+    private function setRandomMatchs($groups, $tournament)
+    {
         $times = $this->getConfigurationPool()->getContainer()->getParameter($this->halfDay.'_match_schedule');
         $entityManager = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
         $teams = $this->formatTeamList($groups);
@@ -161,7 +161,7 @@ class TournamentAdmin extends AbstractAdmin
         foreach ($matchs as $match) {
             foreach ($times as $time) {
                 $versus = new Versus();
-                $versus->setDateMatch($this->formatDate($tournament->getDate(), $time));
+                $versus->setDateMatch(TournamentManager::formatDate($tournament->getDate(), $time));
                 $versus->setTableNumber($this->tableNumber);
                 $versus->setTournament($tournament);
 
@@ -186,7 +186,8 @@ class TournamentAdmin extends AbstractAdmin
      *
      * @return array
      */
-    private function formatTeamMatch($teams) {
+    private function formatTeamMatch($teams)
+    {
         $matchs = [];
         $cpt = 0;
         while (count($teams) > 0) {
@@ -213,7 +214,8 @@ class TournamentAdmin extends AbstractAdmin
      *
      * @return array
      */
-    private function formatTeamList($groups) {
+    private function formatTeamList($groups)
+    {
         $teams = [];
 
         /** @var GroupMatch $group */
@@ -228,26 +230,12 @@ class TournamentAdmin extends AbstractAdmin
     }
 
     /**
-     * Format Date match
-     *
-     * @param DateTime $day Day
-     * @param string $time Time
-     *
-     * @return DateTime
-     */
-    private function formatDate($day, $time) {
-        $dayString = $day->format('Y-m-d');
-
-        return new DateTime($dayString.' '.$time);
-    }
-
-
-    /**
      * Get Room number
      *
      * @return integer
      */
-    private function getRoomNumber() {
+    private function getRoomNumber()
+    {
         $entityManager = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
         $config = $entityManager->getRepository('CoreBundle:Config')->findOneBy(array());
 

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
@@ -100,14 +101,12 @@ class DefaultController extends Controller
     /**
      * Mobile app action
      *
-     * @param Request $request
+     * @param string $idTourament
      *
-     * @return BinaryFileResponse
+     * @return Response
      */
-    public function scoreTournamentsAction(Request $request)
+    public function tournamentScoreAction($idTourament)
     {
-        $idTourament = $request->query->get('id');
-
         $entityManager = $this->getDoctrine()->getManager();
         $tournament = $entityManager->getRepository('MatchBundle:Tournament')->findOneBy(array('id' => $idTourament));
 

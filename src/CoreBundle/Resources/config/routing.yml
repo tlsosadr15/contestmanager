@@ -3,9 +3,9 @@ tournament:
     path:     /tournament
     defaults: { _controller: CoreBundle:Tournament:tournament }
 
-scoreTournament:
-    path:     /scores_tournament
-    defaults: { _controller: CoreBundle:Default:scoreTournaments }
+tournament_score:
+    path:     /tournament_score/{idTourament}
+    defaults: { _controller: CoreBundle:Default:tournamentScore }
 
 app_upload:
     path:     /app_upload

@@ -66,11 +66,20 @@ class Versus
     /**
      * @var string
      *
-     * @ORM\Column(name="step", type="integer", nullable=false)
+     * @ORM\Column(name="step", type="integer", nullable=true)
      * @Expose
      * @MaxDepth(1)
      */
-    private $step = 1;
+    private $step;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="final_group", type="integer", nullable=true)
+     * @Expose
+     * @MaxDepth(1)
+     */
+    private $finalGroup;
 
     /**
      * @ORM\ManyToOne(targetEntity="MatchBundle\Entity\Tournament", inversedBy="match", cascade={"persist"})
@@ -260,5 +269,29 @@ class Versus
     public function getTournament()
     {
         return $this->tournament;
+    }
+
+    /**
+     * Set finalGroup
+     *
+     * @param integer $finalGroup
+     *
+     * @return Versus
+     */
+    public function setFinalGroup($finalGroup)
+    {
+        $this->finalGroup = $finalGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get finalGroup
+     *
+     * @return integer
+     */
+    public function getFinalGroup()
+    {
+        return $this->finalGroup;
     }
 }

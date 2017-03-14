@@ -42,7 +42,7 @@ class TournamentType extends AbstractType
                 'translation_domain' => 'Admin',
                 'attr' => array('class' => 'form-group'),
           ))
-          ->add('submit', SubmitType::class, array(
+          ->add('start_tournament', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-primary'),
                 'translation_domain' => 'Admin',
                 'label' => 'Start the final phase',

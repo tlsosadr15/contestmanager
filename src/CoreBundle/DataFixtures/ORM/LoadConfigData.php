@@ -10,7 +10,7 @@
  * @license  All right reserved
  * @link     Null
  */
-namespace AppBundle\DataFixtures\ORM;
+namespace CoreBundle\DataFixtures\ORM;
 
 use CoreBundle\Entity\Config;
 use Doctrine\Common\DataFixtures\AbstractFixture;

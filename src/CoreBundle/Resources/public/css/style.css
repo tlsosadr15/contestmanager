@@ -1,4 +1,4 @@
-.table {
+.score_tournament .table {
     width: 22%;
     min-width: 300px;
     margin: 10px 0 0 0;
@@ -16,7 +16,7 @@
     padding:20px;
 }
 
-.first {
+.score_tournament .first {
     background-color: #3aff80;
 }
 
@@ -25,7 +25,7 @@
     padding:20px;
 }
 
-.container {
+.score_tournament {
     width: 100%;
     text-align: center;
     margin-top: 200px;

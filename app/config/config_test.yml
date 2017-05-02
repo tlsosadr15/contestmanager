@@ -4,7 +4,9 @@ imports:
 framework:
     test: ~
     session:
+        handler_id:  ~
         storage_id: session.storage.mock_file
+        name: MOCKSESSID
     profiler:
         collect: false
 
@@ -16,6 +18,11 @@ swiftmailer:
     disable_delivery: true
 
 liip_functional_test: ~
+
+security:
+    firewalls:
+        main:
+            http_basic: ~
 
 doctrine:
     dbal:

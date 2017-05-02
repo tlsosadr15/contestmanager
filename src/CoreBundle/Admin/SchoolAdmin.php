@@ -42,7 +42,7 @@ class SchoolAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof School
-            ? 'School '.$object->getName()
+            ? $object->getName()
             : 'School';
     }
 

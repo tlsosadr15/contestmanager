@@ -13,6 +13,12 @@ use TeamBundle\Entity\Team;
  * @ORM\Entity
  * @ORM\Table(name="user")
  * @ExclusionPolicy("all")
+ * @ORM\AttributeOverrides({
+        @ORM\AttributeOverride(
+ *              name="salt",
+ *              column=@ORM\Column(name="salt", type="string", nullable=true)
+ *          )
+ *     })
  */
 class User extends BaseUser
 {

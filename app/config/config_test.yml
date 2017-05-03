@@ -5,10 +5,8 @@ framework:
     test: ~
     session:
         handler_id:  ~
-        storage_id: session.storage.mock_file
+        storage_id: session.storage.filesystem
         name: MOCKSESSID
-    profiler:
-        collect: false
 
 web_profiler:
     toolbar: false
@@ -17,7 +15,10 @@ web_profiler:
 swiftmailer:
     disable_delivery: true
 
-liip_functional_test: ~
+liip_functional_test:
+    authentication:
+        username: "admin"
+        password: "admin"
 
 security:
     firewalls:

@@ -53,10 +53,7 @@ class BaseTest extends WebTestCase
         );
 
         $this->fixtures = $this->loadFixtures($fixtures)->getReferenceRepository();
-        $this->client = static::createClient(array(), array(
-          'PHP_AUTH_USER' => 'admin',
-          'PHP_AUTH_PW'   => 'admin',
-        ));
+        $this->client = $this->makeClient(true);
     }
 
     /**

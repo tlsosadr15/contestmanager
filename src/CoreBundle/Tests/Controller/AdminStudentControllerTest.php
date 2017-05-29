@@ -1,6 +1,6 @@
 <?php
 /**
- * AdminUserControllerTest class file
+ * AdminStudentControllerTest class file
  *
  * PHP Version 7
  *
@@ -13,10 +13,11 @@
 namespace CoreBundle\Tests\Controller;
 
 use CoreBundle\Tests\BaseTest;
-use UserBundle\Entity\User;
+use SchoolBundle\Entity\Student;
+use TeamBundle\Entity\Team;
 
 /**
- * AdminUserControllerTest class
+ * AdminStudentControllerTest class
  *
  * @category Test
  * @package  CoreBundle\Tests\Controller
@@ -24,64 +25,64 @@ use UserBundle\Entity\User;
  * @license  All right reserved
  * @link     Null
  */
-class AdminUserControllerTest extends BaseTest
+class AdminStudentControllerTest extends BaseTest
 {
     /**
-     * Test user list
+     * Test student list
      *
      * @return null
      */
     public function testIndex()
     {
-        $crawler = $this->client->request('GET', $this->getRouter()->generate('admin_user_user_list'));
+        $crawler = $this->client->request('GET', $this->getRouter()->generate('admin_school_student_list'));
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertContains('Admin', $crawler->filter('title')->text());
     }
 
     /**
-     * Test user creation
+     * Test student creation
      *
      * @return null
      */
-    public function testUserCreate()
+    public function testStudentCreate()
     {
-        $crawler = $this->client->request('GET', $this->getRouter()->generate('admin_user_user_create'));
+        $crawler = $this->client->request('GET', $this->getRouter()->generate('admin_school_student_create'));
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $action = $crawler->filter('div.sonata-ba-form form')->attr('action');
         $formId = explode('=', $action)[1];
 
         $form = $crawler->selectButton('btn_create_and_edit')->form();
+        /** @var Team $team */
+        $team = $this->fixtures->getReference('team1');
         $form->setValues(
             array(
                 $formId => array(
-                  'username' => 'john_smith',
                   'firstName' => 'John',
                   'lastName' => 'Smith',
-                  'email' => 'john.smith@gmail.com',
-                  'plainPassword' => 'password',
+                  'team' => $team->getId(),
                 ),
             )
         );
         $this->client->submit($form);
         $crawler = $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('L\'élément "john_smith" a été créé avec succès.', $crawler->filter('div.alert-success')->text());
+        $this->assertContains('a été créé avec succès.', $crawler->filter('div.alert-success')->text());
     }
 
     /**
-     * Test user edition
+     * Test student edition
      *
      * @return null
      */
-    public function testUserEdit()
+    public function testStudentEdit()
     {
-        /** @var User $user */
-        $user = $this->fixtures->getReference('teacher0');
+        /** @var Student $student */
+        $student = $this->fixtures->getReference('student1');
 
         $crawler = $this->client->request('GET', $this->getRouter()->generate(
-            'admin_user_user_edit',
-            ['id' => $user->getId()]
+            'admin_school_student_edit',
+            ['id' => $student->getId()]
         ));
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -89,34 +90,34 @@ class AdminUserControllerTest extends BaseTest
         $formId = explode('=', $action)[1];
 
         $form = $crawler->selectButton('btn_update_and_list')->form();
-        $form->setValues(array($formId => array('username' => 'Toto', 'email' => 'toto@gmail.com')));
+        $form->setValues(array($formId => array('firstName' => 'Toto', 'lastName' => 'Doe')));
         $this->client->submit($form);
         $crawler = $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('L\'élément "Toto" a été mis à jour avec succès.', $crawler->filter('div.alert-success')->text());
+        $this->assertContains('L\'élément "Toto Doe" a été mis à jour avec succès.', $crawler->filter('div.alert-success')->text());
     }
 
     /**
-     * Test user deletion
+     * Test student deletion
      *
      * @return null
      */
-    public function testUserDelete()
+    public function testStudentDelete()
     {
-        /** @var User $user */
-        $user = $this->fixtures->getReference('teacher0');
+        /** @var Student $student */
+        $student = $this->fixtures->getReference('student1');
 
         $crawler = $this->client->request('GET', $this->getRouter()->generate(
-            'admin_user_user_delete',
-            ['id' => $user->getId()]
+            'admin_school_school_delete',
+            ['id' => $student->getId()]
         ));
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Êtes-vous sûr de vouloir supprimer l\'élément "'.$user->getUsername().'" sélectionné?', $crawler->filter('div.box-body')->text());
+        $this->assertContains('Êtes-vous sûr de vouloir supprimer l\'élément', $crawler->filter('div.box-body')->text());
 
         $form = $crawler->filter('button:contains("supprimer")')->eq(0)->form();
         $this->client->submit($form);
         $crawler = $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('L\'élément "'.$user->getUsername().'" a été supprimé avec succès.', $crawler->filter('div.alert-success')->text());
+        $this->assertContains('a été supprimé avec succès.', $crawler->filter('div.alert-success')->text());
     }
 }

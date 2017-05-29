@@ -42,7 +42,7 @@ class TeamAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof Team
-            ? 'Team '.$object->getName()
+            ? $object->getName()
             : 'Team';
     }
 

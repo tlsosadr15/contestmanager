@@ -50,6 +50,12 @@ class BaseTest extends WebTestCase
         $fixtures = array(
           'CoreBundle\DataFixtures\ORM\LoadSchoolData',
           'CoreBundle\DataFixtures\ORM\LoadUserData',
+          'CoreBundle\DataFixtures\ORM\LoadGroupData',
+          'CoreBundle\DataFixtures\ORM\LoadTeamData',
+          'CoreBundle\DataFixtures\ORM\LoadStudentData',
+          'CoreBundle\DataFixtures\ORM\LoadTournamentData',
+          'CoreBundle\DataFixtures\ORM\LoadConfigData',
+          'CoreBundle\DataFixtures\ORM\LoadMatchData',
         );
 
         $this->fixtures = $this->loadFixtures($fixtures)->getReferenceRepository();

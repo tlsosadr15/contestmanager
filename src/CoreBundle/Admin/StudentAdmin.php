@@ -42,11 +42,10 @@ class StudentAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof Student
-            ? 'Student '.$object->getFirstName()
+            ? $object->getFirstName().' '.$object->getLastName()
             : 'Student';
     }
-
-
+    
     /**
      * @param Student $object Student
      */

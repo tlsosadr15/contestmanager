@@ -51,7 +51,7 @@ class TournamentAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof Tournament
-            ? 'Tournament '.$object->getName()
+            ? $object->getName()
             : 'Tournament';
     }
 

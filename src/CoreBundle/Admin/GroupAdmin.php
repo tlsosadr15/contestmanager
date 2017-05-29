@@ -43,7 +43,7 @@ class GroupAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof GroupMatch
-            ? 'Group '.$object->getName()
+            ? $object->getName()
             : 'Group';
     }
 

@@ -52,8 +52,6 @@ class AdminMatchControllerTest extends BaseTest
 
         $action = $crawler->filter('div.sonata-ba-form form')->attr('action');
         $formId = explode('=', $action)[1];
-        /** @var User $teacher */
-        $teacher = $this->fixtures->getReference('teacher0');
 
         $form = $crawler->selectButton('btn_create_and_edit')->form();
         $form->setValues(

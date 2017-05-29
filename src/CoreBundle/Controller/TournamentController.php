@@ -48,11 +48,9 @@ class TournamentController extends Controller
         $tournament = $this->container->get('doctrine')->getManager()->getRepository('MatchBundle:Tournament')->findBy(array('id' => $tournamentId))[0];
         $groups = TournamentManager::getTournamentGroup($tournament);
         $nbBestTeam = count($groups);
-        $nbMissingTeam = null;
+        $nbMissingTeam = 4 - $nbBestTeam;
         if ($nbBestTeam > 4 && $nbBestTeam < 8) {
             $nbMissingTeam = 8 - $nbBestTeam;
-        } else {
-            $nbMissingTeam = 4 - $nbBestTeam;
         }
         $bestTeams = TournamentManager::getBestTeams($groups, $nbMissingTeam);
         $this->createFinalMatchs($bestTeams, $tournament);

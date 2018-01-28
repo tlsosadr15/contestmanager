@@ -95,17 +95,17 @@ class UserAdmin extends AbstractAdmin
             ->add('lastName');
     }
 
-    public function configureActionButtons(AdminInterface $admin, $list, $action, $object)
-    {
-        if (in_array($action, ['show', 'edit', 'acl']) && $object) {
-            $buttonList['custom'] = [
-                'template' => 'AppBundle:Button:custom_button.html.twig',
-            ];
-        }
-
-        // Remove history action
-        unset($buttonList['history']);
-
-        return $buttonList;
-    }
+//    public function configureActionButtons(AdminInterface $admin, $list, $action, $object)
+//    {
+//        if (in_array($action, ['show', 'edit', 'acl']) && $object) {
+//            $buttonList['custom'] = [
+//                'template' => 'AppBundle:Button:custom_button.html.twig',
+//            ];
+//        }
+//
+//        // Remove history action
+//        unset($buttonList['history']);
+//
+//        return $buttonList;
+//    }
 }

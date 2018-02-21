@@ -12,7 +12,6 @@
  */
 namespace CoreBundle\Admin;
 
-use MatchBundle\Entity\GroupMatch;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -95,17 +94,19 @@ class UserAdmin extends AbstractAdmin
             ->add('lastName');
     }
 
-//    public function configureActionButtons(AdminInterface $admin, $list, $action, $object)
+    public function configureActionButtons($action, $object = null)
+    {
+        $list = parent::configureActionButtons($action, $object);
+
+        $list['import'] = array(
+            'template' =>  'CoreBundle:Admin:import_button.html.twig',
+        );
+
+        return $list;
+    }
+
+//    public function configureRoutes(RouteCollection $collection)
 //    {
-//        if (in_array($action, ['show', 'edit', 'acl']) && $object) {
-//            $buttonList['custom'] = [
-//                'template' => 'AppBundle:Button:custom_button.html.twig',
-//            ];
-//        }
-//
-//        // Remove history action
-//        unset($buttonList['history']);
-//
-//        return $buttonList;
+//        $collection->add('import', $this->getRouterIdParameter().'/import');
 //    }
 }

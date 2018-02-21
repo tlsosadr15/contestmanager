@@ -13,6 +13,7 @@
 namespace CoreBundle\Controller;
 
 use MatchBundle\Entity\Tournament;
+use phpDocumentor\Reflection\Types\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -118,6 +119,19 @@ class DefaultController extends Controller
         $groups = TournamentManager::getTournamentGroup($tournament);
 
         return $this->render('CoreBundle:Default:scores_tournament.html.twig', array('scores' => $groups));
+    }
+
+    /**
+     * Mobile app action
+     *
+     * @param Object $object
+     *
+     * @return Response
+     */
+    public function importAction($object)
+    {
+        var_dump($object);
+        exit('yup');
     }
 
 }

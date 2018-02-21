@@ -14,3 +14,7 @@ app_upload:
 app_download:
     path:     /app_download
     defaults: { _controller: CoreBundle:Default:mobileAppDownload }
+
+import:
+    path:     /import
+    defaults: { _controller: CoreBundle:Default:import }

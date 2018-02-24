@@ -13,7 +13,6 @@
 namespace CoreBundle\Controller;
 
 use MatchBundle\Entity\Tournament;
-use phpDocumentor\Reflection\Types\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -40,7 +39,7 @@ class DefaultController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return Response
      */
     public function mobileAppUploadAction(Request $request)
     {
@@ -122,16 +121,33 @@ class DefaultController extends Controller
     }
 
     /**
-     * Mobile app action
+     * Import action
      *
-     * @param Object $object
+     * @param Request $request
      *
      * @return Response
      */
-    public function importAction($object)
+    public function importAction(Request $request)
     {
-        var_dump($object);
-        exit('yup');
-    }
+        $form = $this->createFormBuilder()
+            ->add('test', FileType::class, array(
+                'required' => false,
+                'label' => 'File to import'
+            ))
+            ->getForm();
 
+        if ($request->getMethod() == 'GET') {
+            return $this->render('CoreBundle:Admin:import_button_front.html.twig', array('form' => $form->createView()));
+        }
+
+        foreach ($request->files as $uploadedFiles) {
+            /** @var UploadedFile $uploadedFile */
+            foreach ($uploadedFiles as $uploadedFile) {
+                $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($uploadedFile->getPathname());
+            }
+        }
+        $url = $request->headers->get('referer');
+        preg_match('/(.*)\/(.*)\/list/', $url, $match);
+        $entityType = end($match);
+    }
 }

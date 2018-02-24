@@ -94,19 +94,14 @@ class UserAdmin extends AbstractAdmin
             ->add('lastName');
     }
 
-//    public function configureActionButtons($action, $object = null)
-//    {
-//        $list = parent::configureActionButtons($action, $object);
-//
-//        $list['import'] = array(
-//            'template' =>  'CoreBundle:Admin:import_button.html.twig',
-//        );
-//
-//        return $list;
-//    }
+    public function configureActionButtons($action, $object = null)
+    {
+        $list = parent::configureActionButtons($action, $object);
 
-//    public function configureRoutes(RouteCollection $collection)
-//    {
-//        $collection->add('import', $this->getRouterIdParameter().'/import');
-//    }
+        $list['import'] = array(
+            'template' =>  'CoreBundle:Admin:import_button.html.twig',
+        );
+
+        return $list;
+    }
 }

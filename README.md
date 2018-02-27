@@ -19,6 +19,14 @@ php app/console doctrine:database:create
 php app/console doctrine:schema:update --force
 php app/console assets:install
  ```
+ 
+ 
+## Installation (Extras) ##
+
+```
+composer require liuggio/excelbundle
+```
+
 
 ### Commandes utiles ###
 
